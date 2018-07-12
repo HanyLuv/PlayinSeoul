@@ -10,8 +10,9 @@ import com.work.hany.playinseoul.playinseoul.util.ActivityUtils;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DaggerAppCompatActivity {
 
     @Inject
     Lazy<MainFragment> mainFragmentProvider;
