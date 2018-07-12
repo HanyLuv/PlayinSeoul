@@ -1,4 +1,4 @@
-package com.work.hany.playinseoul.network.network
+package com.work.hany.playinseoul.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -41,7 +41,7 @@ class PlayInSeoulRetrofit private constructor(){
     }
 
     companion object {
-        private const val BASE_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService"
+        private const val BASE_URL = "http://api.visitkorea.or.kr"
 
         private const val VALUE_API_KEY = "Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D"
         private const val VALUE_MOBILE_NAME = "PlayInSeoul"

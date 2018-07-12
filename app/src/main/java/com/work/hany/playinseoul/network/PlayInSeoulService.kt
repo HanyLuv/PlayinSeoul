@@ -1,4 +1,4 @@
-package com.work.hany.playinseoul.network.network
+package com.work.hany.playinseoul.network
 
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call

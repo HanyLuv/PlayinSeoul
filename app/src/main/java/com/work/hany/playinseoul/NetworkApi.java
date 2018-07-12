@@ -1,4 +1,4 @@
-package com.work.hany.playinseoul.network;
+package com.work.hany.playinseoul;
 
 import javax.inject.Inject;
 
