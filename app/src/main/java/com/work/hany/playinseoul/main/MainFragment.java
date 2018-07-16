@@ -16,11 +16,12 @@ import com.work.hany.playinseoul.network.Result;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends DaggerFragment implements MainContract.View {
 
     @Inject
     public MainFragment() {
@@ -30,23 +31,33 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main,null,false);
+        View rootView = inflater.inflate(R.layout.fragment_main, null, false);
 
 
         PlayInSeoulService service = PlayInSeoulRetrofit.Companion.getInstance().create(PlayInSeoulService.class);
         service.getAreaBasedList().enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                Log.d("HANY_TAG","안녕하세용~~ onResponse");
+                Log.d("HANY_TAG", "안녕하세용~~ onResponse");
 
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-                Log.d("HANY_TAG","안녕하세용~~ onFailure");
+                Log.d("HANY_TAG", "안녕하세용~~ onFailure");
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void showTourDetailsUi(String tourContentId) {
+
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        
     }
 }

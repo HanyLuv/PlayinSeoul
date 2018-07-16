@@ -4,6 +4,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URLDecoder
+import java.net.URLEncoder
+
 /**
  *
  * 영어를 지원할것인가?
@@ -25,8 +28,9 @@ class PlayInSeoulRetrofit private constructor(){
             builder.addInterceptor(interceptor)
             builder.addInterceptor { chain ->
                 var request = chain.request()
+                var encodingApiKey = URLDecoder.decode(VALUE_API_KEY, "UTF-8")
                 var url = request.url().newBuilder()
-                        .addQueryParameter(PARAM_SERVICE_KEY, VALUE_API_KEY)
+                        .addQueryParameter(PARAM_SERVICE_KEY, encodingApiKey)
                         .addQueryParameter(PARAM_MOBILE_APP,VALUE_MOBILE_NAME)
                         .addQueryParameter(PARAM_MOBILE_OS,VALUE_MOBILE_OS)
                         .addQueryParameter(PARAM_RESPONSE_TYPE,VALUE_RESPONSE_TYPE)
