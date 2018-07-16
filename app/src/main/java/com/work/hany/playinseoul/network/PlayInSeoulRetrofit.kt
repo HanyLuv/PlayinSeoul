@@ -42,13 +42,13 @@ class PlayInSeoulRetrofit private constructor(){
 
     companion object {
         private const val BASE_URL = "http://api.visitkorea.or.kr"
-
+//http://unikys.tistory.com/195 인코딩, 디코딩 
         private const val VALUE_API_KEY = "Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D"
         private const val VALUE_MOBILE_NAME = "PlayInSeoul"
         private const val VALUE_MOBILE_OS = "AND"
         private const val VALUE_RESPONSE_TYPE = "json"
 
-        private const val PARAM_SERVICE_KEY = "ServiceKey"
+        private const val PARAM_SERVICE_KEY = "serviceKey"
         private const val PARAM_MOBILE_APP = "MobileApp"
         private const val PARAM_MOBILE_OS = "MobileOS"
         private const val PARAM_RESPONSE_TYPE = "_type"
