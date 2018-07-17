@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.di.ActivityScoped;
+import com.work.hany.playinseoul.network.AreaTourInformation;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,7 @@ public class TourDetailFragment  extends DaggerFragment implements TourDetailCon
     TourDetailContract.Presenter presenter;
 
     @Inject
-    int contentId;
+    AreaTourInformation areaTourInformation;
 
     @Inject
     public TourDetailFragment(){ }
@@ -34,7 +35,7 @@ public class TourDetailFragment  extends DaggerFragment implements TourDetailCon
         View rootView = inflater.inflate(R.layout.fragment_detail,null,false);
 
         TextView textView = rootView.findViewById(R.id.contentIdTextView);
-        textView.setText(String.valueOf(contentId));
+        textView.setText(areaTourInformation.toString());
         return rootView;
     }
 }

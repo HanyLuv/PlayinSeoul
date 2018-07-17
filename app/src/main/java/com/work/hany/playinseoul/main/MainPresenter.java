@@ -35,7 +35,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void openTourDetails(AreaTourInformation areaTourInformation) {
-            mainView.showTourDetailsUi(areaTourInformation.getContentID());
+            mainView.showTourDetailsUi(areaTourInformation);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class MainPresenter implements MainContract.Presenter {
             public void onResponse(Call<Result> call, Response<Result> response) {
 
                 if (!call.isCanceled()) {
-                    ArrayList areaTourInformationLisr = response.body().getResponse().getBody().getItems().getAreaTourInformationList();
-                    mainView.showTourListUi(areaTourInformationLisr);
+                    ArrayList areaTourInformationList = response.body().getResponse().getBody().getItems().getAreaTourInformationList();
+                    mainView.showTourListUi(areaTourInformationList);
                 }
 
             }

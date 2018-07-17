@@ -10,6 +10,7 @@ import java.net.URLDecoder
 /**
  *
  * 영어를 지원할것인가?
+ *
  * */
 
 class PlayInSeoulRetrofit private constructor(){
@@ -46,7 +47,7 @@ class PlayInSeoulRetrofit private constructor(){
     }
 
     companion object {
-        private const val BASE_URL = "http://api.visitkorea.or.kr"
+        private const val BASE_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService"
         private const val VALUE_API_KEY = "Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D"
         private const val VALUE_MOBILE_NAME = "PlayInSeoul"
         private const val VALUE_MOBILE_OS = "AND"
@@ -56,6 +57,19 @@ class PlayInSeoulRetrofit private constructor(){
         private const val PARAM_MOBILE_APP = "MobileApp"
         private const val PARAM_MOBILE_OS = "MobileOS"
         private const val PARAM_RESPONSE_TYPE = "_type"
+
+
+        private const val CONTENT_TYPE_TOUR = 12 //관광지
+        private const val CONTENT_TYPE_CULTUR = 14 //문화시설
+        private const val CONTENT_TYPE_PESTIVAL = 15 //행사/공연/축제
+        private const val CONTENT_TYPE_TRAVEL_COURSE = 25 //여행코스
+        private const val CONTENT_TYPE_REPORTS = 28 //레포츠
+        private const val CONTENT_TYPE_STAY = 32//숙박
+        private const val CONTENT_TYPE_SHOPPING = 38//쇼핑
+        private const val CONTENT_TYPE_FOOD = 39//음식점
+
+
+
 
         val instance: Retrofit by lazy {
             Holder.INSTANCE

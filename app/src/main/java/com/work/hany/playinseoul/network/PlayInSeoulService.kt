@@ -1,5 +1,7 @@
 package com.work.hany.playinseoul.network
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
@@ -8,15 +10,25 @@ import retrofit2.http.Path
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회
-    @GET("openapi/service/rest/KorService/areaBasedList")
+    @GET("areaBasedList")
     fun getAreaBasedList(): Call<Result>
 
+    //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14
+    // http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey=Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D&MobileApp=PlayInSeoul&MobileOS=AND&_type=json&contentId=129854&contentTypeId=14&overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y
+    @GET("detailCommon?overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y")
+    fun getTourOperation(): Call<Result>
 
-    // 키워드 검색
+    /**
+    @description 소개정보 조회 (상세정보2)
+    타입별 소개정보(휴무일, 개장시간, 주차시설 등)를 조회하는 기능입니다.
+    각 타입마다 응답 항목이 다르게 제공됩니다. 
+     */
+    @GET("detailIntro?contentId={contentId}&contenttypeId={contenttypeid}")
+    fun getTourInrtro(@Path("contentId") contentID: Int, @Path("contenttypeid") contentTypeID: Int): Call<Result>
+//    10		detailInfo	반복정보 조회 (상세정보3)
+//    11		detailImage	이미지정보 조회 (상세정보4)
 
-    // 공통정보 조회
 
-    // 이미지 정보 조회
 }
 
 
@@ -71,10 +83,10 @@ data class Items(@SerializedName("item") var areaTourInformationList: ArrayList<
 
  * */
 
-data class AreaTourInformation(
+data class AreaTourInformation (
         @SerializedName("addr1") var fullAddress: String,
         @SerializedName("addr2") var areaAddress: String,
-        @SerializedName("areacode") var areacode: String,
+        @SerializedName("areacode") var areaCode: String,
         @SerializedName("cat1") var largeCategory: String,
         @SerializedName("cat2") var mediumCategory: String,
         @SerializedName("cat3") var smallCategory: String,
@@ -94,4 +106,60 @@ data class AreaTourInformation(
         @SerializedName("zipcode") var zipCode: String //우편 번호
 
 
-)
+) : Parcelable {
+    constructor(source: Parcel) : this(
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readInt(),
+            source.readInt(),
+            source.readLong(),
+            source.readString(),
+            source.readString(),
+            source.readFloat(),
+            source.readFloat(),
+            source.readInt(),
+            source.readLong(),
+            source.readInt(),
+            source.readInt(),
+            source.readString(),
+            source.readString(),
+            source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(if (fullAddress == null) "" else fullAddress)
+        writeString(if (areaAddress == null) "" else areaAddress)
+        writeString(if (areaCode == null) "" else areaCode)
+        writeString(if (largeCategory == null) "" else largeCategory)
+        writeString(if (mediumCategory == null) "" else mediumCategory)
+        writeString(if (smallCategory == null) "" else smallCategory)
+        writeInt(contentID)
+        writeInt(contentTypeID)
+        writeLong(createdTime)
+        writeString(if (largeImage == null) "" else largeImage)
+        writeString(if (smallImage == null) "" else smallImage)
+        writeFloat(mapx)
+        writeFloat(mapy)
+        writeInt(mapLevel)
+        writeLong(modifiedTime)
+        writeInt(readCount)
+        writeInt(sigunguCode)
+        writeString(if (tel == null) "" else tel)
+        writeString(if (contentTitle == null) "" else contentTitle)
+        writeString(if (zipCode == null) "" else zipCode)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<AreaTourInformation> = object : Parcelable.Creator<AreaTourInformation> {
+            override fun createFromParcel(source: Parcel): AreaTourInformation = AreaTourInformation(source)
+            override fun newArray(size: Int): Array<AreaTourInformation?> = arrayOfNulls(size)
+        }
+    }
+}

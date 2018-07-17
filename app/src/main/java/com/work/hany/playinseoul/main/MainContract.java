@@ -10,7 +10,7 @@ public interface MainContract {
 
     interface View extends BaseView<Presenter> {
         void showTourListUi(ArrayList<AreaTourInformation> areaTourInformationList);
-        void showTourDetailsUi(int tourContentId);
+        void showTourDetailsUi(AreaTourInformation areaTourInformation);
         void setLoadingIndicator(boolean active);
     }
 

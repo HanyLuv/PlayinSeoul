@@ -81,9 +81,9 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
     }
 
     @Override
-    public void showTourDetailsUi(int tourContentId) { //TODO id 만 넘길지, 아님 이미지등등 넘길지 .고민@_@
+    public void showTourDetailsUi(AreaTourInformation areaTourInformation) { //TODO id 만 넘길지, 아님 이미지등등 넘길지 .고민@_@
         Intent intent = new Intent(getContext(), TourDetailActivity.class);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, tourContentId);
+        intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, areaTourInformation);
         startActivity(intent);
     }
 

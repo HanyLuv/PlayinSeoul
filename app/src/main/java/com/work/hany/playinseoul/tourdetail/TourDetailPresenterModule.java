@@ -2,6 +2,7 @@ package com.work.hany.playinseoul.tourdetail;
 
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.di.FragmentScoped;
+import com.work.hany.playinseoul.network.AreaTourInformation;
 
 import dagger.Binds;
 import dagger.Module;
@@ -24,7 +25,7 @@ public abstract class TourDetailPresenterModule {
 
     @Provides
     @ActivityScoped
-    static int provideTourContentId(TourDetailActivity activity) {
-        return activity.getIntent().getIntExtra(EXTRA_TOUR_ID,0);
+    static AreaTourInformation provideTourContentId(TourDetailActivity activity) {
+        return activity.getIntent().getParcelableExtra(EXTRA_TOUR_ID);
     }
 }
