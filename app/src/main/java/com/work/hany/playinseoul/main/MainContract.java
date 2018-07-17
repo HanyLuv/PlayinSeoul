@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface MainContract {
 
     interface View extends BaseView<Presenter> {
-        void showTourListUi(ArrayList<AreaTourInformation> areaTourInformationList);
+        void initTourListUi(ArrayList<AreaTourInformation> areaTourInformationList);
         void showTourDetailsUi(AreaTourInformation areaTourInformation);
         void setLoadingIndicator(boolean active);
     }

@@ -2,7 +2,6 @@ package com.work.hany.playinseoul.main;
 
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.model.DataHandler;
@@ -40,19 +39,19 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void loadTourList() {
-        dataHandler.getTourList().enqueue(new Callback<Result>() {
+        dataHandler.getTourList().enqueue(new Callback<Result<AreaTourInformation>>() {
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
+            public void onResponse(Call<Result<AreaTourInformation>> call, Response<Result<AreaTourInformation>> response) {
 
                 if (!call.isCanceled()) {
-                    ArrayList areaTourInformationList = response.body().getResponse().getBody().getItems().getAreaTourInformationList();
-                    mainView.showTourListUi(areaTourInformationList);
+                    ArrayList areaTourInformationList = response.body().getResponse().getBody().getItems().getList();
+                    mainView.initTourListUi(areaTourInformationList);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+            public void onFailure(Call<Result<AreaTourInformation>> call, Throwable t) {
                 t.toString();
             }
         });

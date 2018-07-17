@@ -2,41 +2,45 @@ package com.work.hany.playinseoul.network
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회
     @GET("areaBasedList")
-    fun getAreaBasedList(): Call<Result>
+    fun getAreaBasedList(): Call<Result<AreaTourInformation>>
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14
     // http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey=Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D&MobileApp=PlayInSeoul&MobileOS=AND&_type=json&contentId=129854&contentTypeId=14&overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y
     @GET("detailCommon?overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y")
-    fun getTourOperation(): Call<Result>
+    fun getTourOperation(): Call<Result<AreaTourInformation>>
 
     /**
     @description 소개정보 조회 (상세정보2)
     타입별 소개정보(휴무일, 개장시간, 주차시설 등)를 조회하는 기능입니다.
-    각 타입마다 응답 항목이 다르게 제공됩니다. 
+    각 타입마다 응답 항목이 다르게 제공됩니다.
      */
     @GET("detailIntro?contentId={contentId}&contenttypeId={contenttypeid}")
-    fun getTourInrtro(@Path("contentId") contentID: Int, @Path("contenttypeid") contentTypeID: Int): Call<Result>
-//    10		detailInfo	반복정보 조회 (상세정보3)
+    fun getTourInrtro(@Path("contentId") contentID: Int, @Path("contenttypeid") contentTypeID: Int): Call<AreaTourInformation>
+
+    //    10		detailInfo	반복정보 조회 (상세정보3)
+
 //    11		detailImage	이미지정보 조회 (상세정보4)
+    @GET("detailImage")
+    fun getTourPhotos(@Query("contentId") contentID: Int, @Query("contenttypeid") contentTypeID: Int): Call<Result<TourPhoto>>
 
 
 }
 
 
-data class Result(@SerializedName("response") var response: Response)
+data class Result<T>(@SerializedName("response") var response: Response<T>)
 
 
-data class Response(@SerializedName("header") var header: Header,
-                    @SerializedName("body") var body: Body)
+data class Response<T>(@SerializedName("header") var header: Header,
+                    @SerializedName("body") var body: Body<T>)
 
 
 data class Header(@SerializedName("resultCode") var resultCode: String,
@@ -44,13 +48,18 @@ data class Header(@SerializedName("resultCode") var resultCode: String,
 
 
 
-data class Body(@SerializedName("items") var items: Items,
+data class Body<T>(@SerializedName("items") var items: Items<T>,
                   @SerializedName("numOfRows") var numOfRows: Int,
                   @SerializedName("pageNo") var pageNo: Int,
                  @SerializedName("totalCount") var totalCount: Int)
 
-data class Items(@SerializedName("item") var areaTourInformationList: ArrayList<AreaTourInformation>)
+data class Items<T>(@SerializedName("item") var list: ArrayList<T>)
 
+
+data class TourPhoto(@SerializedName("contentid") var contentId: Int,
+                     @SerializedName("originimgurl") var originImageURI: String,
+                     @SerializedName("serialnum") var serialNumber: String,
+                     @SerializedName("smallimageurl") var smallImageURI: Int)
 
 /**
 *
@@ -84,14 +93,14 @@ data class Items(@SerializedName("item") var areaTourInformationList: ArrayList<
  * */
 
 data class AreaTourInformation (
-        @SerializedName("addr1") var fullAddress: String,
-        @SerializedName("addr2") var areaAddress: String,
+        @SerializedName("addr1") var fullAddress: String,// 서울시 종로구 평창30길 28
+        @SerializedName("addr2") var areaAddress: String, //문화일경우 (평창동)
         @SerializedName("areacode") var areaCode: String,
         @SerializedName("cat1") var largeCategory: String,
         @SerializedName("cat2") var mediumCategory: String,
         @SerializedName("cat3") var smallCategory: String,
-        @SerializedName("contentid") var contentID: Int,
-        @SerializedName("contenttypeid") var contentTypeID: Int, //관광타입
+        @SerializedName("contentid") var contentId: Int,
+        @SerializedName("contenttypeid") var contentTypeId: Int, //관광타입
         @SerializedName("createdtime") var createdTime: Long,
         @SerializedName("firstimage") var largeImage: String,
         @SerializedName("firstimage2") var smallImage: String,
@@ -103,7 +112,8 @@ data class AreaTourInformation (
         @SerializedName("sigungucode") var sigunguCode: Int, //시군코드
         @SerializedName("tel") var tel: String, //연락처
         @SerializedName("title") var contentTitle: String,
-        @SerializedName("zipcode") var zipCode: String //우편 번호
+        @SerializedName("zipcode") var zipCode: String, //우편 번호
+        @SerializedName("overview") var overview: String //설명
 
 
 ) : Parcelable {
@@ -127,6 +137,7 @@ data class AreaTourInformation (
             source.readInt(),
             source.readString(),
             source.readString(),
+            source.readString(),
             source.readString()
     )
 
@@ -139,8 +150,8 @@ data class AreaTourInformation (
         writeString(if (largeCategory == null) "" else largeCategory)
         writeString(if (mediumCategory == null) "" else mediumCategory)
         writeString(if (smallCategory == null) "" else smallCategory)
-        writeInt(contentID)
-        writeInt(contentTypeID)
+        writeInt(contentId)
+        writeInt(contentTypeId)
         writeLong(createdTime)
         writeString(if (largeImage == null) "" else largeImage)
         writeString(if (smallImage == null) "" else smallImage)
@@ -153,6 +164,7 @@ data class AreaTourInformation (
         writeString(if (tel == null) "" else tel)
         writeString(if (contentTitle == null) "" else contentTitle)
         writeString(if (zipCode == null) "" else zipCode)
+        writeString(if (overview == null) "" else overview)
     }
 
     companion object {

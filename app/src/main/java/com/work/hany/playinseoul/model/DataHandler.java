@@ -7,6 +7,7 @@ import com.work.hany.playinseoul.network.AreaTourInformation;
 import com.work.hany.playinseoul.network.PlayInSeoulRetrofit;
 import com.work.hany.playinseoul.network.PlayInSeoulService;
 import com.work.hany.playinseoul.network.Result;
+import com.work.hany.playinseoul.network.TourPhoto;
 
 import java.util.ArrayList;
 
@@ -20,22 +21,29 @@ import retrofit2.Response;
 
 @Singleton
 public class DataHandler implements DataHandlerContract {
+    private PlayInSeoulService service;
 
     @Inject
-    public DataHandler(){
+    public DataHandler() {
+        service = PlayInSeoulRetrofit.Companion.getInstance().create(PlayInSeoulService.class);
     }
 
     @Override
-    public Call<Result> getTourList() {
-        PlayInSeoulService service = PlayInSeoulRetrofit.Companion.getInstance().create(PlayInSeoulService.class);
-        return  service.getAreaBasedList();
+    public Call<Result<AreaTourInformation>> getTourList() {
+        return service.getAreaBasedList();
     }
+
+    @Override
+    public Call<Result<TourPhoto>> getTourPhotos(int contentId, int contentTypeId) {
+        return service.getTourPhotos(contentId,contentTypeId);
+    }
+
 }
 
 
-
 interface DataHandlerContract {
-    Call<Result> getTourList();
+    Call<Result<AreaTourInformation>> getTourList();
+    Call<Result<TourPhoto>> getTourPhotos(int contentId, int contentTypeId);
 
 
 }

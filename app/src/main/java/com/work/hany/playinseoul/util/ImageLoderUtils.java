@@ -9,7 +9,11 @@ import com.bumptech.glide.request.RequestOptions;
 public class ImageLoderUtils {
 
     public static void lodeURI(ImageView imageView, String uri) {
-        Glide.with(imageView).load(uri).apply(RequestOptions.downsampleOf(DownsampleStrategy.CENTER_INSIDE)).into(imageView);
+        Glide.with(imageView)
+                .load(uri)
+                .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.downsampleOf(DownsampleStrategy.CENTER_INSIDE))
+                .into(imageView);
 
     }
 }
