@@ -1,4 +1,4 @@
-package com.work.hany.playinseoul.playinseoul.util;
+package com.work.hany.playinseoul.util;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

@@ -1,5 +1,6 @@
 package com.work.hany.playinseoul.network
 
+import android.util.Log
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
@@ -31,10 +32,12 @@ data class Header(@SerializedName("resultCode") var resultCode: String,
 
 
 
-data class Body(@SerializedName("items") var areaTourInformationList: ArrayList<AreaTourInformation>,
+data class Body(@SerializedName("items") var items: Items,
                   @SerializedName("numOfRows") var numOfRows: Int,
                   @SerializedName("pageNo") var pageNo: Int,
                  @SerializedName("totalCount") var totalCount: Int)
+
+data class Items(@SerializedName("item") var areaTourInformationList: ArrayList<AreaTourInformation>)
 
 
 /**
@@ -77,13 +80,13 @@ data class AreaTourInformation(
         @SerializedName("cat3") var smallCategory: String,
         @SerializedName("contentid") var contentID: Int,
         @SerializedName("contenttypeid") var contentTypeID: Int, //관광타입
-        @SerializedName("createdtime") var createdTime: Int,
+        @SerializedName("createdtime") var createdTime: Long,
         @SerializedName("firstimage") var largeImage: String,
         @SerializedName("firstimage2") var smallImage: String,
         @SerializedName("mapx") var mapx: Float, //경도
         @SerializedName("mapy") var mapy: Float, //위도
         @SerializedName("mlevel") var mapLevel: Int,
-        @SerializedName("modifiedtime") var modifiedTime: Int,
+        @SerializedName("modifiedtime") var modifiedTime: Long,
         @SerializedName("readcount") var readCount: Int, //조회수
         @SerializedName("sigungucode") var sigunguCode: Int, //시군코드
         @SerializedName("tel") var tel: String, //연락처

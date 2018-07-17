@@ -2,10 +2,9 @@ package com.work.hany.playinseoul.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.work.hany.playinseoul.R;
-import com.work.hany.playinseoul.playinseoul.util.ActivityUtils;
+import com.work.hany.playinseoul.util.ActivityUtils;
 
 import javax.inject.Inject;
 
