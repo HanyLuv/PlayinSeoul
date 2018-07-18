@@ -10,27 +10,32 @@ import retrofit2.http.Query
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회
-    @GET("areaBasedList")
-    fun getAreaBasedList(): Call<Result<AreaTourInformation>>
+    @GET("areaBasedList?contentTypeId=25")
+    fun getAreaBasedList(): Call<Result<ArrayList<AreaTour>>>
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14
     // http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey=Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D&MobileApp=PlayInSeoul&MobileOS=AND&_type=json&contentId=129854&contentTypeId=14&overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y
-    @GET("detailCommon?overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y")
-    fun getTourOperation(): Call<Result<AreaTourInformation>>
+    @GET("detailCommon?overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y3&defaultYN=Y")
+    fun getTourOverView(@Query("contentId") contentID: Int, @Query("contenttypeId") contentTypeID: Int): Call<Result<AreaTour>>
 
     /**
-    @description 소개정보 조회 (상세정보2)
+    @description 여행코스의 소개정보 조회
     타입별 소개정보(휴무일, 개장시간, 주차시설 등)를 조회하는 기능입니다.
     각 타입마다 응답 항목이 다르게 제공됩니다.
      */
-    @GET("detailIntro?contentId={contentId}&contenttypeId={contenttypeid}")
-    fun getTourInrtro(@Path("contentId") contentID: Int, @Path("contenttypeid") contentTypeID: Int): Call<AreaTourInformation>
+    @GET("detailIntro?introYN=Y")
+    fun getTravelTourInformation(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<TravelInformation>>
 
-    //    10		detailInfo	반복정보 조회 (상세정보3)
+    /**
+    @description 여행코스의 소개정보 조회
+     여행정보 TravelDetail
+     */
+    @GET("detailInfo?detailYN=Y")
+    fun getTravelDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<TravelDetail>>>
 
-//    11		detailImage	이미지정보 조회 (상세정보4)
+    //    11		detailImage	이미지정보 조회 (상세정보4)
     @GET("detailImage")
-    fun getTourPhotos(@Query("contentId") contentID: Int, @Query("contenttypeid") contentTypeID: Int): Call<Result<TourPhoto>>
+    fun getTourPhotos(@Query("contentId") contentID: Int, @Query("contenttypeId") contentTypeID: Int): Call<Result<ArrayList<TourPhoto>>>
 
 
 }
@@ -53,46 +58,49 @@ data class Body<T>(@SerializedName("items") var items: Items<T>,
                   @SerializedName("pageNo") var pageNo: Int,
                  @SerializedName("totalCount") var totalCount: Int)
 
-data class Items<T>(@SerializedName("item") var list: ArrayList<T>)
+data class Items<T>(@SerializedName("item") var data: T)
 
 
 data class TourPhoto(@SerializedName("contentid") var contentId: Int,
                      @SerializedName("originimgurl") var originImageURI: String,
                      @SerializedName("serialnum") var serialNumber: String,
                      @SerializedName("smallimageurl") var smallImageURI: Int)
-
-/**
-*
- *
-*
-* */
-
 /**
  *
-"addr1": "서울특별시 강서구 곰달래로 247",
-"addr2": "(화곡동)",
-"areacode": 1,
-"cat1": "B02",
-"cat2": "B0201",
-"cat3": "B02010900",
-"contentid": 1747824,
-"contenttypeid": 32,
-"createdtime": 20121105144638,
-"firstimage": "http://tong.visitkorea.or.kr/cms/resource/22/1744722_image2_1.jpg",
-"firstimage2": "http://tong.visitkorea.or.kr/cms/resource/22/1744722_image3_1.jpg",
-"mapx": 126.8605049692,
-"mapy": 37.5321644636,
-"mlevel": 6,
-"modifiedtime": 20170518151707,
-"readcount": 16166,
-"sigungucode": 4,
-"tel": "02-2643-8800",
-"title": "㈜코스테이",
-"zipcode": "07741"
-
+private const val CONTENT_TYPE_TOUR = 12 //관광지
+private const val CONTENT_TYPE_CULTUR = 14 //문화시설
+private const val CONTENT_TYPE_PESTIVAL = 15 //행사/공연/축제
+private const val CONTENT_TYPE_TRAVEL_COURSE = 25 //여행코스
+private const val CONTENT_TYPE_REPORTS = 28 //레포츠
+private const val CONTENT_TYPE_STAY = 32//숙박
+private const val CONTENT_TYPE_SHOPPING = 38//쇼핑
+private const val CONTENT_TYPE_FOOD = 39//음식점
  * */
 
-data class AreaTourInformation (
+//여행 코스 디테일
+data class TravelDetail (
+        @SerializedName("contentid") var contentId: Int,
+        @SerializedName("contenttypeid") var contentTypeId: Int,
+        @SerializedName("subcontentid") var subContentId: Int,
+        @SerializedName("subdetailalt") var subImageDescription: String, //코스이미지설명
+        @SerializedName("subdetailimg") var subDetailImage: String,
+        @SerializedName("subdetailoverview") var subDetailDescription: String,
+        @SerializedName("subname") var subTitle: String,
+        @SerializedName("subnum") var subNumber: Int //반복 일련번호 (순서)
+        )
+
+
+data class TravelInformation(
+        @SerializedName("contentid") var contentId: Int,
+        @SerializedName("contenttypeid") var contentTypeId: Int,
+        @SerializedName("distance") var distance: String,
+        @SerializedName("infocentertourcourse") var informationCenter: String,
+        @SerializedName("schedule") var schedule: String,
+        @SerializedName("taketime") var courseTime: String, //코스 총 소요시간
+        @SerializedName("theme") var theme: String //코스 테마
+)
+
+data class AreaTour (
         @SerializedName("addr1") var fullAddress: String,// 서울시 종로구 평창30길 28
         @SerializedName("addr2") var areaAddress: String, //문화일경우 (평창동)
         @SerializedName("areacode") var areaCode: String,
@@ -114,7 +122,6 @@ data class AreaTourInformation (
         @SerializedName("title") var contentTitle: String,
         @SerializedName("zipcode") var zipCode: String, //우편 번호
         @SerializedName("overview") var overview: String //설명
-
 
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -169,9 +176,9 @@ data class AreaTourInformation (
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<AreaTourInformation> = object : Parcelable.Creator<AreaTourInformation> {
-            override fun createFromParcel(source: Parcel): AreaTourInformation = AreaTourInformation(source)
-            override fun newArray(size: Int): Array<AreaTourInformation?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<AreaTour> = object : Parcelable.Creator<AreaTour> {
+            override fun createFromParcel(source: Parcel): AreaTour = AreaTour(source)
+            override fun newArray(size: Int): Array<AreaTour?> = arrayOfNulls(size)
         }
     }
 }

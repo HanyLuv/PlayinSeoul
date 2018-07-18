@@ -29,6 +29,7 @@ public class Section<T> {
         INFORMATION(2), //운영정보
         PHOTOS(3), // 사진들~
         MAP(4), //지도
+        COURSE(5), // 코스 정보
         NOTHING(-1); //아무것도 아니다..
 
         private int code;

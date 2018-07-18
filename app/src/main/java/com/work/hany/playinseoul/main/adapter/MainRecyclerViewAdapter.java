@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.main.MainFragment;
-import com.work.hany.playinseoul.network.AreaTourInformation;
+import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
 
 import java.util.ArrayList;
@@ -18,17 +18,17 @@ import java.util.ArrayList;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<AreaTourInformation> areaTourInformationList;
+    private ArrayList<AreaTour> areaTourList;
     private MainFragment.MainItemListener mainItemListener;
 
-    public void setTourList(ArrayList<AreaTourInformation> areaTourInformationList){
-        this.areaTourInformationList = checkNotNull(areaTourInformationList);
+    public void setTourList(ArrayList<AreaTour> areaTourList){
+        this.areaTourList = checkNotNull(areaTourList);
         notifyDataSetChanged();
     }
 
-    public MainRecyclerViewAdapter(ArrayList<AreaTourInformation> areaTourInformationList, MainFragment.MainItemListener mainItemListener) {
+    public MainRecyclerViewAdapter(ArrayList<AreaTour> areaTourList, MainFragment.MainItemListener mainItemListener) {
         this.mainItemListener = mainItemListener;
-        this.areaTourInformationList = areaTourInformationList;
+        this.areaTourList = areaTourList;
     }
 
     @NonNull
@@ -41,12 +41,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bindItem(areaTourInformationList.get(position));
+        holder.bindItem(areaTourList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return areaTourInformationList.size();
+        return areaTourList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +60,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         }
 
-        void bindItem(final AreaTourInformation tourInformation) {
+        void bindItem(final AreaTour tourInformation) {
             ImageLoderUtils.lodeURI(tourImageView, tourInformation.getLargeImage());
             tourTextView.setText(tourInformation.getContentTitle());
             itemView.setOnClickListener(new View.OnClickListener() {

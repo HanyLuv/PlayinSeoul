@@ -9,14 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.di.ActivityScoped;
-import com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter;
 import com.work.hany.playinseoul.model.Section;
-import com.work.hany.playinseoul.network.AreaTourInformation;
+import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.network.TravelDetail;
+import com.work.hany.playinseoul.network.TravelInformation;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class TourDetailFragment  extends DaggerFragment implements TourDetailCon
     TourDetailContract.Presenter presenter;
 
     @Inject
-    AreaTourInformation areaTourInformation;
+    AreaTour areaTour;
 
     private TourDetailRecyclerViewAdapter detailRecyclerViewAdapter;
 
@@ -46,7 +46,24 @@ public class TourDetailFragment  extends DaggerFragment implements TourDetailCon
     }
 
     @Override
-    public void initTourImageUi(ArrayList<TourPhoto> tourPhotos) {
+    public void initDetailInformation(ArrayList<TravelDetail> travelDetails) {
+        for (TravelDetail detail : travelDetails ){
+            detailRecyclerViewAdapter.addSection(Section.ItemType.COURSE, detail);
+        }
+    }
+
+    @Override
+    public void initTourOverviewUi(AreaTour areaTour) {
+        detailRecyclerViewAdapter.updateSection(Section.ItemType.INTRO, areaTour);
+    }
+
+    @Override
+    public void initTourInformation(TravelInformation information) {
+        detailRecyclerViewAdapter.updateSection(Section.ItemType.INFORMATION, information);
+    }
+
+    @Override
+    public void initTourPhotosUi(ArrayList<TourPhoto> tourPhotos) {
 //        detailRecyclerViewAdapter.updateSection(Section.ItemType.IMAGE, tourPhotos);
 
     }
@@ -56,17 +73,15 @@ public class TourDetailFragment  extends DaggerFragment implements TourDetailCon
         super.onCreate(savedInstanceState);
         ArrayList<Section> sections = new ArrayList<>();
 
-        Section imageSection = new Section(Section.ItemType.IMAGE, areaTourInformation.getLargeImage());
-        Section informationSection = new Section(Section.ItemType.INFORMATION, areaTourInformation);
-        Section introSection = new Section(Section.ItemType.INTRO,null);
+        Section imageSection = new Section(Section.ItemType.IMAGE, areaTour.getLargeImage());
+        Section introSection = new Section(Section.ItemType.INTRO, areaTour);
+        Section informationSection = new Section(Section.ItemType.INFORMATION, null);
         Section photosSection = new Section(Section.ItemType.PHOTOS,new ArrayList<TourPhoto>());
         Section mapSection = new Section(Section.ItemType.MAP, null);
 
         sections.add(imageSection);
-        sections.add(informationSection);
         sections.add(introSection);
-        sections.add(photosSection);
-        sections.add(mapSection);
+        sections.add(informationSection);
 
         detailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections);
     }
@@ -80,7 +95,7 @@ public class TourDetailFragment  extends DaggerFragment implements TourDetailCon
         detailTourRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         detailTourRecyclerView.setAdapter(detailRecyclerViewAdapter);
 
-//        presenter.loadTourDetail(areaTourInformation.getContentId(), areaTourInformation.getContentTypeId());
+        presenter.loadTourDetail(areaTour.getContentId(), areaTour.getContentTypeId());
 
         return rootView;
     }

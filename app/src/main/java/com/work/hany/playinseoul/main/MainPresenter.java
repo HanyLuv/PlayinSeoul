@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.model.DataHandler;
-import com.work.hany.playinseoul.network.AreaTourInformation;
+import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.Result;
 
 import java.util.ArrayList;
@@ -33,26 +33,24 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void openTourDetails(AreaTourInformation areaTourInformation) {
-            mainView.showTourDetailsUi(areaTourInformation);
+    public void openTourDetails(AreaTour areaTour) {
+            mainView.showTourDetailsUi(areaTour);
     }
 
     @Override
     public void loadTourList() {
-        dataHandler.getTourList().enqueue(new Callback<Result<AreaTourInformation>>() {
+        dataHandler.getTourList().enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
             @Override
-            public void onResponse(Call<Result<AreaTourInformation>> call, Response<Result<AreaTourInformation>> response) {
-
+            public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
                 if (!call.isCanceled()) {
-                    ArrayList areaTourInformationList = response.body().getResponse().getBody().getItems().getList();
+                    ArrayList areaTourInformationList = response.body().getResponse().getBody().getItems().getData();
                     mainView.initTourListUi(areaTourInformationList);
                 }
-
             }
 
             @Override
-            public void onFailure(Call<Result<AreaTourInformation>> call, Throwable t) {
-                t.toString();
+            public void onFailure(Call<Result<ArrayList<AreaTour>>> call, Throwable t) {
+
             }
         });
     }

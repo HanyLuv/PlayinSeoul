@@ -6,17 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
-import com.work.hany.playinseoul.network.AreaTourInformation;
+import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.network.TravelDetail;
+import com.work.hany.playinseoul.network.TravelInformation;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
 
 import java.util.ArrayList;
 
 import static com.work.hany.playinseoul.model.Section.*;
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
+import static dagger.internal.Preconditions.checkNotNull;
 
 public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDetailRecyclerViewAdapter.ViewHolder> {
 
@@ -30,10 +34,16 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
 
     }
 
+    public <T>void addSection(ItemType type, T data){
+        sections.add(new Section(type,data));
+        notifyDataSetChanged();
+    }
+
     public <T>void updateSection(ItemType type,T data) {
-        for (Section section : sections) {
-            if (section.getType().equals(type)) {
-                section.setData(data);
+        for(int position = 0, end = sections.size(); position < end; position++ ){
+            if (sections.get(position).getType().equals(type)) {
+                sections.get(position).setData(data);
+                notifyItemChanged(position);
             }
         }
     }
@@ -79,7 +89,10 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
                 View introRowView= inflater.inflate(R.layout.detail_recycler_row_intro_itme,null,false);
                 viewHolder = new IntroViewHolder(introRowView);
                 break;
-
+            case COURSE:
+                View courseView= inflater.inflate(R.layout.detail_recycler_row_course_itme,null,false);
+                viewHolder = new CourseViewHolder(courseView);
+                break;
 
         }
 
@@ -136,25 +149,64 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
         }
     }
 
-    class IntroViewHolder extends ViewHolder {
+    class IntroViewHolder extends ViewHolder<AreaTour> {
+        private TextView contentIntroTextView;
+        private TextView contentTitleTextView;
+        private TextView contentAddrTextView;
+
         public IntroViewHolder(View itemView) {
             super(itemView);
+            contentIntroTextView = itemView.findViewById(R.id.tour_information_text_view);
+            contentTitleTextView = itemView.findViewById(R.id.tour_title_text_view);
+            contentAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
         }
 
         @Override
-        public void bind(Object data) {
+        public void bind(AreaTour data) {
+            contentTitleTextView.setText(data.getContentTitle());
+            contentAddrTextView.setText(data.getAreaAddress());
+            contentIntroTextView.setText(data.getOverview());
+        }
+    }
+    class CourseViewHolder extends ViewHolder<TravelDetail>{
+        private TextView contentCourseTitleTextView;
+        private TextView contentCourseNumberTextView;
+        private TextView contentCourseDescriptionTextView;
+        private ImageView contentCourseImageTextView;
+
+        public CourseViewHolder(View itemView) {
+            super(itemView);
+            contentCourseTitleTextView = itemView.findViewById(R.id.tour_course_title_text_view);
+            contentCourseNumberTextView = itemView.findViewById(R.id.tour_course_number_text_view);
+            contentCourseDescriptionTextView = itemView.findViewById(R.id.tour_course_description_text_view);
+            contentCourseImageTextView = itemView.findViewById(R.id.tour_course_image_view);
+        }
+
+        @Override
+        public void bind(TravelDetail data) {
+            contentCourseTitleTextView.setText(data.getSubTitle());
+            contentCourseNumberTextView.setText(String.valueOf(data.getSubNumber() + 1));
+            contentCourseDescriptionTextView.setText( data.getSubDetailDescription());
+            ImageLoderUtils.lodeURI(contentCourseImageTextView,data.getSubTitle());
+
 
         }
     }
+    class InformationViewHolder extends ViewHolder<TravelInformation>{
+        private TextView contentCourseTimeTextView;
+        private TextView contentDistanceTextView;
 
-    class InformationViewHolder extends ViewHolder<AreaTourInformation>{
         public InformationViewHolder(View itemView) {
             super(itemView);
+            contentCourseTimeTextView = itemView.findViewById(R.id.tour_info_course_time_text_view);
+            contentDistanceTextView = itemView.findViewById(R.id.tour_info_distance_text_view);
         }
 
         @Override
-        public void bind(AreaTourInformation data) {
-
+        public void bind(TravelInformation data) {
+            if(data == null) return;
+            contentCourseTimeTextView.setText(contentCourseTimeTextView.getText() + data.getCourseTime());
+            contentDistanceTextView.setText(contentDistanceTextView.getText() + data.getDistance());
         }
     }
 

@@ -1,17 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tourtitle"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:text="소개합니다."
-        android:gravity="right"
-        android:background="#B3FFFFAA"
-        android:padding="5dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/tourimage"/>
-</android.support.constraint.ConstraintLayout>
+<TextView
+    android:id="@+id/tour_addr_text_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="30dp"
+    android:text="의왕시"
+    android:textColor="#1ABC9C"
+    android:textSize="12dp"
+    android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/tour_title_text_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/tour_addr_text_view"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:text="타이틀 입니다."
+    android:textColor="#2E2E2E"
+    android:textSize="30dp"
+    android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/tour_information_text_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tour_title_text_view"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="10dp"
+    android:ellipsize="end"
+    android:lineSpacingExtra="2dp"
+    android:maxLines="8"
+    android:text="설명입니다."
+    android:textColor="#2E2E2E"
+    android:textSize="14dp" />
+
+<TextView
+    android:id="@+id/tour_more_text_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tour_information_text_view"
+    android:layout_marginBottom="25dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="10dp"
+    android:background="#F8F9F9"
+    android:gravity="right"
+    android:padding="10dp"
+    android:text="더 읽어 보기"
+    android:textColor="#A93226" />
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="10dp"
+    android:layout_alignParentBottom="true"
+    android:background="#EAEDED" />
+</RelativeLayout>

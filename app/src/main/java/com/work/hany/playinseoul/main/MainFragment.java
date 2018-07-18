@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter;
-import com.work.hany.playinseoul.network.AreaTourInformation;
+import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.tourdetail.TourDetailActivity;
 
 import java.util.ArrayList;
@@ -33,12 +33,12 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
 
     public interface MainItemListener {
-        void onTourClick(AreaTourInformation tourInformation);
+        void onTourClick(AreaTour tourInformation);
     }
 
     private MainItemListener mainItemListener = new MainItemListener() {
         @Override
-        public void onTourClick(AreaTourInformation tourInformation) {
+        public void onTourClick(AreaTour tourInformation) {
             presenter.openTourDetails(tourInformation);
         }
     };
@@ -49,7 +49,7 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(new ArrayList<AreaTourInformation>(), mainItemListener);
+        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(new ArrayList<AreaTour>(), mainItemListener);
 
     }
 
@@ -73,9 +73,9 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
     }
 
     @Override
-    public void showTourDetailsUi(AreaTourInformation areaTourInformation) { //TODO id 만 넘길지, 아님 이미지등등 넘길지 .고민@_@
+    public void showTourDetailsUi(AreaTour areaTour) { //TODO id 만 넘길지, 아님 이미지등등 넘길지 .고민@_@
         Intent intent = new Intent(getContext(), TourDetailActivity.class);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, areaTourInformation);
+        intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, areaTour);
         startActivity(intent);
     }
 
@@ -86,8 +86,8 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
 
 
     @Override
-    public void initTourListUi(ArrayList<AreaTourInformation> areaTourInformationList) {
-        mainRecyclerViewAdapter.setTourList(areaTourInformationList);
+    public void initTourListUi(ArrayList<AreaTour> areaTourList) {
+        mainRecyclerViewAdapter.setTourList(areaTourList);
     }
 
 
