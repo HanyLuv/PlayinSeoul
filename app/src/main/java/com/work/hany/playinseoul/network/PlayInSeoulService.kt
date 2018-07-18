@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회
-    @GET("areaBasedList?contentTypeId=25")
+    @GET("areaBasedList?contentTypeId=25&numOfRows=100")
     fun getAreaBasedList(): Call<Result<ArrayList<AreaTour>>>
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14

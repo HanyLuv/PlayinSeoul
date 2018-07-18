@@ -40,6 +40,7 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         @Override
         public void onTourClick(AreaTour tourInformation) {
             presenter.openTourDetails(tourInformation);
+            //TODO contentTypeID 에따라서 실행되어야하는 프레그먼트가 다르다.
         }
     };
 

@@ -153,19 +153,34 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
         private TextView contentIntroTextView;
         private TextView contentTitleTextView;
         private TextView contentAddrTextView;
+        private TextView contentMoreTextView;
 
         public IntroViewHolder(View itemView) {
             super(itemView);
             contentIntroTextView = itemView.findViewById(R.id.tour_information_text_view);
             contentTitleTextView = itemView.findViewById(R.id.tour_title_text_view);
             contentAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
+//            contentMoreTextView = itemView.findViewById(R.id.tour_more_text_view);
         }
 
         @Override
         public void bind(AreaTour data) {
+            if(data.getSmallCategory() != null) {
+                contentAddrTextView.setText(data.getSmallCategory());
+            }
+
             contentTitleTextView.setText(data.getContentTitle());
-            contentAddrTextView.setText(data.getAreaAddress());
             contentIntroTextView.setText(data.getOverview());
+//            contentIntroTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//                @Override
+//                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                    boolean isIntroInformationMaxCountOver = contentIntroTextView.getLineCount() == contentIntroTextView.getMaxLines();
+//                    contentMoreTextView.setVisibility(isIntroInformationMaxCountOver ? View.VISIBLE : View.GONE);
+//                    contentIntroTextView.removeOnLayoutChangeListener(this);
+//                }
+//            });
+//                boolean isIntroInformationMaxCountOver = contentIntroTextView.getLineCount() == contentIntroTextView.getMaxLines() ;
+//                contentMoreTextView.setVisibility( isIntroInformationMaxCountOver ? View.VISIBLE : View.GONE);
         }
     }
     class CourseViewHolder extends ViewHolder<TravelDetail>{
@@ -205,8 +220,10 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
         @Override
         public void bind(TravelInformation data) {
             if(data == null) return;
-            contentCourseTimeTextView.setText(contentCourseTimeTextView.getText() + data.getCourseTime());
-            contentDistanceTextView.setText(contentDistanceTextView.getText() + data.getDistance());
+            String courseTimeString = new StringBuilder().append("소요시간 ").append(data.getCourseTime()).toString();
+            String distanceString = new StringBuilder().append("총 거리 ").append(data.getDistance()).toString();
+            contentCourseTimeTextView.setText(courseTimeString);
+            contentDistanceTextView.setText(distanceString);
         }
     }
 
