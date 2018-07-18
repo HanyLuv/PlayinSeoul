@@ -186,8 +186,8 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
         public void bind(TravelDetail data) {
             contentCourseTitleTextView.setText(data.getSubTitle());
             contentCourseNumberTextView.setText(String.valueOf(data.getSubNumber() + 1));
-            contentCourseDescriptionTextView.setText( data.getSubDetailDescription());
-            ImageLoderUtils.lodeURI(contentCourseImageTextView,data.getSubTitle());
+            contentCourseDescriptionTextView.setText(data.getSubDetailDescription());
+            ImageLoderUtils.lodeURI(contentCourseImageTextView,data.getSubDetailImage());
 
 
         }
