@@ -52,6 +52,38 @@ public class DataHandler implements DataHandlerContract {
     public Call<Result<ArrayList<TravelDetail>>> getTravelDetailInformation(int contentId, int contentTypeId) {
         return service.getTravelDetailInfo(contentId,contentTypeId);
     }
+
+    public String getSmallCategoryToWord(String smallCategoryCode){
+        String word = "";
+        switch (smallCategoryCode) {
+            case "C01120001":
+                word = "가족코스";
+                break;
+
+            case "C01130001":
+                word = "나홀로코스";
+                break;
+
+            case "C01140001":
+                word = "힐링코스";
+                break;
+
+            case "C01150001":
+                word = "도보코스";
+
+                break;
+            case "C01160001":
+                word = "캠핑코스";
+
+                break;
+            case "C01170001":
+                word = "맛코스";
+
+                break;
+
+        }
+        return word;
+    }
 }
 
 

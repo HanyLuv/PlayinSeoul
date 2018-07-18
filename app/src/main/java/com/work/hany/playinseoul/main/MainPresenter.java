@@ -43,7 +43,11 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
                 if (!call.isCanceled()) {
-                    ArrayList areaTourInformationList = response.body().getResponse().getBody().getItems().getData();
+                    ArrayList<AreaTour> areaTourInformationList = response.body().getResponse().getBody().getItems().getData();
+                    for(AreaTour tour: areaTourInformationList){
+                        tour.setSmallCategory(dataHandler.getSmallCategoryToWord(tour.getSmallCategory()));
+                    }
+
                     mainView.initTourListUi(areaTourInformationList);
                 }
             }

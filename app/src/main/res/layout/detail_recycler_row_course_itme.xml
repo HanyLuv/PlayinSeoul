@@ -51,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tour_course_image_view"
-        android:layout_marginBottom="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="15dp"
@@ -64,10 +63,27 @@
         app:layout_constraintRight_toRightOf="parent" />
 
 
+    <TextView
+        android:id="@+id/tour_course_more_detail_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tour_course_description_text_view"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="2dp"
+        android:maxLines="5"
+        android:gravity="right"
+        android:text="자세히 보기"
+        android:textColor="#A93226"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@id/tour_course_description_text_view"
+        android:layout_below="@id/tour_course_more_detail_text_view"
         android:background="#EAEDED" />
 
 </RelativeLayout>
