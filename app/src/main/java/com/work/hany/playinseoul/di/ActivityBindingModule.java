@@ -14,13 +14,8 @@ public abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = MainModule.class)
     abstract MainActivity mainActivity();
 
-
-    //TODO 이부분 없으니 에러남
-    /**
-     *      Caused by: java.lang.IllegalArgumentException: No injector factory bound for Class<com.work.hany.playinseoul.tourdetail.DetailActivity>
-     * */
     @ActivityScoped
     @ContributesAndroidInjector(modules = DetailModule.class)
-    abstract DetailActivity tourDetailActivity();
+    abstract DetailActivity detailActivity();
 
 }

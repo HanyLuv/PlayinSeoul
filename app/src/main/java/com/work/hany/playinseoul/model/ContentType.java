@@ -8,8 +8,9 @@ public enum ContentType {
     TRAVEL_COURSE(25), //여행코스
     REPORTS(28), //레포츠
     STAY(32),//숙박
-    SHOPPINGs(38),
-    FOOD(39); //음식점
+    SHOPPING(38),
+    FOOD(39), //음식점
+    EMPTY(40); //음식점
 
     private int code;
     ContentType(int code){

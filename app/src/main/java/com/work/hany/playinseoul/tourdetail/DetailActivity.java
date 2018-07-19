@@ -23,12 +23,6 @@ public class DetailActivity extends DaggerAppCompatActivity {
     public static final String EXTRA_TOUR_ID = "TOUR_ID";
 
     @Inject
-    TourDetailFragment tourFragment; //TODO 이게 무슨차이일까?
-
-    @Inject
-    TravelCourseDetailFragment travelFragment; //TODO 이게 무슨차이일까?
-
-    @Inject
     AreaTour areaTour;
 
     @Override
@@ -36,18 +30,32 @@ public class DetailActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour_detail);
 
-        int contentTypeId = areaTour.getContentTypeId();
-        if (contentTypeId == ContentType.TOUR.getCode()){
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), tourFragment, R.id.fragmentLayout);
-        } else if (contentTypeId == ContentType.TRAVEL_COURSE.getCode()){
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), travelFragment, R.id.fragmentLayout);
+        ContentType currentTourContentType = ContentType.EMPTY;
+
+        for (ContentType type : ContentType.values()) {
+             if (type.getCode() == areaTour.getContentTypeId()) {
+                 currentTourContentType = type;
+                 break;
+             }
         }
-        //TODO 아래 구간 생각해보자
-//        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentLayout);
-//        if (fragment == null) {
-//            tourDetailFragment = injectedFragment;
-//            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), tourDetailFragment, R.id.fragmentLayout);
-//        }
+
+        Fragment fragment = null;
+
+        switch (currentTourContentType) {
+            case TOUR:
+                fragment = new TourDetailFragment();
+                break;
+
+            case TRAVEL_COURSE:
+                fragment = new TravelCourseDetailFragment();
+                break;
+
+        }
+
+        if (fragment != null) {
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.fragmentLayout);
+        }
+
 
 
     }
