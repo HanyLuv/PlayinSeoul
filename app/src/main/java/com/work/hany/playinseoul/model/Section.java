@@ -1,7 +1,5 @@
 package com.work.hany.playinseoul.model;
 
-import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
-
 public class Section<T> {
     private ItemType type;
     private T data = null;

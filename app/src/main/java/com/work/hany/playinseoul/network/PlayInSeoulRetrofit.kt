@@ -58,19 +58,6 @@ class PlayInSeoulRetrofit private constructor(){
         private const val PARAM_MOBILE_OS = "MobileOS"
         private const val PARAM_RESPONSE_TYPE = "_type"
 
-
-        private const val CONTENT_TYPE_TOUR = 12 //관광지
-        private const val CONTENT_TYPE_CULTUR = 14 //문화시설
-        private const val CONTENT_TYPE_PESTIVAL = 15 //행사/공연/축제
-        private const val CONTENT_TYPE_TRAVEL_COURSE = 25 //여행코스
-        private const val CONTENT_TYPE_REPORTS = 28 //레포츠
-        private const val CONTENT_TYPE_STAY = 32//숙박
-        private const val CONTENT_TYPE_SHOPPING = 38//쇼핑
-        private const val CONTENT_TYPE_FOOD = 39//음식점
-
-
-
-
         val instance: Retrofit by lazy {
             Holder.INSTANCE
         }

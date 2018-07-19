@@ -5,12 +5,11 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회
-    @GET("areaBasedList?contentTypeId=25&numOfRows=100")
+    @GET("areaBasedList?contentTypeId=12&numOfRows=100")
     fun getAreaBasedList(): Call<Result<ArrayList<AreaTour>>>
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14
@@ -104,9 +103,10 @@ data class AreaTour (
         @SerializedName("addr1") var fullAddress: String,// 서울시 종로구 평창30길 28
         @SerializedName("addr2") var areaAddress: String, //문화일경우 (평창동)
         @SerializedName("areacode") var areaCode: String,
-        @SerializedName("cat1") var largeCategory: String,
-        @SerializedName("cat2") var mediumCategory: String,
-        @SerializedName("cat3") var smallCategory: String,
+        @SerializedName("cat1") var largeCategoryCode: String,
+        @SerializedName("cat2") var mediumCategoryCode: String,
+        @SerializedName("cat3") var smallCategoryCode: String,
+        var smallCategory: String,
         @SerializedName("contentid") var contentId: Int,
         @SerializedName("contenttypeid") var contentTypeId: Int, //관광타입
         @SerializedName("createdtime") var createdTime: Long,
@@ -125,6 +125,7 @@ data class AreaTour (
 
 ) : Parcelable {
     constructor(source: Parcel) : this(
+            source.readString(),
             source.readString(),
             source.readString(),
             source.readString(),
@@ -154,8 +155,9 @@ data class AreaTour (
         writeString(if (fullAddress == null) "" else fullAddress)
         writeString(if (areaAddress == null) "" else areaAddress)
         writeString(if (areaCode == null) "" else areaCode)
-        writeString(if (largeCategory == null) "" else largeCategory)
-        writeString(if (mediumCategory == null) "" else mediumCategory)
+        writeString(if (largeCategoryCode == null) "" else largeCategoryCode)
+        writeString(if (mediumCategoryCode == null) "" else mediumCategoryCode)
+        writeString(if (smallCategoryCode == null) "" else smallCategoryCode)
         writeString(if (smallCategory == null) "" else smallCategory)
         writeInt(contentId)
         writeInt(contentTypeId)

@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".tourdetail.TourDetailActivity" />
+        <activity android:name=".tourdetail.DetailActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

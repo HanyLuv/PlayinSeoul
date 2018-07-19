@@ -1,4 +1,4 @@
-package com.work.hany.playinseoul.tourdetail.adapter;
+package com.work.hany.playinseoul.tourdetail.travel.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -18,18 +18,14 @@ import com.work.hany.playinseoul.util.ImageLoderUtils;
 
 import java.util.ArrayList;
 
-import static com.work.hany.playinseoul.model.Section.*;
+import static com.work.hany.playinseoul.model.Section.ItemType;
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
-import static dagger.internal.Preconditions.checkNotNull;
 
-public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDetailRecyclerViewAdapter.ViewHolder> {
-
-
-    //https://stackoverflow.com/questions/26245139/how-to-create-recyclerview-with-multiple-view-type
+public class TravelDetailRecyclerViewAdapter extends RecyclerView.Adapter<TravelDetailRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<Section> sections;
 
-    public TourDetailRecyclerViewAdapter(ArrayList<Section> sections) {
+    public TravelDetailRecyclerViewAdapter(ArrayList<Section> sections) {
         this.sections = sections;
 
     }
@@ -60,8 +56,8 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
 
     @NonNull
     @Override
-    public TourDetailRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TourDetailRecyclerViewAdapter.ViewHolder viewHolder = null;
+    public TravelDetailRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        TravelDetailRecyclerViewAdapter.ViewHolder viewHolder = null;
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
         ItemType currentItemType = getCurrentItemType(viewType);
 
@@ -85,10 +81,12 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
                 View mapRowView= inflater.inflate(R.layout.detail_recycler_row_map_itme,null,false);
                 viewHolder = new MapViewHolder(mapRowView);
                 break;
+
             case INTRO:
                 View introRowView= inflater.inflate(R.layout.detail_recycler_row_intro_itme,null,false);
                 viewHolder = new IntroViewHolder(introRowView);
                 break;
+
             case COURSE:
                 View courseView= inflater.inflate(R.layout.detail_recycler_row_course_itme,null,false);
                 viewHolder = new CourseViewHolder(courseView);
@@ -165,7 +163,7 @@ public class TourDetailRecyclerViewAdapter extends RecyclerView.Adapter<TourDeta
 
         @Override
         public void bind(AreaTour data) {
-            if(data.getSmallCategory() != null) {
+            if(data.getSmallCategoryCode() != null) {
                 contentAddrTextView.setText(data.getSmallCategory());
             }
 

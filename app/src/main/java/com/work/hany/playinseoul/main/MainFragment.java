@@ -14,7 +14,7 @@ import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter;
 import com.work.hany.playinseoul.network.AreaTour;
-import com.work.hany.playinseoul.tourdetail.TourDetailActivity;
+import com.work.hany.playinseoul.tourdetail.DetailActivity;
 
 import java.util.ArrayList;
 
@@ -75,8 +75,8 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
 
     @Override
     public void showTourDetailsUi(AreaTour areaTour) { //TODO id 만 넘길지, 아님 이미지등등 넘길지 .고민@_@
-        Intent intent = new Intent(getContext(), TourDetailActivity.class);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, areaTour);
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra(DetailActivity.EXTRA_TOUR_ID, areaTour);
         startActivity(intent);
     }
 

@@ -1,4 +1,4 @@
-package com.work.hany.playinseoul.tourdetail;
+package com.work.hany.playinseoul.tourdetail.travel;
 
 
 import android.support.annotation.Nullable;
@@ -19,18 +19,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TourDetailPresenter implements TourDetailContract.Presenter {
+public class TravelCourseDetailPresenter implements TravelCourseDetailContract.Presenter {
 
     //TODO 이미지 상세 클릭, 지도 클릭 이벤트
 
     @Nullable
-    TourDetailContract.View detailView;
+    TravelCourseDetailContract.View detailView;
 
     @Nullable
     DataHandler dataHandler;
 
     @Inject
-    TourDetailPresenter(DataHandler dataHandler){
+    TravelCourseDetailPresenter(DataHandler dataHandler){
         this.dataHandler = dataHandler;
     }
 
@@ -104,7 +104,7 @@ public class TourDetailPresenter implements TourDetailContract.Presenter {
     }
 
     @Override
-    public void takeView(TourDetailContract.View view) {
+    public void takeView(TravelCourseDetailContract.View view) {
         this.detailView = view;
 
     }

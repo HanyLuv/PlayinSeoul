@@ -7,6 +7,7 @@ import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.model.DataHandler;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.Result;
+import com.work.hany.playinseoul.util.CategoryConverterUtils;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,9 @@ public class MainPresenter implements MainContract.Presenter {
                 if (!call.isCanceled()) {
                     ArrayList<AreaTour> areaTourInformationList = response.body().getResponse().getBody().getItems().getData();
                     for(AreaTour tour: areaTourInformationList){
-                        tour.setSmallCategory(dataHandler.getSmallCategoryToWord(tour.getSmallCategory()));
+                        //TODO 한글로 된 카테고리 명을 데이터에 넣어두자... 내생각인데 카테고리 코드는 쓰일일이 충분히 있음 ㅇㅅㅇ
+                        //getSmallCategoryCode 는 ... 관광지 타입에 없다 -_-;; 세상에
+                        tour.setSmallCategory(CategoryConverterUtils.convertSmallCategory(tour.getSmallCategoryCode()));
                     }
 
                     mainView.initTourListUi(areaTourInformationList);
