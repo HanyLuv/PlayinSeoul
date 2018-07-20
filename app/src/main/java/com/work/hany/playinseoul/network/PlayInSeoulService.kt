@@ -3,13 +3,14 @@ package com.work.hany.playinseoul.network
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.work.hany.playinseoul.model.dao.TourDetail
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface PlayInSeoulService {
-    //지역기반 관광정보 조회
-    @GET("areaBasedList?contentTypeId=12&numOfRows=100")
+    //지역기반 관광정보 조회 contentTypeId= 넣어서 다양한값 부를수잇다
+    @GET("areaBasedList?&numOfRows=100")
     fun getAreaBasedList(): Call<Result<ArrayList<AreaTour>>>
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14
@@ -23,12 +24,9 @@ interface PlayInSeoulService {
     각 타입마다 응답 항목이 다르게 제공됩니다.
      */
     @GET("detailIntro?introYN=Y")
-    fun getTravelTourInformation(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<TravelInformation>>
+    fun getTravelInformation(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<TravelIntro>>
 
-    /**
-    @description 여행코스의 소개정보 조회
-     여행정보 TravelDetail
-     */
+    /** @description 여행코스의 소개정보 조회여행정보 TravelDetail*/
     @GET("detailInfo?detailYN=Y")
     fun getTravelDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<TravelDetail>>>
 
@@ -36,6 +34,14 @@ interface PlayInSeoulService {
     @GET("detailImage")
     fun getTourPhotos(@Query("contentId") contentID: Int, @Query("contenttypeId") contentTypeID: Int): Call<Result<ArrayList<TourPhoto>>>
 
+
+    //TODO 각 콘텐츠타입별 요청 서비스를 나뉘자 ~~
+
+    /**
+    @description 관광지 소개정보 조회 TourDetail
+     */
+    @GET("detailInfo?detailYN=Y")
+    fun getDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<TourDetail>>>
 
 }
 
@@ -76,6 +82,7 @@ private const val CONTENT_TYPE_SHOPPING = 38//쇼핑
 private const val CONTENT_TYPE_FOOD = 39//음식점
  * */
 
+
 //여행 코스 디테일
 data class TravelDetail (
         @SerializedName("contentid") var contentId: Int,
@@ -89,7 +96,7 @@ data class TravelDetail (
         )
 
 
-data class TravelInformation(
+data class TravelIntro(
         @SerializedName("contentid") var contentId: Int,
         @SerializedName("contenttypeid") var contentTypeId: Int,
         @SerializedName("distance") var distance: String,
@@ -106,7 +113,6 @@ data class AreaTour (
         @SerializedName("cat1") var largeCategoryCode: String,
         @SerializedName("cat2") var mediumCategoryCode: String,
         @SerializedName("cat3") var smallCategoryCode: String,
-        var smallCategory: String,
         @SerializedName("contentid") var contentId: Int,
         @SerializedName("contenttypeid") var contentTypeId: Int, //관광타입
         @SerializedName("createdtime") var createdTime: Long,
@@ -125,7 +131,6 @@ data class AreaTour (
 
 ) : Parcelable {
     constructor(source: Parcel) : this(
-            source.readString(),
             source.readString(),
             source.readString(),
             source.readString(),
@@ -158,7 +163,6 @@ data class AreaTour (
         writeString(if (largeCategoryCode == null) "" else largeCategoryCode)
         writeString(if (mediumCategoryCode == null) "" else mediumCategoryCode)
         writeString(if (smallCategoryCode == null) "" else smallCategoryCode)
-        writeString(if (smallCategory == null) "" else smallCategory)
         writeInt(contentId)
         writeInt(contentTypeId)
         writeLong(createdTime)

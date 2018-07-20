@@ -2,19 +2,13 @@ package com.work.hany.playinseoul.tourdetail.food;
 
 import com.work.hany.playinseoul.BasePresenter;
 import com.work.hany.playinseoul.BaseView;
-import com.work.hany.playinseoul.network.AreaTour;
-import com.work.hany.playinseoul.network.TourPhoto;
-import com.work.hany.playinseoul.network.TravelDetail;
-import com.work.hany.playinseoul.network.TravelInformation;
-
-import java.util.ArrayList;
 
 public interface FoodDetailContract {
 
     interface View extends BaseView<Presenter> {
 //        void initTourPhotosUi(ArrayList<TourPhoto> tourPhotos);
 //        void initTourOverviewUi(AreaTour areaTour);
-//        void initTourInformation(TravelInformation information);
+//        void initTourIntroUi(TravelIntro information);
 //        void initDetailInformation(ArrayList<TravelDetail> travelDetails);
     }
 
@@ -24,6 +18,6 @@ public interface FoodDetailContract {
         @Override
         void takeView(FoodDetailContract.View view);
 
-//        void loadTourDetail(int contentId, int contentTypeId);
+//        void loadTravelCourseDetail(int contentId, int contentTypeId);
     }
 }

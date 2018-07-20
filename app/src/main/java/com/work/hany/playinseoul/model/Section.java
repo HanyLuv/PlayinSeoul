@@ -2,7 +2,7 @@ package com.work.hany.playinseoul.model;
 
 public class Section<T> {
     private ItemType type;
-    private T data = null;
+    private T data;
 
     public Section(ItemType type, T data) {
         this.data = data;
@@ -23,11 +23,11 @@ public class Section<T> {
 
     public enum ItemType {
         IMAGE(0), //이미지
-        INTRO(1), //소개
+        OVERHEAD(1), //소개
         INFORMATION(2), //운영정보
         PHOTOS(3), // 사진들~
         MAP(4), //지도
-        COURSE(5), // 코스 정보
+        DETAIL(5), // 여행 : 코스정보 / 관광지 / 입장정보등등
         NOTHING(-1); //아무것도 아니다..
 
         private int code;

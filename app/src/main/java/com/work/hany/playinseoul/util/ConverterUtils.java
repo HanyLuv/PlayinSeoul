@@ -7,7 +7,70 @@ import android.support.v4.app.FragmentTransaction;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class CategoryConverterUtils {
+public class ConverterUtils {
+    /** 컨텐츠타입 */
+    public static String convertContentType(int code) {
+        String type;
+        switch (code) {
+            case 12: type = "관광지"; break;
+            case 14: type = "문화시설"; break;
+            case 15: type = "축제/공연/행사"; break;
+            case 25: type = "여행코스"; break;
+            case 28: type = "레포츠"; break;
+            case 32: type = "숙박"; break;
+            case 38: type = "쇼핑"; break;
+            case 39: type = "음식"; break;
+            default: type = String.valueOf(code); break;
+        } return type;
+    }
+
+
+
+    /** 대분류 */
+    public static String convertLargeCategory(String code) {
+        if(code == null) return "";
+        switch (code) {
+            case "A01": code = "자연"; break;
+            case "A02": code = "인문(문화/예술/역사)"; break;
+            case "C01": code = "추천코스"; break;
+            case "A03": code = "레포츠"; break;
+            case "B02": code = "숙박시설"; break;
+            case "A04": code = "쇼핑"; break;
+            case "A05": code = "음식점"; break;
+        } return code;
+    }
+
+
+    /** 중분류 */
+    public static String convertMediumCategory(String code) {
+        if(code == null) return "";
+        switch (code) {
+            case "A0101": code = "자연관광지"; break;
+            case "A0102": code = "관광자원"; break;
+            case "A0201": code = "역사관광지"; break;
+            case "A0202": code = "휴양관광지"; break;
+            case "A0203": code = "체험관광지"; break;
+            case "A0204": code = "산업관광지"; break;
+            case "A0205": code = "건축/조형물"; break;
+            case "A0206": code = "문화시설"; break;
+            case "A0207": code = "축제"; break;
+            case "A0208": code = "공연/행사"; break;
+            case "C0112": code = "가족코스"; break;
+            case "C0113": code = "나홀로코스"; break;
+            case "C0114": code = "힐링코스"; break;
+            case "C0115": code = "도보코스"; break;
+            case "C0116": code = "캠핑코스"; break;
+            case "C0117": code = "맛코스"; break;
+            case "A0301": code = "레포츠소개"; break;
+            case "A0302": code = "육상레포츠"; break;
+            case "A0303": code = "수상레포츠"; break;
+            case "A0304": code = "항공레포츠"; break;
+            case "A0305": code = "복합레포츠"; break;
+            case "B0201": code = "숙박시설"; break;
+            case "A0401": code = "쇼핑"; break;
+            case "A0502": code = "음식점"; break;
+        } return code;
+    }
 
     /** 소분류 */
     public static String convertSmallCategory(String code) {
@@ -194,19 +257,10 @@ public class CategoryConverterUtils {
             case "A05020800": code = "채식전문점"; break;
             case "A05020900": code = "바/카페"; break;
             case "A05021000": code = "클럽"; break;//음식 끝
-        }
-        return code;
+
+        } return code;
     }
 
 
-
-    public static String convertMediumCategory(String code) {
-        String word = code ;
-        switch (word) {
-
-        }
-
-        return word;
-    }
 
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.main.MainFragment;
 import com.work.hany.playinseoul.network.AreaTour;
+import com.work.hany.playinseoul.util.ConverterUtils;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
 
 import java.util.ArrayList;
@@ -52,21 +53,25 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView tourImageView;
         private TextView tourTextView;
+        private TextView tourContentTypeTextView;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             tourImageView = itemView.findViewById(R.id.tourimage);
             tourTextView = itemView.findViewById(R.id.tourtitle);
+            tourContentTypeTextView = itemView.findViewById(R.id.tourcontenttype);
 
         }
 
-        void bindItem(final AreaTour tourInformation) {
-            ImageLoderUtils.lodeURI(tourImageView, tourInformation.getLargeImage());
-            tourTextView.setText(tourInformation.getContentTitle());
+        void bindItem(final AreaTour areaTour) {
+            ImageLoderUtils.lodeURI(tourImageView, areaTour.getLargeImage());
+            tourTextView.setText(areaTour.getContentTitle());
+            tourContentTypeTextView.setText(ConverterUtils.convertContentType(areaTour.getContentTypeId()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainItemListener.onTourClick(tourInformation);
+                    mainItemListener.onTourClick(areaTour);
 
                 }
             });

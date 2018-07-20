@@ -1,12 +1,13 @@
 package com.work.hany.playinseoul.model;
 
+import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.PlayInSeoulRetrofit;
 import com.work.hany.playinseoul.network.PlayInSeoulService;
 import com.work.hany.playinseoul.network.Result;
 import com.work.hany.playinseoul.network.TourPhoto;
 import com.work.hany.playinseoul.network.TravelDetail;
-import com.work.hany.playinseoul.network.TravelInformation;
+import com.work.hany.playinseoul.network.TravelIntro;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,8 @@ public class DataHandler implements DataHandlerContract {
         return service.getTourPhotos(contentId,contentTypeId);
     }
 
-    /** 관광지에 대한 설명 */
+    /** 관광지에 대한 설명
+     * TODO 일단.. 다른 여행들과 동일한 요청같다. 이것도 모아보장 ㅇㅅㅇ */
     @Override
     public Call<Result<AreaTour>> getTourOverView(int contentId, int contentTypeId) {
         return service.getTourOverView(contentId,contentTypeId);
@@ -43,16 +45,22 @@ public class DataHandler implements DataHandlerContract {
 
     /** 여행 코스 정보 */
     @Override
-    public Call<Result<TravelInformation>> getTravelTourInformation(int contentId, int contentTypeId) {
-        return service.getTravelTourInformation(contentId,contentTypeId);
+    public Call<Result<TravelIntro>> getTravelTour(int contentId, int contentTypeId) {
+        return service.getTravelInformation(contentId,contentTypeId);
     }
 
     /** 반복 되는 정보 */
     @Override
-    public Call<Result<ArrayList<TravelDetail>>> getTravelDetailInformation(int contentId, int contentTypeId) {
+    public Call<Result<ArrayList<TravelDetail>>> getTravelDetail(int contentId, int contentTypeId) {
         return service.getTravelDetailInfo(contentId,contentTypeId);
     }
 
+    //각 반한 유형에 대해 다른 메소드를 만들어야함.. 런타임에 완전히 알려져야하기떄문 ㅠ
+    //관련 주소. https://github.com/square/retrofit/issues/2012
+
+    public Call<Result<ArrayList<TourDetail>>> getTourDetail(int contentId, int contentTypeId) {
+        return service.getDetailInfo(contentId,contentTypeId);
+    }
 }
 
 
@@ -60,8 +68,8 @@ interface DataHandlerContract {
     Call<Result<ArrayList<AreaTour>>> getTourList();
     Call<Result<AreaTour>> getTourOverView(int contentId, int contentTypeId);
     Call<Result<ArrayList<TourPhoto>>> getTourPhotos(int contentId, int contentTypeId);
-    Call<Result<TravelInformation>> getTravelTourInformation(int contentId, int contentTypeId);
-    Call<Result<ArrayList<TravelDetail>>> getTravelDetailInformation(int contentId, int contentTypeId);
+    Call<Result<TravelIntro>> getTravelTour(int contentId, int contentTypeId);
+    Call<Result<ArrayList<TravelDetail>>> getTravelDetail(int contentId, int contentTypeId);
 
 
 }
