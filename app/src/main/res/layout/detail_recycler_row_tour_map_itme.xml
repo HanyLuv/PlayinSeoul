@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:map="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/tour_info_title_text_view"
@@ -29,15 +30,14 @@
         android:textColor="#2E2E2E"
         android:textSize="18dp" />
 
-    <ImageView
+    <com.google.android.gms.maps.MapView
         android:id="@+id/tour_map_view"
+        android:layout_below="@+id/tour_addr_text_view"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_below="@id/tour_addr_text_view"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorAccent"
-        android:textColor="#2E2E2E"
-        android:textSize="18dp" />
+        map:cameraTilt="30"
+        map:cameraZoom="13"
+       />
 
     <TextView
         android:id="@+id/tour_map_more_text_view"

@@ -6,6 +6,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
@@ -105,6 +113,41 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
             contentAddrTextView.setText(ConverterUtils.convertMediumCategory(data.getMediumCategoryCode()));
             contentTitleTextView.setText(data.getContentTitle());
             contentIntroTextView.setText(data.getOverview());
+        }
+    }
+
+    //아래 메소드 알아보기
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
+    protected class MapViewHolder extends ViewHolder<AreaTour> implements OnMapReadyCallback {
+        private MapView mapView;
+
+        public MapViewHolder(View itemView) {
+            super(itemView);
+            mapView = itemView.findViewById(R.id.tour_map_view);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+            mapView.onCreate(null);
+        }
+
+        @Override
+        public void bind(AreaTour areaTour) {
+        }
+//git https://gist.github.com/alunsford3/5d7c1bb5a67b90b4e1f3
+        //https://stackoverflow.com/questions/41915317/access-google-map-from-onbindviewholder-android
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            googleMap.getUiSettings().setAllGesturesEnabled(false);
+            AreaTour areaTour = (AreaTour)sections.get(getAdapterPosition()).getData();
+            LatLng sydney = new LatLng(areaTour.getMapx(), areaTour.getMapy());
+            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
         }
     }
 

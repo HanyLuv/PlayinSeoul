@@ -20,6 +20,11 @@ import retrofit2.Response;
 @ActivityScoped
 public class MainPresenter implements MainContract.Presenter {
 
+    @Override
+    public void loadContent(int contentId, int contentTypeId) {
+
+    }
+
     @Nullable
     MainContract.View mainView;
     @Nullable

@@ -29,6 +29,11 @@ public class FoodDetailPresenter implements FoodDetailContract.Presenter {
     }
 
     @Override
+    public void loadContent(int contentId, int contentTypeId) {
+
+    }
+
+    @Override
     public void dropView() {
         //TODO dropView 처리해주기이이이
     }

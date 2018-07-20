@@ -28,9 +28,8 @@ public class TourDetailPresenter implements TourDetailContract.Presenter {
         this.dataHandler = dataHandler;
     }
 
-
     @Override
-    public void loadTourDetail(int contentId, int contentTypeId) {
+    public void loadContent(int contentId, int contentTypeId) {
         dataHandler.getTourOverView(contentId,contentTypeId).enqueue(new Callback<Result<AreaTour>>() {
             @Override
             public void onResponse(Call<Result<AreaTour>> call, Response<Result<AreaTour>> response) {

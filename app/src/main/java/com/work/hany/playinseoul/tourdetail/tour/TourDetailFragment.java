@@ -14,7 +14,6 @@ import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
 import com.work.hany.playinseoul.network.AreaTour;
-import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
         Section imageSection = new Section(Section.ItemType.IMAGE, areaTour.getLargeImage());
         Section overheadSection = new Section(Section.ItemType.OVERHEAD, areaTour);
         Section informationSection = new Section(Section.ItemType.INFORMATION, null);
-        Section mapSection = new Section(Section.ItemType.MAP, null);
+        Section mapSection = new Section(Section.ItemType.MAP, areaTour);
         Section photosSection = new Section(Section.ItemType.PHOTOS, null);
 
         sections.add(imageSection);
@@ -71,7 +70,7 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
         RecyclerView travelDetailRecyclerView = rootView.findViewById(R.id.tour_detail_recycler_view);
         travelDetailRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         travelDetailRecyclerView.setAdapter(tourDetailRecyclerViewAdapter);
-        presenter.loadTourDetail(areaTour.getContentId(),areaTour.getContentTypeId());
+        presenter.loadContent(areaTour.getContentId(),areaTour.getContentTypeId());
 
         return rootView;
     }

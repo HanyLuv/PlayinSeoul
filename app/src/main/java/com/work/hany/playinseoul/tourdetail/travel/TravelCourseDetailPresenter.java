@@ -19,7 +19,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TravelCourseDetailPresenter implements TravelCourseDetailContract.Presenter {
+    @Override
+    public void loadContent(int contentId, int contentTypeId) {
 
+    }
     //TODO 이미지 상세 클릭, 지도 클릭 이벤트
 
     @Nullable
