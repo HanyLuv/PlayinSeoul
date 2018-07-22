@@ -26,17 +26,15 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="주소 "
         android:textColor="#2E2E2E"
-        android:textSize="18dp" />
+        android:textSize="16dp" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/tour_map_view"
         android:layout_below="@+id/tour_addr_text_view"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        map:cameraTilt="30"
-        map:cameraZoom="13"
+        map:cameraZoom="15"
        />
 
     <TextView

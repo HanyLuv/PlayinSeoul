@@ -6,6 +6,7 @@ import com.work.hany.playinseoul.model.DataHandler;
 import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.Result;
+import com.work.hany.playinseoul.network.TourPhoto;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,20 @@ public class TourDetailPresenter implements TourDetailContract.Presenter {
 
             @Override
             public void onFailure(Call<Result<ArrayList<TourDetail>>> call, Throwable t) {
+
+            }
+        });
+
+        dataHandler.getPhotos(contentId,contentTypeId).enqueue(new Callback<Result<ArrayList<TourPhoto>>>() {
+            @Override
+            public void onResponse(Call<Result<ArrayList<TourPhoto>>> call, Response<Result<ArrayList<TourPhoto>>> response) {
+                if (!call.isCanceled()) {
+                    tourView.initTourPhotosUi(response.body().getResponse().getBody().getItems().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<ArrayList<TourPhoto>>> call, Throwable t) {
 
             }
         });

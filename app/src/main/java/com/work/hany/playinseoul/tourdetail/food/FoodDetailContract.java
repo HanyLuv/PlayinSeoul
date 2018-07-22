@@ -6,7 +6,7 @@ import com.work.hany.playinseoul.BaseView;
 public interface FoodDetailContract {
 
     interface View extends BaseView<Presenter> {
-//        void initTourPhotosUi(ArrayList<TourPhoto> tourPhotos);
+//        void initPhotosUi(ArrayList<TourPhoto> tourPhotos);
 //        void initTourOverviewUi(AreaTour areaTour);
 //        void initTourIntroUi(TravelIntro information);
 //        void initDetailInformation(ArrayList<TravelDetail> travelDetails);

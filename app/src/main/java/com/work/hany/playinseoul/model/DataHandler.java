@@ -32,8 +32,8 @@ public class DataHandler implements DataHandlerContract {
     }
 
     @Override
-    public Call<Result<ArrayList<TourPhoto>>> getTourPhotos(int contentId, int contentTypeId) {
-        return service.getTourPhotos(contentId,contentTypeId);
+    public Call<Result<ArrayList<TourPhoto>>> getPhotos(int contentId, int contentTypeId) {
+        return service.getPhotos(contentId,contentTypeId);
     }
 
     /** 관광지에 대한 설명
@@ -67,7 +67,7 @@ public class DataHandler implements DataHandlerContract {
 interface DataHandlerContract {
     Call<Result<ArrayList<AreaTour>>> getTourList();
     Call<Result<AreaTour>> getTourOverView(int contentId, int contentTypeId);
-    Call<Result<ArrayList<TourPhoto>>> getTourPhotos(int contentId, int contentTypeId);
+    Call<Result<ArrayList<TourPhoto>>> getPhotos(int contentId, int contentTypeId);
     Call<Result<TravelIntro>> getTravelTour(int contentId, int contentTypeId);
     Call<Result<ArrayList<TravelDetail>>> getTravelDetail(int contentId, int contentTypeId);
 

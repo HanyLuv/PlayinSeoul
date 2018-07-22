@@ -10,7 +10,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -124,17 +123,23 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 
     protected class MapViewHolder extends ViewHolder<AreaTour> implements OnMapReadyCallback {
         private MapView mapView;
+        private TextView mapAddrTextView;
 
         public MapViewHolder(View itemView) {
             super(itemView);
             mapView = itemView.findViewById(R.id.tour_map_view);
-            mapView.onResume();
-            mapView.getMapAsync(this);
-            mapView.onCreate(null);
+            mapAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
+
         }
 
         @Override
         public void bind(AreaTour areaTour) {
+            mapAddrTextView.setText(areaTour.getFullAddress());
+
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+
         }
 //git https://gist.github.com/alunsford3/5d7c1bb5a67b90b4e1f3
         //https://stackoverflow.com/questions/41915317/access-google-map-from-onbindviewholder-android
@@ -142,10 +147,16 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
         @Override
         public void onMapReady(GoogleMap googleMap) {
             googleMap.getUiSettings().setAllGesturesEnabled(false);
+            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+//            options.maxZoomPreference()
+            googleMap.setMapType(options.getMapType());
+
             AreaTour areaTour = (AreaTour)sections.get(getAdapterPosition()).getData();
-            LatLng sydney = new LatLng(areaTour.getMapx(), areaTour.getMapy());
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+            LatLng latLng = new LatLng(areaTour.getMapy(), areaTour.getMapx());
+            googleMap.addMarker(new MarkerOptions().position(latLng).title("여기"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
 
 
         }

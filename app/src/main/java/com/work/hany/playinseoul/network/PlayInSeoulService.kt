@@ -31,8 +31,9 @@ interface PlayInSeoulService {
     fun getTravelDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<TravelDetail>>>
 
     //    11		detailImage	이미지정보 조회 (상세정보4)
-    @GET("detailImage")
-    fun getTourPhotos(@Query("contentId") contentID: Int, @Query("contenttypeId") contentTypeID: Int): Call<Result<ArrayList<TourPhoto>>>
+//    @GET("detailImage?imageYN={imageYN}") //imageYN = 푸드는 N
+    @GET("detailImage") //imageYN = 푸드는 N
+    fun getPhotos(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<TourPhoto>>>
 
 
     //TODO 각 콘텐츠타입별 요청 서비스를 나뉘자 ~~
@@ -69,7 +70,7 @@ data class Items<T>(@SerializedName("item") var data: T)
 data class TourPhoto(@SerializedName("contentid") var contentId: Int,
                      @SerializedName("originimgurl") var originImageURI: String,
                      @SerializedName("serialnum") var serialNumber: String,
-                     @SerializedName("smallimageurl") var smallImageURI: Int)
+                     @SerializedName("smallimageurl") var smallImageURI: String)
 /**
  *
 private const val CONTENT_TYPE_TOUR = 12 //관광지

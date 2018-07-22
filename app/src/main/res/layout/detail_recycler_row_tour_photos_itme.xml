@@ -17,15 +17,14 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/tour_map_view"
+    <LinearLayout
+        android:id="@+id/tour_photo_layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tour_info_title_text_view"
-        android:layout_marginTop="5dp"
-        android:background="#AABBDD"
-        android:textColor="#2E2E2E"
         android:layout_marginBottom="45dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
         android:textSize="18dp" />
 
     <View
