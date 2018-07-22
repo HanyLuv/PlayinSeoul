@@ -9,6 +9,7 @@ import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.ContentType;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
+import com.work.hany.playinseoul.tourdetail.stay.StayDetailFragment;
 import com.work.hany.playinseoul.tourdetail.tour.TourDetailFragment;
 import com.work.hany.playinseoul.tourdetail.travel.TravelCourseDetailFragment;
 import com.work.hany.playinseoul.util.ActivityUtils;
@@ -42,12 +43,16 @@ public class DetailActivity extends DaggerAppCompatActivity {
         Fragment fragment = null;
 
         switch (currentTourContentType) {
-            case TOUR:
+            default:
                 fragment = new TourDetailFragment();
                 break;
 
             case TRAVEL_COURSE:
                 fragment = new TravelCourseDetailFragment();
+                break;
+
+            case STAY: //여행코스랑 숙박정보는 디테일인포 결과값이 달라서 일단 각기 다른 fragment로 뺏음
+                fragment = new StayDetailFragment();
                 break;
 
         }

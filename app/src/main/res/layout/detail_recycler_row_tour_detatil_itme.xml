@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/tour_info_title_text_view"
         android:layout_width="match_parent"
@@ -10,17 +11,17 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
-        android:visibility="gone"
         android:text="참고"
         android:textColor="#2E2E2E"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <TextView
-        android:layout_below="@+id/tour_info_title_text_view"
         android:id="@+id/tour_content_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tour_info_title_text_view"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -40,4 +41,14 @@
         android:textColor="#2E2E2E"
         android:textSize="13dp"
         android:textStyle="bold" />
+
+
+    //TODO 맨뒤로 오게해야하는데 참고가
+    <!--<View-->
+        <!--android:id="@+id/divider"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="30dp"-->
+        <!--android:background="#EAEDED" />-->
 </RelativeLayout>

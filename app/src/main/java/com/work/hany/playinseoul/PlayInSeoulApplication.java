@@ -10,7 +10,6 @@ public class PlayInSeoulApplication  extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        MapsInitializer.initialize(getApplicationContext());
     }
 
     @Override

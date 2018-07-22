@@ -3,9 +3,9 @@ package com.work.hany.playinseoul.tourdetail;
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.di.FragmentScoped;
 import com.work.hany.playinseoul.network.AreaTour;
-import com.work.hany.playinseoul.tourdetail.food.FoodDetailContract;
-import com.work.hany.playinseoul.tourdetail.food.FoodDetailFragment;
-import com.work.hany.playinseoul.tourdetail.food.FoodDetailPresenter;
+import com.work.hany.playinseoul.tourdetail.stay.StayDetailContract;
+import com.work.hany.playinseoul.tourdetail.stay.StayDetailFragment;
+import com.work.hany.playinseoul.tourdetail.stay.StayDetailPresenter;
 import com.work.hany.playinseoul.tourdetail.tour.TourDetailContract;
 import com.work.hany.playinseoul.tourdetail.tour.TourDetailFragment;
 import com.work.hany.playinseoul.tourdetail.tour.TourDetailPresenter;
@@ -33,11 +33,11 @@ public abstract class DetailModule {
 
     @FragmentScoped
     @ContributesAndroidInjector
-    abstract FoodDetailFragment foodDetailFragment();
+    abstract StayDetailFragment stayDetailFragment();
 
     @ActivityScoped
     @Binds
-    abstract FoodDetailContract.Presenter foodDetailPresenter(FoodDetailPresenter presenter);
+    abstract StayDetailContract.Presenter stayDetailPresenter(StayDetailPresenter presenter);
 
 
     @FragmentScoped

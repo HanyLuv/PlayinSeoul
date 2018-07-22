@@ -28,6 +28,7 @@ public class Section<T> {
         PHOTOS(3), // 사진들~
         MAP(4), //지도
         DETAIL(5), // 여행 : 코스정보 / 관광지 / 입장정보등등
+        STAY_DETAIL(6), // 숙박의 디테일은 다르기때문에ㅣ..
         NOTHING(-1); //아무것도 아니다..
 
         private int code;

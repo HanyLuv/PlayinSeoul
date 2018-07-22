@@ -3,6 +3,7 @@ package com.work.hany.playinseoul.network
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.work.hany.playinseoul.model.dao.StayDetail
 import com.work.hany.playinseoul.model.dao.TourDetail
 import retrofit2.Call
 import retrofit2.http.GET
@@ -43,6 +44,14 @@ interface PlayInSeoulService {
      */
     @GET("detailInfo?detailYN=Y")
     fun getDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<TourDetail>>>
+
+
+
+    /**
+    @description 숙박정보 소개 조회 StayDetail
+     */
+    @GET("detailInfo?detailYN=Y")
+    fun getStayDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<StayDetail>>>
 
 }
 

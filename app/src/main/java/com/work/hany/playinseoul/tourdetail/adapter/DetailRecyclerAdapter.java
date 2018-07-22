@@ -2,20 +2,24 @@ package com.work.hany.playinseoul.tourdetail.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
+import com.work.hany.playinseoul.network.TourPhoto;
 import com.work.hany.playinseoul.util.ConverterUtils;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
 
@@ -134,14 +138,14 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 
         @Override
         public void bind(AreaTour areaTour) {
+            MapsInitializer.initialize(itemView.getContext());
             mapAddrTextView.setText(areaTour.getFullAddress());
-
             mapView.onCreate(null);
             mapView.onResume();
             mapView.getMapAsync(this);
 
         }
-//git https://gist.github.com/alunsford3/5d7c1bb5a67b90b4e1f3
+        //https://gist.github.com/alunsford3/5d7c1bb5a67b90b4e1f3
         //https://stackoverflow.com/questions/41915317/access-google-map-from-onbindviewholder-android
 
         @Override
@@ -151,6 +155,7 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 //            options.maxZoomPreference()
             googleMap.setMapType(options.getMapType());
 
+            //TODO outofindex발생함. ㅠㅠㅠ 간헐적인듯
             AreaTour areaTour = (AreaTour)sections.get(getAdapterPosition()).getData();
 
             LatLng latLng = new LatLng(areaTour.getMapy(), areaTour.getMapx());
@@ -163,4 +168,58 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
     }
 
 
+    /** 둘러보기, 음식점메뉴에 사용됨*/
+    class PhotosViewHolder extends ViewHolder<ArrayList<TourPhoto>> {
+        private LinearLayout tourPhotosLayout;
+        private LayoutInflater inflater;
+        private final int MAX_SHOW_IMAGE_COUNT = 3;
+
+        public PhotosViewHolder(View itemView) {
+            super(itemView);
+            inflater = LayoutInflater.from(itemView.getContext());
+            tourPhotosLayout = itemView.findViewById(R.id.tour_photo_layout);
+        }
+
+        @Override
+        public void bind(ArrayList<TourPhoto> tourPhotos) {
+            tourPhotosLayout.removeAllViews();
+            for (int index = 0, endIndex = tourPhotos.size(); index <= MAX_SHOW_IMAGE_COUNT; ) {
+                View photoLayout = inflater.inflate(R.layout.detail_recycler_row_tour_photo_itme, null, false);
+                photoLayout.setTag(index);
+                ImageView leftImageView = photoLayout.findViewById(R.id.tour_left_photo_image_view);
+                ImageView rightImageView = photoLayout.findViewById(R.id.tour_right_photo_image_view);
+
+                int nextIndex = index + 1;
+                String leftImageUrl = tourPhotos.get(index).getOriginImageURI();
+                String rightImageUrl = "";
+
+                if (nextIndex < endIndex) {
+                    rightImageUrl = tourPhotos.get(nextIndex).getOriginImageURI();
+
+                    if (nextIndex == MAX_SHOW_IMAGE_COUNT) {
+                        boolean hasNextIndex = (nextIndex + 1) < endIndex;
+                        if (hasNextIndex) {
+                            String moreText = new StringBuilder().append("+").append(endIndex - MAX_SHOW_IMAGE_COUNT).toString();
+                            TextView morePhotoTextView = photoLayout.findViewById(R.id.tour_photo_more_text_view);
+                            morePhotoTextView.setVisibility(View.VISIBLE);
+                            morePhotoTextView.setText(moreText);
+                        }
+
+
+                    }
+                }
+
+                ImageLoderUtils.lodeURI(leftImageView, leftImageUrl);
+                if (!rightImageUrl.isEmpty()) {
+                    ImageLoderUtils.lodeURI(rightImageView, rightImageUrl);
+                }
+                index = nextIndex + 1;
+                tourPhotosLayout.addView(photoLayout);
+
+
+            }
+        }
+
+
+    }
 }

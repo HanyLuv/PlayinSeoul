@@ -1,31 +1,22 @@
 package com.work.hany.playinseoul.tourdetail.adapter;
 
-import android.app.Fragment;
-import android.media.Image;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapView;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
+import com.work.hany.playinseoul.model.dao.StayDetail;
 import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
-import com.work.hany.playinseoul.network.TourPhoto;
-import com.work.hany.playinseoul.util.ImageLoderUtils;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import static com.work.hany.playinseoul.R.*;
+import static com.work.hany.playinseoul.R.id;
+import static com.work.hany.playinseoul.R.layout;
 
 public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
 
@@ -73,9 +64,71 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
                 viewHolder = new PhotosViewHolder(photoRowView);
                 break;
 
+
+            case STAY_DETAIL:
+                View stayDetail = inflater.inflate(layout.detail_recycler_row_stay_detatil_itme, null, false);
+                viewHolder = new StayDetailViewHolder(stayDetail);
+                break;
+
         }
 
         return viewHolder;
+    }
+
+
+    class StayDetailViewHolder extends ViewHolder<StayDetail> {
+        private TextView basePeopleCountTextView;
+        private TextView maxPeopleCountTextView;
+        private TextView stayRoomNameTextView;
+        private TextView stayRoomTitleTextView; //객실정보 타이틀
+        private TextView stayOffSeasonFeeTextView;
+        private TextView stayAllRoomShowTextView; //모든 객실 정보 보기
+        private TextView stayMoreShowTextView; //해당객실정보 상세보기
+
+        public StayDetailViewHolder(View itemView) {
+            super(itemView);
+            //4개이상 나오면 모든 상품 보기 출력하자.
+            basePeopleCountTextView = itemView.findViewById(id.stay_basecount_text_view);
+            maxPeopleCountTextView = itemView.findViewById(id.stay_maxcount_text_view);
+            stayRoomNameTextView = itemView.findViewById(id.stay_room_title_text_view);
+            stayRoomTitleTextView = itemView.findViewById(id.stay_info_title_text_view);
+            stayOffSeasonFeeTextView = itemView.findViewById(id.stay_offseasonmin_fee_text_view);
+            stayMoreShowTextView = itemView.findViewById(id.stay_more_fee_text_view);
+            stayAllRoomShowTextView = itemView.findViewById(id.stay_all_room_text_view);
+        }
+
+        @Override
+        public void bind(StayDetail data) {
+            if (data.getSerialNumber() == 0) stayRoomTitleTextView.setVisibility(View.VISIBLE);
+
+            int maxShowRoomCount = 3; //우리가 보여야 하는 값보다 작은 경우가 있다.
+            if(data.getSerialMaxNumber() < maxShowRoomCount ) {
+                maxShowRoomCount = data.getSerialMaxNumber();
+            }
+
+            stayRoomNameTextView.setText(data.getRoomTitle());
+            String basePeopleCount = new StringBuffer().append("최소인원 ").append(data.getRoomBaseCount()).append("명").toString();
+            String maxPeopleCount = new StringBuffer().append("최대인원 ").append(data.getRoomMaxCount()).append("명").toString();
+
+            basePeopleCountTextView.setText(basePeopleCount);
+            maxPeopleCountTextView.setText(maxPeopleCount);
+
+            //TODO 금전 , 표시 작업하기
+            String offSeasonFee = new StringBuffer().append("비수기 주중 최소 ").append(data.getRoomOffSeasonMinFee1()).append("원").toString();
+            stayOffSeasonFeeTextView.setText(offSeasonFee);
+
+            View betweenItemDivider = itemView.findViewById(id.divider1); //아이템간 디바이더
+            if (data.getSerialNumber() == maxShowRoomCount) { //최대 4개의 아이템이 들어와서, 3개가 마지막인덱스가 된다.
+                if (data.isRoomOverMaxCount()) {
+                    stayAllRoomShowTextView.setVisibility(View.VISIBLE);
+                } else {
+                    betweenItemDivider.setVisibility(View.INVISIBLE);
+                }
+
+                itemView.findViewById(id.divider2).setVisibility(View.VISIBLE);
+            }
+
+        }
     }
     //https://developers.google.com/maps/documentation/android-sdk/map?authuser=1&hl=ko#the_map_object 맵ㅂ뷰 사용법
 
@@ -130,58 +183,5 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
             * */
 
         }
-    }
-
-    class PhotosViewHolder extends ViewHolder<ArrayList<TourPhoto>> {
-        private LinearLayout tourPhotosLayout;
-        private LayoutInflater inflater;
-        private final int MAX_SHOW_IMAGE_COUNT = 3;
-
-        public PhotosViewHolder(View itemView) {
-            super(itemView);
-            inflater = LayoutInflater.from(itemView.getContext());
-            tourPhotosLayout = itemView.findViewById(R.id.tour_photo_layout);
-        }
-
-        @Override
-        public void bind(ArrayList<TourPhoto> tourPhotos) {
-            for (int index = 0, endIndex = tourPhotos.size(); index <= MAX_SHOW_IMAGE_COUNT; ) {
-                View photoLayout = inflater.inflate(R.layout.detail_recycler_row_tour_photo_itme, null, false);
-
-                ImageView leftImageView = photoLayout.findViewById(id.tour_left_photo_image_view);
-                ImageView rightImageView = photoLayout.findViewById(id.tour_right_photo_image_view);
-
-                int nextIndex = index + 1;
-                String leftImageUrl = tourPhotos.get(index).getOriginImageURI();
-                String rightImageUrl = "";
-
-                if (nextIndex < endIndex) {
-                    rightImageUrl = tourPhotos.get(nextIndex).getOriginImageURI();
-
-                    if (nextIndex == MAX_SHOW_IMAGE_COUNT) {
-                        boolean hasNextIndex = (nextIndex + 1) < endIndex;
-                        if (hasNextIndex) {
-                            String moreText = new StringBuilder().append("+").append(endIndex - MAX_SHOW_IMAGE_COUNT).toString();
-                            TextView morePhotoTextView = photoLayout.findViewById(R.id.tour_photo_more_text_view);
-                            morePhotoTextView.setVisibility(View.VISIBLE);
-                            morePhotoTextView.setText(moreText);
-                        }
-
-
-                    }
-                }
-
-                ImageLoderUtils.lodeURI(leftImageView, leftImageUrl);
-                if (!rightImageUrl.isEmpty()) {
-                    ImageLoderUtils.lodeURI(rightImageView, rightImageUrl);
-                }
-                index = nextIndex + 1;
-                tourPhotosLayout.addView(photoLayout);
-
-
-            }
-        }
-
-
     }
 }

@@ -31,7 +31,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@id/tour_map_view"
+        android:layout_below="@id/tour_photo_layout"
         android:background="#EAEDED" />
 
 </RelativeLayout>

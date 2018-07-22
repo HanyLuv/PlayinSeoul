@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/stay_info_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:text="객실정보"
+        android:textColor="#2E2E2E"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/stay_room_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stay_info_title_text_view"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:text="힐링룸 26평형"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/stay_room_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stay_room_title_text_view"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/stay_basecount_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기준인원 4명"
+            android:textColor="#2E2E2E"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/stay_devider_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="|"
+            android:textColor="#2E2E2E"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/stay_maxcount_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최대인원 8명"
+            android:textColor="#2E2E2E"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/stay_offseasonmin_fee_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stay_room_info_layout"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="비수기 주중 최소 149,000원"
+        android:textColor="#2E2E2E"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/stay_more_fee_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stay_offseasonmin_fee_text_view"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/stay_room_info_layout"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="더보기"
+        android:textColor="#A93226" />
+    //TODO 맨뒤로 오게해야하는데 참고가
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/stay_offseasonmin_fee_text_view"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:background="#EAEDED" />
+
+
+    <TextView
+        android:id="@+id/stay_all_room_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider1"
+        android:gravity="center"
+        android:text="모든 객실 보기"
+        android:textColor="#85C1E9"
+        android:visibility="gone"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:visibility="gone"
+        android:layout_below="@+id/stay_all_room_text_view"
+        android:background="#EAEDED" />
+</RelativeLayout>

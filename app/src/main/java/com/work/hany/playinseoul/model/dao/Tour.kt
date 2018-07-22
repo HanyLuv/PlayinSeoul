@@ -33,3 +33,37 @@ data class TourDetail (
         @SerializedName("infotext") var informationDescription: String, // 설명...
         @SerializedName("serialnum") var serialNumber: Int //반복일련번호
 )
+data class StayDetail (
+        var serialNumber: Int, //반복일련번호
+        var serialMaxNumber: Int, //반복일련최대값
+        var isRoomOverMaxCount: Boolean, //룸은 4개만 보여주는데 그 항목을 넘는가에 대한 여부
+        @SerializedName("contentid") var contentTypeId: Int,
+        @SerializedName("contenttypeid") var contentId: Int,
+        @SerializedName("roomaircondition") var roomAirCondition: String, // 에어
+        @SerializedName("roomcode") var roomCode: Int, // 객실코드
+        @SerializedName("roomtitle") var roomTitle: String, //객실명...
+        @SerializedName("roomsize1") var roomSize1: Int, //객실크기(평)
+        @SerializedName("roomsize2") var roomSize2: Int, //객실크기(평방미)
+        @SerializedName("roomcount") var roomCount: Int, //객실수
+        @SerializedName("roombasecount") var roomBaseCount: Int, //기준인원
+        @SerializedName("roommaxcount") var roomMaxCount: Int, //최대 인원
+        @SerializedName("roomoffseasonminfee1") var roomOffSeasonMinFee1: Int, //비수기 주중 최소
+        @SerializedName("roomoffseasonminfee2") var roomOffSeasonMinFee2: Int, //비수기 주말 최소
+        @SerializedName("roompeakseasonminfee1") var roomPeakSeasonMinFee1: Int, //성수기 주중 최소
+        @SerializedName("roompeakseasonminfee2") var roomPeakSeasonMinFee2: Int, //성수기 주말 최
+        @SerializedName("roomintro") var roomIntro: String, //객실소개
+        @SerializedName("roombathfacility") var roomBathFacility: String, //목욕시설
+        @SerializedName("roombath") var roomBath: String, //욕조
+        @SerializedName("roomhometheater") var roomHomeTheater: String, //홈시어터
+        @SerializedName("roomtv") var roomTV: String, //티비
+        @SerializedName("roompc") var roomPC: String, //컴퓨터
+        @SerializedName("roomcable") var roomCable: String, //케이블여부
+        @SerializedName("roominternet") var roomInternet: String, //인터넷
+        @SerializedName("roomrefrigerator") var roomRefrigerator: String, //냉장고
+        @SerializedName("roomtoiletries") var roomToiletRies: String, //세면도구
+        @SerializedName("roomsofa") var roomSofa: String, //소파
+        @SerializedName("roomcook") var roomCook: String, //취사용품
+        @SerializedName("roomTable") var roomTable: String, //테이블
+        @SerializedName("roomHairdryer") var roomHairDryer: String //헤어드라이기
+
+)
