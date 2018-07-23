@@ -1,12 +1,16 @@
 package com.work.hany.playinseoul.tourdetail.adapter;
 
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,9 +25,11 @@ import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
 import com.work.hany.playinseoul.util.ConverterUtils;
+import com.work.hany.playinseoul.util.DisplayUtils;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
 
@@ -103,19 +109,41 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
         private TextView contentIntroTextView;
         private TextView contentTitleTextView;
         private TextView contentAddrTextView;
+        private final int MAX_SHOW_INTRO_COUNT = 130; //보여지는 총 인트로 문장 숫자.
 
         public OverHeadViewHolder(View itemView) {
             super(itemView);
             contentIntroTextView = itemView.findViewById(R.id.tour_information_text_view);
             contentTitleTextView = itemView.findViewById(R.id.tour_title_text_view);
             contentAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
+
         }
 
         @Override
-        public void bind(AreaTour data) {
+        public void bind(final AreaTour data) {
             contentAddrTextView.setText(ConverterUtils.convertMediumCategory(data.getMediumCategoryCode()));
             contentTitleTextView.setText(data.getContentTitle());
-            contentIntroTextView.setText(data.getOverview());
+            if (!data.getOverview().isEmpty()) { //114개 5줄. //130
+                String overView = data.getOverview();
+                if (overView.trim().length() <= MAX_SHOW_INTRO_COUNT ) {
+                    contentIntroTextView.setText(data.getOverview());
+
+                } else if (overView.trim().length() > MAX_SHOW_INTRO_COUNT ) {
+                        //...붙고 더 자세히 보기 붙어줘야함 ㅇㅅㅇ
+                }
+                contentIntroTextView.setText(data.getOverview());
+
+                contentIntroTextView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (contentIntroTextView.getText().toString().equals(data.getOverview())) {
+                            Toast.makeText(itemView.getContext(), "line Count " + contentIntroTextView.getLineCount()
+                                    +"str count "+data.getOverview().length(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
         }
     }
 
@@ -155,13 +183,15 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 //            options.maxZoomPreference()
             googleMap.setMapType(options.getMapType());
 
-            //TODO outofindex발생함. ㅠㅠㅠ 간헐적인듯
-            AreaTour areaTour = (AreaTour)sections.get(getAdapterPosition()).getData();
+            if (getAdapterPosition() > -1) { // -1 empty.
+                AreaTour areaTour = (AreaTour) sections.get(getAdapterPosition()).getData();
 
-            LatLng latLng = new LatLng(areaTour.getMapy(), areaTour.getMapx());
-            googleMap.addMarker(new MarkerOptions().position(latLng).title("여기"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-
+                LatLng latLng = new LatLng(areaTour.getMapy(), areaTour.getMapx());
+                googleMap.addMarker(new MarkerOptions().position(latLng));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            } else {
+                Log.d("HANY_TAG", "" + getAdapterPosition());
+            }
 
 
         }
@@ -172,7 +202,7 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
     class PhotosViewHolder extends ViewHolder<ArrayList<TourPhoto>> {
         private LinearLayout tourPhotosLayout;
         private LayoutInflater inflater;
-        private final int MAX_SHOW_IMAGE_COUNT = 3;
+        private final int MAX_SHOW_IMAGE_COUNT = 4;
 
         public PhotosViewHolder(View itemView) {
             super(itemView);
@@ -183,7 +213,12 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
         @Override
         public void bind(ArrayList<TourPhoto> tourPhotos) {
             tourPhotosLayout.removeAllViews();
-            for (int index = 0, endIndex = tourPhotos.size(); index <= MAX_SHOW_IMAGE_COUNT; ) {
+            int maxIndex =  MAX_SHOW_IMAGE_COUNT;
+            if( maxIndex > tourPhotos.size() ) {
+                maxIndex =  tourPhotos.size();
+            }
+
+            for (int index = 0, endIndex = tourPhotos.size(); index < maxIndex; ) {
                 View photoLayout = inflater.inflate(R.layout.detail_recycler_row_tour_photo_itme, null, false);
                 photoLayout.setTag(index);
                 ImageView leftImageView = photoLayout.findViewById(R.id.tour_left_photo_image_view);
@@ -196,7 +231,8 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
                 if (nextIndex < endIndex) {
                     rightImageUrl = tourPhotos.get(nextIndex).getOriginImageURI();
 
-                    if (nextIndex == MAX_SHOW_IMAGE_COUNT) {
+                    int lastIndex = maxIndex - 1;
+                    if (nextIndex == lastIndex) {
                         boolean hasNextIndex = (nextIndex + 1) < endIndex;
                         if (hasNextIndex) {
                             String moreText = new StringBuilder().append("+").append(endIndex - MAX_SHOW_IMAGE_COUNT).toString();

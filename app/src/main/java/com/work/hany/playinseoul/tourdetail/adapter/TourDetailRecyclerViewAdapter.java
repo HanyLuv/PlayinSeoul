@@ -84,6 +84,7 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
         private TextView stayOffSeasonFeeTextView;
         private TextView stayAllRoomShowTextView; //모든 객실 정보 보기
         private TextView stayMoreShowTextView; //해당객실정보 상세보기
+        private final int MAX_SHOW_STAY_COUNT = 3;
 
         public StayDetailViewHolder(View itemView) {
             super(itemView);
@@ -101,7 +102,7 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
         public void bind(StayDetail data) {
             if (data.getSerialNumber() == 0) stayRoomTitleTextView.setVisibility(View.VISIBLE);
 
-            int maxShowRoomCount = 3; //우리가 보여야 하는 값보다 작은 경우가 있다.
+            int maxShowRoomCount = MAX_SHOW_STAY_COUNT; //우리가 보여야 하는 값보다 작은 경우가 있다.
             if(data.getSerialMaxNumber() < maxShowRoomCount ) {
                 maxShowRoomCount = data.getSerialMaxNumber();
             }

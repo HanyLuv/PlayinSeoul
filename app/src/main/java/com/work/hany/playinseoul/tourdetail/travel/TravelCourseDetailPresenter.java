@@ -97,6 +97,6 @@ public class TravelCourseDetailPresenter implements TravelCourseDetailContract.P
 
     @Override
     public void dropView() {
-        //TODO dropView 처리해주기이이이
+        this.detailView = null;
     }
 }
