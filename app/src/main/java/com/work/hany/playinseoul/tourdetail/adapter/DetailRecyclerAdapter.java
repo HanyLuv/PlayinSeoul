@@ -1,16 +1,13 @@
 package com.work.hany.playinseoul.tourdetail.adapter;
 
-import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,11 +22,10 @@ import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
 import com.work.hany.playinseoul.util.ConverterUtils;
-import com.work.hany.playinseoul.util.DisplayUtils;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
+import com.work.hany.playinseoul.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
 
@@ -109,13 +105,15 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
         private TextView contentIntroTextView;
         private TextView contentTitleTextView;
         private TextView contentAddrTextView;
-        private final int MAX_SHOW_INTRO_COUNT = 130; //보여지는 총 인트로 문장 숫자.
+        private TextView contentMoreTextView;
+        private final int MAX_SHOW_INTRO_COUNT = 300; // 보여지는 인트로 문자 갯수. 300바이트 즉 한글일경우 150자정도...
 
         public OverHeadViewHolder(View itemView) {
             super(itemView);
             contentIntroTextView = itemView.findViewById(R.id.tour_information_text_view);
             contentTitleTextView = itemView.findViewById(R.id.tour_title_text_view);
             contentAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
+            contentMoreTextView = itemView.findViewById(R.id.tour_more_text_view);
 
         }
 
@@ -123,25 +121,16 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
         public void bind(final AreaTour data) {
             contentAddrTextView.setText(ConverterUtils.convertMediumCategory(data.getMediumCategoryCode()));
             contentTitleTextView.setText(data.getContentTitle());
-            if (!data.getOverview().isEmpty()) { //114개 5줄. //130
+            if (!data.getOverview().isEmpty()) {
                 String overView = data.getOverview();
-                if (overView.trim().length() <= MAX_SHOW_INTRO_COUNT ) {
-                    contentIntroTextView.setText(data.getOverview());
 
-                } else if (overView.trim().length() > MAX_SHOW_INTRO_COUNT ) {
-                        //...붙고 더 자세히 보기 붙어줘야함 ㅇㅅㅇ
+                if (overView.trim().getBytes().length > MAX_SHOW_INTRO_COUNT) {
+                    overView = new StringBuilder().append( StringUtils.SplitStringByByteLength(overView,"EUC-KR",MAX_SHOW_INTRO_COUNT)[0]).append("...").toString();
+                    contentMoreTextView.setVisibility(View.VISIBLE);
+
                 }
-                contentIntroTextView.setText(data.getOverview());
+                contentIntroTextView.setText(overView);
 
-                contentIntroTextView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (contentIntroTextView.getText().toString().equals(data.getOverview())) {
-                            Toast.makeText(itemView.getContext(), "line Count " + contentIntroTextView.getLineCount()
-                                    +"str count "+data.getOverview().length(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
             }
 
         }
