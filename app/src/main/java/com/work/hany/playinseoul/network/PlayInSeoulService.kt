@@ -80,6 +80,7 @@ data class TourPhoto(@SerializedName("contentid") var contentId: Int,
                      @SerializedName("originimgurl") var originImageURI: String,
                      @SerializedName("serialnum") var serialNumber: String,
                      @SerializedName("smallimageurl") var smallImageURI: String)
+
 /**
  *
 private const val CONTENT_TYPE_TOUR = 12 //관광지
@@ -94,7 +95,7 @@ private const val CONTENT_TYPE_FOOD = 39//음식점
 
 
 //여행 코스 디테일
-data class TravelDetail (
+data class TravelDetail(
         @SerializedName("contentid") var contentId: Int,
         @SerializedName("contenttypeid") var contentTypeId: Int,
         @SerializedName("subcontentid") var subContentId: Int,
@@ -103,7 +104,39 @@ data class TravelDetail (
         @SerializedName("subdetailoverview") var subDetailDescription: String,
         @SerializedName("subname") var subTitle: String,
         @SerializedName("subnum") var subNumber: Int //반복 일련번호 (순서)
-        )
+) : Parcelable {
+    constructor(source: Parcel) : this(
+            source.readInt(),
+            source.readInt(),
+            source.readInt(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readInt()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeInt(contentId)
+        writeInt(contentTypeId)
+        writeInt(subContentId)
+        writeString(subImageDescription)
+        writeString(subDetailImage)
+        writeString(subDetailDescription)
+        writeString(subTitle)
+        writeInt(subNumber)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<TravelDetail> = object : Parcelable.Creator<TravelDetail> {
+            override fun createFromParcel(source: Parcel): TravelDetail = TravelDetail(source)
+            override fun newArray(size: Int): Array<TravelDetail?> = arrayOfNulls(size)
+        }
+    }
+}
 
 
 data class TravelIntro(

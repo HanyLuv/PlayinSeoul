@@ -26,6 +26,7 @@ data class TourIntro (
 
 //숙박, 여행코스 제외한 타입이라함.... @_@;;;
 data class TourDetail (
+        var serialMaxNumber: Int, //반복일련최대값
         @SerializedName("contentid") var contentTypeId: Int,
         @SerializedName("contenttypeid") var contentId: Int,
         @SerializedName("fldgubun") var fldgubun: Int, // 일련번호인데 잘모르겠음 ㅠ

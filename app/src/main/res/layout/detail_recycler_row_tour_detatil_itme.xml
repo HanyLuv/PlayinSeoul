@@ -43,12 +43,12 @@
         android:textStyle="bold" />
 
 
-    //TODO 맨뒤로 오게해야하는데 참고가
-    <!--<View-->
-        <!--android:id="@+id/divider"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="10dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_marginBottom="30dp"-->
-        <!--android:background="#EAEDED" />-->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:layout_below="@+id/tour_content_description_text_view"
+        android:background="#EAEDED" />
 </RelativeLayout>

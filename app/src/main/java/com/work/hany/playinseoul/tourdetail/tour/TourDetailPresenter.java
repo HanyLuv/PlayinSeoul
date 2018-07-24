@@ -37,6 +37,7 @@ public class TourDetailPresenter implements TourDetailContract.Presenter {
                 if (!call.isCanceled()) {
                     AreaTour areaTour = response.body().getResponse().getBody().getItems().getData();
                     tourView.initTourOverviewUi(areaTour);
+                    tourView.initTourMapUi(areaTour);
                 }
             }
 

@@ -14,6 +14,8 @@ public interface TravelCourseDetailContract {
         void initTourOverviewUi(AreaTour areaTour);
         void initTourIntroUi(TravelIntro information);
         void initTourDetailUi(ArrayList<TravelDetail> travelDetails);
+        void showSubTravelCourseDetailUi(AreaTour areaTour);
+        void showOverViewDetail(AreaTour tour);
     }
 
 
@@ -21,5 +23,7 @@ public interface TravelCourseDetailContract {
         @Override
         void takeView(TravelCourseDetailContract.View view);
         void loadTravelCourseDetail(int contentId, int contentTypeId);
+        void openSubTravelCourseDetail(TravelDetail detail);
+        void openOverViewDetail(AreaTour tour);
     }
 }

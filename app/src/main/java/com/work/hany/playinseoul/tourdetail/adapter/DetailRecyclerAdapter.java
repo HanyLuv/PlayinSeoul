@@ -2,6 +2,8 @@ package com.work.hany.playinseoul.tourdetail.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.util.ConverterUtils;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
 import com.work.hany.playinseoul.util.StringUtils;
@@ -31,6 +34,10 @@ import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
 
 abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
     protected ArrayList<Section> sections;
+
+    public interface ItemListener {
+        void onOverViewMoreShowClicked(AreaTour tour);
+    }
 
     public DetailRecyclerAdapter(ArrayList<Section> sections){
         this.sections = sections;
@@ -119,16 +126,22 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 
         @Override
         public void bind(final AreaTour data) {
-            contentAddrTextView.setText(ConverterUtils.convertMediumCategory(data.getMediumCategoryCode()));
+            if(data.getMediumCategoryCode()!= null){ //TODO 카테고리값이... 리스트조회때만 불러오는거다보니 ㅠ 주소를 넣는게 맞을듯싶다. 에혀
+                contentAddrTextView.setText(ConverterUtils.convertMediumCategory(data.getMediumCategoryCode()));
+                contentAddrTextView.setVisibility(View.VISIBLE);
+            }
             contentTitleTextView.setText(data.getContentTitle());
+
             if (!data.getOverview().isEmpty()) {
-                String overView = data.getOverview();
-
-                if (overView.trim().getBytes().length > MAX_SHOW_INTRO_COUNT) {
-                    overView = new StringBuilder().append( StringUtils.SplitStringByByteLength(overView,"EUC-KR",MAX_SHOW_INTRO_COUNT)[0]).append("...").toString();
+                SpannableString spannableOverViewString = new SpannableString(Html.fromHtml(data.getOverview()));
+                String overView = spannableOverViewString.toString();
+                if (spannableOverViewString.toString().trim().getBytes().length > MAX_SHOW_INTRO_COUNT) {
+                    String splitOverViewString = StringUtils.SplitStringByByteLength(spannableOverViewString.toString(),"EUC-KR",MAX_SHOW_INTRO_COUNT)[0];
+                    overView = new StringBuilder().append(splitOverViewString).append("...").toString();
                     contentMoreTextView.setVisibility(View.VISIBLE);
-
                 }
+
+
                 contentIntroTextView.setText(overView);
 
             }
@@ -247,4 +260,5 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 
 
     }
+
 }

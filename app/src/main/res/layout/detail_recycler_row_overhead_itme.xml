@@ -13,6 +13,7 @@ android:layout_height="wrap_content">
     android:layout_marginTop="30dp"
     android:text="의왕시"
     android:textColor="#1ABC9C"
+    android:visibility="invisible"
     android:textSize="12dp"
     android:textStyle="bold" />
 

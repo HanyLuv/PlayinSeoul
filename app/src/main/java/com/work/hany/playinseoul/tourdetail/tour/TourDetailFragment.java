@@ -15,6 +15,8 @@ import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.network.TravelDetail;
+import com.work.hany.playinseoul.tourdetail.DetailActivity;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -31,6 +33,9 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
     @Inject
     AreaTour areaTour;
 
+    //여행코스 서브에서 넘어오는값이다..
+
+
     private TourDetailRecyclerViewAdapter tourDetailRecyclerViewAdapter;
 
     @Inject
@@ -45,6 +50,12 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            AreaTour areaTour = getArguments().getParcelable(DetailActivity.EXTRA_TOUR_ID);
+            this.areaTour = areaTour;
+        }
+
         ArrayList<Section> sections = new ArrayList<>();
 
         Section imageSection = new Section(Section.ItemType.IMAGE, areaTour.getLargeImage());
@@ -77,19 +88,28 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
     }
 
 
-
     @Override
     public void initTourDetailUi(ArrayList<TourDetail> tourDetails) {
         for (TourDetail detail : tourDetails ){
+            detail.setSerialMaxNumber(tourDetails.size() - 1);
             tourDetailRecyclerViewAdapter.addSection(Section.ItemType.DETAIL, detail);
         }
     }
 
     @Override
-    public void initTourOverviewUi(AreaTour areaTour) { /** 해당 여행 설명*/
-        areaTour.setMediumCategoryCode(this.areaTour.getMediumCategoryCode());
+    public void initTourOverviewUi(AreaTour areaTour) {
+        /** 해당 여행 설명*/
+        //여행코스에서 들어갔을땐 this.areaTour.getMediumCategoryCode() 값이없다..
+        String mediumCategoryCode = this.areaTour.getMediumCategoryCode() != null ? this.areaTour.getMediumCategoryCode() : "";
+        areaTour.setMediumCategoryCode(mediumCategoryCode);
         tourDetailRecyclerViewAdapter.updateSection(Section.ItemType.OVERHEAD, areaTour);
     }
+
+    @Override
+    public void initTourMapUi(AreaTour areaTour) {
+//        tourDetailRecyclerViewAdapter.updateSection(Section.ItemType.MAP, areaTour);
+    }
+
 
     @Override
     public void initTourIntroUi(TourIntro information) {

@@ -90,6 +90,32 @@ public class TravelCourseDetailPresenter implements TravelCourseDetailContract.P
     }
 
     @Override
+    public void openSubTravelCourseDetail(final TravelDetail travelDetail) {
+        //여행 상세 볼때
+        dataHandler.getTourOverView(travelDetail.getSubContentId(), travelDetail.getContentTypeId()).enqueue(new Callback<Result<AreaTour>>() {
+            @Override
+            public void onResponse(Call<Result<AreaTour>> call, Response<Result<AreaTour>> response) {
+                if (!call.isCanceled()) {
+                    AreaTour areaTour = response.body().getResponse().getBody().getItems().getData();
+                    areaTour.setLargeImage(travelDetail.getSubDetailImage());
+                    detailView.showSubTravelCourseDetailUi(areaTour);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<AreaTour>> call, Throwable t) {
+
+            }
+        });
+//        this.detailView.showSubTravelCourseDetailUi(travelDetail);
+    }
+
+    @Override
+    public void openOverViewDetail(AreaTour tour) {
+        //오버뷰 더 자세히 보기 할때
+    }
+
+    @Override
     public void takeView(TravelCourseDetailContract.View view) {
         this.detailView = view;
 

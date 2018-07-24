@@ -16,12 +16,16 @@ import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.network.TravelIntro;
+import com.work.hany.playinseoul.tourdetail.DetailActivity;
 import com.work.hany.playinseoul.tourdetail.adapter.TravelCourseDetailRecyclerViewAdapter;
+import com.work.hany.playinseoul.tourdetail.tour.TourDetailFragment;
+import com.work.hany.playinseoul.util.ActivityUtils;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dagger.android.DaggerActivity;
 import dagger.android.support.DaggerFragment;
 
 @ActivityScoped
@@ -34,6 +38,18 @@ public class TravelCourseDetailFragment extends DaggerFragment implements Travel
     AreaTour areaTour;
 
     private TravelCourseDetailRecyclerViewAdapter detailRecyclerViewAdapter;
+
+    private TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener = new TravelCourseDetailRecyclerViewAdapter.ItemListener() {
+        @Override
+        public void onSubCourseDetailShowClicked(TravelDetail travelDetail) {
+            presenter.openSubTravelCourseDetail(travelDetail);
+        }
+
+        @Override
+        public void onOverViewMoreShowClicked(AreaTour tour) {
+            presenter.openOverViewDetail(tour);
+        }
+    };
 
     @Inject
     public TravelCourseDetailFragment(){}
@@ -57,7 +73,7 @@ public class TravelCourseDetailFragment extends DaggerFragment implements Travel
         sections.add(overheadSection);
         sections.add(informationSection);
 
-        detailRecyclerViewAdapter = new TravelCourseDetailRecyclerViewAdapter(sections);
+        detailRecyclerViewAdapter = new TravelCourseDetailRecyclerViewAdapter(sections, itemListener);
     }
 
     @Nullable
@@ -79,6 +95,20 @@ public class TravelCourseDetailFragment extends DaggerFragment implements Travel
         for (TravelDetail detail : travelDetails ){
             detailRecyclerViewAdapter.addSection(Section.ItemType.DETAIL, detail);
         }
+    }
+
+    @Override
+    public void showSubTravelCourseDetailUi(AreaTour areaTour) {
+        TourDetailFragment fragment = new TourDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(DetailActivity.EXTRA_TOUR_ID,areaTour);
+        fragment.setArguments(bundle);
+        ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.fragmentLayout,true);
+    }
+
+    @Override
+    public void showOverViewDetail(AreaTour tour) {
+
     }
 
     @Override

@@ -1,11 +1,14 @@
 package com.work.hany.playinseoul.tourdetail.adapter;
 
 import android.support.annotation.NonNull;
+import android.text.Html;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
@@ -134,6 +137,7 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
     //https://developers.google.com/maps/documentation/android-sdk/map?authuser=1&hl=ko#the_map_object 맵ㅂ뷰 사용법
 
     class TourDetailViewHolder extends ViewHolder<TourDetail> {
+        private View sectionDividerView;
         private TextView contentTitleTextView;
         private TextView contentSubTitleTextView;
         private TextView contentSubDescriptionTextView;
@@ -143,19 +147,26 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
             contentSubTitleTextView = itemView.findViewById(id.tour_content_title_text_view);
             contentSubDescriptionTextView = itemView.findViewById(id.tour_content_description_text_view);
             contentTitleTextView = itemView.findViewById(id.tour_info_title_text_view);
+            sectionDividerView = itemView.findViewById(id.divider);
 
         }
 
         @Override
         public void bind(TourDetail data) {
-            if (data.getSerialNumber() == 0) {
-                contentTitleTextView.setVisibility(View.VISIBLE);
-            }
-            contentSubTitleTextView.setText(data.getInformationTitle());
-            contentSubDescriptionTextView.setText(data.getInformationDescription());
+            try {
+                if (data.getSerialNumber() == 0) { contentTitleTextView.setVisibility(View.VISIBLE); }
+                if (data.getSerialNumber() == data.getSerialMaxNumber()) { sectionDividerView.setVisibility(View.VISIBLE); }
+                contentSubTitleTextView.setText(data.getInformationTitle());
+                SpannableString spannableString = new SpannableString(Html.fromHtml(data.getInformationDescription()));
+                contentSubDescriptionTextView.setText(spannableString);
 
+            } catch (NullPointerException e) {
+                //TODO 각 데이터에 대하여 null exception 처리하자.
+                Toast.makeText(itemView.getContext(), "Error: "+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
 
         }
+
     }
 
     class InformationViewHolder extends ViewHolder<TourIntro> {

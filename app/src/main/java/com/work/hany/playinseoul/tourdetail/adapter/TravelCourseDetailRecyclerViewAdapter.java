@@ -19,8 +19,15 @@ import static com.work.hany.playinseoul.model.Section.ItemType;
 
 public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter{
 
-    public TravelCourseDetailRecyclerViewAdapter(ArrayList<Section> sections) {
+    public interface ItemListener extends DetailRecyclerAdapter.ItemListener {
+        void onSubCourseDetailShowClicked(TravelDetail travelDetail);
+    }
+
+    private TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener;
+
+    public TravelCourseDetailRecyclerViewAdapter(ArrayList<Section> sections, TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener) {
         super(sections);
+        this.itemListener = itemListener;
     }
 
 
@@ -67,6 +74,7 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
         private TextView contentCourseNumberTextView;
         private TextView contentCourseDescriptionTextView;
         private ImageView contentCourseImageTextView;
+        private TextView contentCourseMoreTextView;
 
         public CourseViewHolder(View itemView) {
             super(itemView);
@@ -74,14 +82,24 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
             contentCourseNumberTextView = itemView.findViewById(R.id.tour_course_number_text_view);
             contentCourseDescriptionTextView = itemView.findViewById(R.id.tour_course_description_text_view);
             contentCourseImageTextView = itemView.findViewById(R.id.tour_course_image_view);
+            contentCourseMoreTextView = itemView.findViewById(R.id.tour_course_more_detail_text_view);
+
         }
 
         @Override
-        public void bind(TravelDetail data) {
+        public void bind(final TravelDetail data) {
             contentCourseTitleTextView.setText(data.getSubTitle());
             contentCourseNumberTextView.setText(String.valueOf(data.getSubNumber() + 1));
             contentCourseDescriptionTextView.setText(data.getSubDetailDescription());
             ImageLoderUtils.lodeURI(contentCourseImageTextView,data.getSubDetailImage());
+            contentCourseMoreTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemListener.onSubCourseDetailShowClicked(data);
+                }
+
+            });
+
 
 
         }
