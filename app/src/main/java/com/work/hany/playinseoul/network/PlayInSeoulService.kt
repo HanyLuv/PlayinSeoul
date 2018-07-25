@@ -18,6 +18,8 @@ interface PlayInSeoulService {
     // http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey=Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D&MobileApp=PlayInSeoul&MobileOS=AND&_type=json&contentId=129854&contentTypeId=14&overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y
     @GET("detailCommon?overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y&defaultYN=Y")
     fun getTourOverView(@Query("contentId") contentID: Int, @Query("contenttypeId") contentTypeID: Int): Call<Result<AreaTour>>
+    @GET("detailCommon?catcodeYN=Y&overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y&defaultYN=Y&firstImageYN=Y")
+    fun getTourOverView(@Query("contentId") contentID: Int, @Query("contenttypeId") contentTypeID: Int): Call<Result<TourCommon>>
 
     /**
     @description 여행코스의 소개정보 조회
