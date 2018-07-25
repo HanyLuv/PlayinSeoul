@@ -33,9 +33,6 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
     @Inject
     AreaTour areaTour;
 
-    //여행코스 서브에서 넘어오는값이다..
-
-
     private TourDetailRecyclerViewAdapter tourDetailRecyclerViewAdapter;
 
     @Inject
@@ -51,24 +48,16 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            AreaTour areaTour = getArguments().getParcelable(DetailActivity.EXTRA_TOUR_ID);
-            this.areaTour = areaTour;
-        }
-
         ArrayList<Section> sections = new ArrayList<>();
-
         Section imageSection = new Section(Section.ItemType.IMAGE, areaTour.getLargeImage());
         Section overheadSection = new Section(Section.ItemType.OVERHEAD, areaTour);
         Section informationSection = new Section(Section.ItemType.INFORMATION, null);
-        Section mapSection = new Section(Section.ItemType.MAP, areaTour);
-//        Section photosSection = new Section(Section.ItemType.PHOTOS, new ArrayList<TourPhoto>());
+        Section mapSection = new Section(Section.ItemType.MAP, null);
 
         sections.add(imageSection);
         sections.add(overheadSection);
         sections.add(informationSection);
         sections.add(mapSection);
-//        sections.add(photosSection);
 
         tourDetailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections);
 
@@ -107,7 +96,7 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
 
     @Override
     public void initTourMapUi(AreaTour areaTour) {
-//        tourDetailRecyclerViewAdapter.updateSection(Section.ItemType.MAP, areaTour);
+        tourDetailRecyclerViewAdapter.updateSection(Section.ItemType.MAP, areaTour);
     }
 
 

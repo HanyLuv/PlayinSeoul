@@ -1,5 +1,6 @@
 package com.work.hany.playinseoul.tourdetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,11 @@ public class DetailActivity extends DaggerAppCompatActivity {
 
     @Inject
     AreaTour areaTour;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

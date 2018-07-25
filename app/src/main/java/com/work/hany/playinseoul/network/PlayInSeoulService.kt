@@ -16,7 +16,7 @@ interface PlayInSeoulService {
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14
     // http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey=Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D&MobileApp=PlayInSeoul&MobileOS=AND&_type=json&contentId=129854&contentTypeId=14&overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y
-    @GET("detailCommon?overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y3&defaultYN=Y")
+    @GET("detailCommon?overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y&defaultYN=Y")
     fun getTourOverView(@Query("contentId") contentID: Int, @Query("contenttypeId") contentTypeID: Int): Call<Result<AreaTour>>
 
     /**

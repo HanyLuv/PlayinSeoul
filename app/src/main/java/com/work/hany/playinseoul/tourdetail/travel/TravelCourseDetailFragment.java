@@ -1,6 +1,7 @@
 package com.work.hany.playinseoul.tourdetail.travel;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -99,11 +100,11 @@ public class TravelCourseDetailFragment extends DaggerFragment implements Travel
 
     @Override
     public void showSubTravelCourseDetailUi(AreaTour areaTour) {
-        TourDetailFragment fragment = new TourDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(DetailActivity.EXTRA_TOUR_ID,areaTour);
-        fragment.setArguments(bundle);
-        ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.fragmentLayout,true);
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(DetailActivity.EXTRA_TOUR_ID, areaTour);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
     @Override

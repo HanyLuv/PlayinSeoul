@@ -23,7 +23,6 @@ import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
-import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.util.ConverterUtils;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
 import com.work.hany.playinseoul.util.StringUtils;
@@ -153,50 +152,86 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
     @Override
     public void onViewRecycled(@NonNull ViewHolder holder) {
         super.onViewRecycled(holder);
+
+        if( holder instanceof MapViewHolder) {
+            MapViewHolder mapViewHolder = (MapViewHolder)holder;
+            if (mapViewHolder != null && mapViewHolder.map != null) {
+                mapViewHolder.map.clear();
+                mapViewHolder.map.setMapType(GoogleMap.MAP_TYPE_NONE);
+            }
+        }
+
     }
 
     protected class MapViewHolder extends ViewHolder<AreaTour> implements OnMapReadyCallback {
-        private MapView mapView;
+        public MapView mapView;
+        public GoogleMap  map;
         private TextView mapAddrTextView;
 
         public MapViewHolder(View itemView) {
             super(itemView);
-            mapView = itemView.findViewById(R.id.tour_map_view);
             mapAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
-
+            mapView = itemView.findViewById(R.id.tour_map_view);
+            if(mapView !=null) {
+                mapView.onCreate(null);
+                mapView.onResume();
+                mapView.getMapAsync(this);
+            }
         }
 
         @Override
         public void bind(AreaTour areaTour) {
-            MapsInitializer.initialize(itemView.getContext());
+            if (areaTour == null) return;
             mapAddrTextView.setText(areaTour.getFullAddress());
-            mapView.onCreate(null);
-            mapView.onResume();
-            mapView.getMapAsync(this);
+            mapView.setTag(areaTour);
+            setMapLocation();
+        }
 
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            MapsInitializer.initialize(itemView.getContext());
+            map = googleMap;
+            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+            map.setMapType(options.getMapType());
+            map.getUiSettings().setAllGesturesEnabled(false);
+
+            setMapLocation();
+        }
+
+        private void setMapLocation(){
+            if (map == null) return;
+
+            AreaTour areaTour = (AreaTour) mapView.getTag();
+            if (areaTour == null) return;
+
+            LatLng latLng = new LatLng(areaTour.getMapy(), areaTour.getMapx());
+
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13f));
+            map.addMarker(new MarkerOptions().position(latLng));
+
+            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         }
         //https://gist.github.com/alunsford3/5d7c1bb5a67b90b4e1f3
         //https://stackoverflow.com/questions/41915317/access-google-map-from-onbindviewholder-android
 
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            googleMap.getUiSettings().setAllGesturesEnabled(false);
-            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
-//            options.maxZoomPreference()
-            googleMap.setMapType(options.getMapType());
-
-            if (getAdapterPosition() > -1) { // -1 empty.
-                AreaTour areaTour = (AreaTour) sections.get(getAdapterPosition()).getData();
-
-                LatLng latLng = new LatLng(areaTour.getMapy(), areaTour.getMapx());
-                googleMap.addMarker(new MarkerOptions().position(latLng));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-            } else {
-                Log.d("HANY_TAG", "" + getAdapterPosition());
-            }
-
-
-        }
+//        @Override
+//        public void onMapReady(GoogleMap googleMap) {
+//            googleMap.getUiSettings().setAllGesturesEnabled(false);
+//            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+//            googleMap.setMapType(options.getMapType());
+//
+//            if (getAdapterPosition() > -1) { // -1 empty.
+//                AreaTour areaTour = (AreaTour) sections.get(getAdapterPosition()).getData();
+//
+//                LatLng latLng = new LatLng(areaTour.getMapy(), areaTour.getMapx());
+//                googleMap.addMarker(new MarkerOptions().position(latLng));
+//                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+//            } else {
+//                Log.d("HANY_TAG", "" + getAdapterPosition());
+//            }
+//
+//
+//        }
     }
 
 

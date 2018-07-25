@@ -97,7 +97,10 @@ public class TravelCourseDetailPresenter implements TravelCourseDetailContract.P
             public void onResponse(Call<Result<AreaTour>> call, Response<Result<AreaTour>> response) {
                 if (!call.isCanceled()) {
                     AreaTour areaTour = response.body().getResponse().getBody().getItems().getData();
-                    areaTour.setLargeImage(travelDetail.getSubDetailImage());
+                    if(travelDetail!=null && travelDetail.getSubDetailImage() !=null) {
+                        areaTour.setLargeImage(travelDetail.getSubDetailImage());
+                    }
+
                     detailView.showSubTravelCourseDetailUi(areaTour);
                 }
             }
