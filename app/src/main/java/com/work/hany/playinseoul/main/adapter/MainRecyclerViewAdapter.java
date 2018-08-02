@@ -50,6 +50,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         return areaTourList.size();
     }
 
+
+//    class Locate
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView tourImageView;
         private TextView tourTextView;

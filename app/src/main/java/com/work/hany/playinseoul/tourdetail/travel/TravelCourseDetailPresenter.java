@@ -3,6 +3,7 @@ package com.work.hany.playinseoul.tourdetail.travel;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.work.hany.playinseoul.model.DataHandler;
 import com.work.hany.playinseoul.network.AreaTour;
@@ -84,6 +85,7 @@ public class TravelCourseDetailPresenter implements TravelCourseDetailContract.P
             @Override
             public void onFailure(Call<Result<ArrayList<TravelDetail>>> call, Throwable t) {
                 Log.d("HANY_TAG","hi");
+
             }
         });
 

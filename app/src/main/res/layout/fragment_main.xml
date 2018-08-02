@@ -1,11 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/choice_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="어떤 여행을 찾으세요?"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@id/choice_recycler_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/choice_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#FFF"
+        app:layout_constraintBottom_toTopOf="@id/tour_title_layout"
+        app:layout_constraintTop_toBottomOf="@id/choice_title_text_view" />
+
+    <LinearLayout
+        android:id="@+id/tour_title_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/tour_recycler_view"
+        app:layout_constraintTop_toBottomOf="@id/choice_recycler_view">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지역별 여행지"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="지역별 여행지"
+            android:textSize="18dp" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tour_recycler_view"
-        android:background="#FFF"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:background="#FFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintTop_toBottomOf="@id/tour_title_layout" />
 </android.support.constraint.ConstraintLayout>
