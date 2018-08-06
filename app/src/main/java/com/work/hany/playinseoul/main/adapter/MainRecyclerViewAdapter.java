@@ -1,13 +1,16 @@
 package com.work.hany.playinseoul.main.adapter;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.work.hany.playinseoul.BaseSectionRecyclerAdapter;
 import com.work.hany.playinseoul.R;
@@ -24,11 +27,18 @@ import java.util.ArrayList;
 
 public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
     private MainFragment.MainItemListener mainItemListener;
-
+    private RecyclerView.RecycledViewPool recycledViewPool;
 
     public MainRecyclerViewAdapter(ArrayList<Section> sections, MainFragment.MainItemListener mainItemListener) {
         this.mainItemListener = mainItemListener;
         this.sections = sections;
+//        this.recycledViewPool = new RecyclerView.RecycledViewPool();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recycledViewPool = recyclerView.getRecycledViewPool();
     }
 
     @NonNull
@@ -42,8 +52,11 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         switch (currentItemType) {
             case CATEGORY:
                 itemView = inflater.inflate(R.layout.main_recycler_row_category, parent, false);
-                viewHolder = new CategoryViewHolder(itemView);
+                CategoryViewHolder categoryViewHolder = new CategoryViewHolder(itemView);
+                categoryViewHolder.categoryRecyclerView.setRecycledViewPool(recycledViewPool);
+                viewHolder = categoryViewHolder;
                 break;
+
             case MAIN_TOUR:
                 itemView = inflater.inflate(R.layout.main_recycler_row_item, parent, false);
                 viewHolder = new TourViewHolder(itemView);
@@ -54,30 +67,61 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         return viewHolder;
     }
 
+    private int categoryRecyclerViewScrollPosition = 0;
+
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        super.onViewRecycled(holder);
+        if(holder instanceof CategoryViewHolder) {
+            CategoryViewHolder categoryViewHolder = (CategoryViewHolder) holder;
+            RecyclerView categoryRecyclerView =  categoryViewHolder.categoryRecyclerView;
+            int categoryRecyclerViewWidth = categoryRecyclerView.getWidth();
+//            categoryRecyclerViewScrollPosition = categoryRecyclerViewWidth - categoryRecyclerView.computeHorizontalScrollOffset();
+            categoryRecyclerViewScrollPosition =  categoryRecyclerView.computeHorizontalScrollOffset();
+
+        }
+
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        super.onBindViewHolder(holder, position);
+        if(holder instanceof CategoryViewHolder) {
+            CategoryViewHolder categoryViewHolder = (CategoryViewHolder) holder;
+            categoryViewHolder.categoryRecyclerView.scrollBy(categoryRecyclerViewScrollPosition,0);
+        }
+    }
 
     // https://irpdevelop.wordpress.com/2016/02/10/horizontal-recyclerview-inside-a-vertical-recyclerview/
 
 
     class CategoryViewHolder extends ViewHolder<ArrayList<ContentType>> {
-        private RecyclerView catrgoryRecyclerView;
+        private RecyclerView categoryRecyclerView;
         private TextView categoryTitleView;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
             categoryTitleView = itemView.findViewById(R.id.main_tour_title_text_view);
-            catrgoryRecyclerView = itemView.findViewById(R.id.main_tour_recycler_view);
+            categoryRecyclerView = itemView.findViewById(R.id.main_tour_recycler_view);
+            categoryRecyclerView.setHasFixedSize(true);
         }
 
         @Override
         public void bind(ArrayList<ContentType> data) {
             CategoryHorizontalAdapter categoryHorizontalAdapter =new CategoryHorizontalAdapter(data);
-            catrgoryRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-            catrgoryRecyclerView.setAdapter(categoryHorizontalAdapter);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+//            layoutManager.setInitialPrefetchItemCount(data.size());
+//            RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(itemView.getContext()) {
+//                @Override protected int getVerticalSnapPreference() {
+//                    return LinearSmoothScroller.SNAP_TO_START;
+//                }
+//            };
+            categoryRecyclerView.setLayoutManager(layoutManager);
+            categoryRecyclerView.setAdapter(categoryHorizontalAdapter);
 
         }
 
         private class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryItemViewHolder> {
-            private int rowIndex = -1;
             private ArrayList<ContentType> categoryTypes;
 
 
@@ -94,7 +138,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
             @Override
             public void onBindViewHolder(@NonNull CategoryItemViewHolder holder, int position) {
-
+                holder.bind(categoryTypes.get(position));
             }
 
             @Override
@@ -105,9 +149,16 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
 
         private class CategoryItemViewHolder extends RecyclerView.ViewHolder {
+            private TextView categoryTitleTextView;
+
 
             public CategoryItemViewHolder(View itemView) {
                 super(itemView);
+                categoryTitleTextView = itemView.findViewById(R.id.category_item_title_text_view);
+            }
+
+            public void bind(ContentType type){
+                categoryTitleTextView.setText(type.getName());
             }
         }
     }

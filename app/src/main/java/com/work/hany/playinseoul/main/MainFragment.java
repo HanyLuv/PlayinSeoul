@@ -60,6 +60,10 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         areaTour.add(ContentType.FOOD);
         areaTour.add(ContentType.SHOPPING);
         areaTour.add(ContentType.TRAVEL_COURSE);
+        areaTour.add(ContentType.STAY);
+        areaTour.add(ContentType.REPORTS);
+        areaTour.add(ContentType.CULTURE);
+
 
         Section categorySection = new Section(Section.ItemType.CATEGORY, areaTour);
         sections.add(categorySection);
@@ -81,8 +85,15 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         RecyclerView tourRecyclerView = rootView.findViewById(R.id.tour_recycler_view);
         tourRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         tourRecyclerView.setAdapter(mainRecyclerViewAdapter);
+        tourRecyclerView.setNestedScrollingEnabled(false);
+        /** 조금빨라지긴했다만 ㅠㅠ
+        tourRecyclerView.setItemViewCacheSize(20);
+        tourRecyclerView.setDrawingCacheEnabled(true);
+        tourRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        */
 
         presenter.loadTourList();
+
 
         return rootView;
     }
