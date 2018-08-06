@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter;
+import com.work.hany.playinseoul.model.ContentType;
+import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.tourdetail.DetailActivity;
 
@@ -50,7 +52,19 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(new ArrayList<AreaTour>(), mainItemListener);
+
+        ArrayList<Section> sections = new ArrayList<>();
+
+        ArrayList<ContentType>  areaTour = new ArrayList<>(); // TODO 데이터 만드는 클래스로 이동하자~
+        areaTour.add(ContentType.TOUR);
+        areaTour.add(ContentType.FOOD);
+        areaTour.add(ContentType.SHOPPING);
+        areaTour.add(ContentType.TRAVEL_COURSE);
+
+        Section categorySection = new Section(Section.ItemType.CATEGORY, areaTour);
+        sections.add(categorySection);
+
+        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(sections, mainItemListener);
 
     }
 
@@ -88,7 +102,9 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
 
     @Override
     public void initTourListUi(ArrayList<AreaTour> areaTourList) {
-        mainRecyclerViewAdapter.setTourList(areaTourList);
+        for(AreaTour tour: areaTourList) {
+            mainRecyclerViewAdapter.addSection(Section.ItemType.MAIN_TOUR, tour);
+        }
     }
 
 

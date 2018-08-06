@@ -3,6 +3,7 @@ package com.work.hany.playinseoul.network
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.work.hany.playinseoul.model.ContentType
 import com.work.hany.playinseoul.model.dao.StayDetail
 import com.work.hany.playinseoul.model.dao.TourDetail
 import retrofit2.Call

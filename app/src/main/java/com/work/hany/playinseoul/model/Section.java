@@ -29,7 +29,13 @@ public class Section<T> {
         MAP(4), //지도
         DETAIL(5), // 여행 : 코스정보 / 관광지 / 입장정보등등
         STAY_DETAIL(6), // 숙박의 디테일은 다르기때문에ㅣ..
-        NOTHING(-1); //아무것도 아니다..
+
+        /** 메인화면에서 쓰이는 아이템임 'ㅅ' */
+        CATEGORY(7), //메인의 카테고리
+        MAIN_TOUR(8), //메인의 일반 아이템들@_@
+
+
+        NOTHING(-1);//아무것도 아니다..
 
         private int code;
 

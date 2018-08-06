@@ -19,6 +19,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.work.hany.playinseoul.BaseSectionRecyclerAdapter;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
@@ -31,8 +32,7 @@ import java.util.ArrayList;
 
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
 
-abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
-    protected ArrayList<Section> sections;
+abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
 
     public interface ItemListener {
         void onOverViewMoreShowClicked(AreaTour tour);
@@ -42,56 +42,8 @@ abstract public class DetailRecyclerAdapter extends RecyclerView.Adapter<ViewHol
         this.sections = sections;
     }
 
-//    // 파라미터명을 뭐라해야할지 모르겟네. 입력된 타입의 다음구간에 add한다고 보면된다.
-//    public <T>void addSection(Section.ItemType whereType, Section.ItemType type, T data ){
-//        for ( Section section : sections){
-//            if (section.getType().equals(whereType) ) {
-//                int index = sections.indexOf(section);
-//                sections.add(index, new Section(type,data));
-//                break;
-//            }
-//        }
-//    }
-//
-    public <T>void addSection(Section.ItemType type, T data){
-        sections.add(new Section(type,data));
-        notifyDataSetChanged();
-    }
-
-    public <T>void updateSection(Section.ItemType type, T data) {
-        for(int position = 0, end = sections.size(); position < end; position++ ){
-            if (sections.get(position).getType().equals(type)) {
-                sections.get(position).setData(data);
-                notifyItemChanged(position);
-            }
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind((sections.get(position).getData()));
-    }
-
-    @Override
-    public int getItemCount() {
-        return sections.size();
-    }
-
-
-    @Override
-    public int getItemViewType(int position) {
-        return sections.get(position).getType().getCode();
-    }
 
     //TODO getCurrentItemType 와 onCreateViewHolder 가 null을 리턴하는 방식이 마음에 안든당..생각해보자.
-
-    protected Section.ItemType getCurrentItemType(int position) {
-        for (Section.ItemType itemType : Section.ItemType.values()) {
-            if (itemType.getCode() == position) return itemType;
-        }
-
-        return NOTHING;
-    }
 
     protected class ImageViewHolder extends ViewHolder<String> {
         private ImageView imageView;
