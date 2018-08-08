@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@android:color/white"
         android:elevation="2dp">
 
         <ImageView
             android:id="@+id/like_icon_image_view"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/icon_search" />
@@ -28,16 +28,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="25dp"
+            android:textSize="22dp"
+            android:textColor="@color/content_title_text_color"
             android:layout_toRightOf="@+id/search_icon_image_view"
             android:layout_toLeftOf="@id/like_icon_image_view"
-            android:text="이것은 앱이니라." />
+            android:textStyle="bold"
+            android:text="요기조기" />
 
         <ImageView
             android:id="@+id/search_icon_image_view"
-            android:layout_width="30dp"
+            android:layout_width="20dp"
             android:layout_centerInParent="true"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:background="@drawable/icon_like" />
     </RelativeLayout>

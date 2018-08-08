@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.work.hany.playinseoul.R;
+import com.work.hany.playinseoul.main.MainFragment;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
@@ -17,7 +18,9 @@ import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
 import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.tourdetail.DetailActivity;
+import com.work.hany.playinseoul.tourdetail.adapter.DetailRecyclerAdapter;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
+import com.work.hany.playinseoul.util.ActivityUtils;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,14 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
     AreaTour areaTour;
 
     private TourDetailRecyclerViewAdapter tourDetailRecyclerViewAdapter;
+
+    private DetailRecyclerAdapter.ItemListener itemListener = new DetailRecyclerAdapter.ItemListener() {
+        @Override
+        public void onOverViewMoreClicked(AreaTour tour) {
+//            ActivityUtils.addFragmentToActivity(   getActivity().getSupportFragmentManager(),);
+        }
+    };
+
 
     @Inject
     public TourDetailFragment(){ }
@@ -59,7 +70,7 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
         sections.add(informationSection);
         sections.add(mapSection);
 
-        tourDetailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections);
+        tourDetailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections, itemListener);
 
     }
 

@@ -24,5 +24,6 @@ public interface TourDetailContract {
     interface Presenter extends BasePresenter<View> {
         @Override
         void takeView(TourDetailContract.View view);
+        void loadContent(int contentId, int contentTypeId);
     }
 }

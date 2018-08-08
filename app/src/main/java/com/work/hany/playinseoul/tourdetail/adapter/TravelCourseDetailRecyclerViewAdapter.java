@@ -17,16 +17,16 @@ import java.util.ArrayList;
 
 import static com.work.hany.playinseoul.model.Section.ItemType;
 
-public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter{
+public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
+
+    private TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener;
 
     public interface ItemListener extends DetailRecyclerAdapter.ItemListener {
         void onSubCourseDetailShowClicked(TravelDetail travelDetail);
     }
 
-    private TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener;
-
     public TravelCourseDetailRecyclerViewAdapter(ArrayList<Section> sections, TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener) {
-        super(sections);
+        super(sections,itemListener);
         this.itemListener = itemListener;
     }
 

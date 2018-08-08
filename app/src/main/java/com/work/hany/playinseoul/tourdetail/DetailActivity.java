@@ -48,20 +48,25 @@ public class DetailActivity extends DaggerAppCompatActivity {
              }
         }
 
-        Fragment fragment = null;
+        Fragment fragment;
 
         switch (currentTourContentType) {
             default:
                 fragment = new TourDetailFragment();
+                Log.e("HANY_TAG"  , "TourDetailFragment id : "+ fragment.getId());
                 break;
 
             case TRAVEL_COURSE:
                 fragment = new TravelCourseDetailFragment();
+                Log.e("HANY_TAG"  , "TravelCourseDetailFragment id : "+ fragment.getTag());
                 break;
 
             case STAY: //여행코스랑 숙박정보는 디테일인포 결과값이 달라서 일단 각기 다른 fragment로 뺏음
                 fragment = new StayDetailFragment();
+                Log.e("HANY_TAG"  , "StayDetailFragment id : "+ fragment.getId());
                 break;
+
+
 
         }
 

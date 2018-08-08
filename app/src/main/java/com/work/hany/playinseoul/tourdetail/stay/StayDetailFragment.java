@@ -16,6 +16,7 @@ import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.tourdetail.adapter.DetailRecyclerAdapter;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -34,6 +35,14 @@ public class StayDetailFragment extends DaggerFragment implements StayDetailCont
     AreaTour areaTour;
 
     private TourDetailRecyclerViewAdapter tourDetailRecyclerViewAdapter;
+
+    private DetailRecyclerAdapter.ItemListener itemListener = new DetailRecyclerAdapter.ItemListener() {
+        @Override
+        public void onOverViewMoreClicked(AreaTour tour) {
+//            ActivityUtils.addFragmentToActivity(   getActivity().getSupportFragmentManager(),);
+        }
+    };
+
 
     @Inject
     public StayDetailFragment(){ }
@@ -61,7 +70,7 @@ public class StayDetailFragment extends DaggerFragment implements StayDetailCont
         sections.add(mapSection);
 //        sections.add(photosSection);
 
-        tourDetailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections);
+        tourDetailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections,itemListener);
 
     }
 

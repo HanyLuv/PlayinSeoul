@@ -10,9 +10,12 @@ public class ActivityUtils {
     public static void addFragmentToActivity (@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment, int frameId, boolean addBackStack) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
+        String fragmentID = fragment.getClass().getName();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(frameId, fragment);
-        if(addBackStack){ transaction.addToBackStack(null); }
+        if (addBackStack &&  fragmentManager.findFragmentByTag(fragmentID) == null) {
+            transaction.addToBackStack(fragmentID);
+        }
         transaction.commit();
     }
 

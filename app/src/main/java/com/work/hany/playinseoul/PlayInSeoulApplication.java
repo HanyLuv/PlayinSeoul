@@ -1,7 +1,10 @@
 package com.work.hany.playinseoul;
 
+import android.app.Application;
+
 import com.google.android.gms.maps.MapsInitializer;
 
+import dagger.Binds;
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
 
@@ -16,4 +19,5 @@ public class PlayInSeoulApplication  extends DaggerApplication {
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
         return DaggerPlayInSeoulAppComponent.builder().application(this).build();
     }
+
 }

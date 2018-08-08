@@ -23,5 +23,6 @@ public interface StayDetailContract {
     interface Presenter extends BasePresenter<View> {
         @Override
         void takeView(StayDetailContract.View view);
+        void loadContent(int contentId, int contentTypeId);
     }
 }

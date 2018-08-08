@@ -1,16 +1,13 @@
 package com.work.hany.playinseoul.main.adapter;
 
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.work.hany.playinseoul.BaseSectionRecyclerAdapter;
 import com.work.hany.playinseoul.R;
@@ -172,9 +169,9 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
         public TourViewHolder(View itemView) {
             super(itemView);
-            tourImageView = itemView.findViewById(R.id.tourimage);
-            tourTextView = itemView.findViewById(R.id.tourtitle);
-            tourContentTypeTextView = itemView.findViewById(R.id.tourcontenttype);
+            tourImageView = itemView.findViewById(R.id.tour_content_image_view);
+            tourTextView = itemView.findViewById(R.id.tour_title_text_view);
+            tourContentTypeTextView = itemView.findViewById(R.id.tour_content_type_text_view);
 
         }
 

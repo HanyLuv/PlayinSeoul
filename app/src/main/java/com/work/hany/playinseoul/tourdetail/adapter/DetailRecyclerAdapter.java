@@ -1,10 +1,8 @@
 package com.work.hany.playinseoul.tourdetail.adapter;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,16 +28,16 @@ import com.work.hany.playinseoul.util.StringUtils;
 
 import java.util.ArrayList;
 
-import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
-
 abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
+    protected ItemListener itemListener; //공통 아이템 리스너임..
 
     public interface ItemListener {
-        void onOverViewMoreShowClicked(AreaTour tour);
+        void onOverViewMoreClicked(AreaTour tour);
     }
 
-    public DetailRecyclerAdapter(ArrayList<Section> sections){
+    public DetailRecyclerAdapter(ArrayList<Section> sections, ItemListener itemListener){
         this.sections = sections;
+        this.itemListener = itemListener;
     }
 
 
@@ -86,10 +84,17 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
             if (!data.getOverview().isEmpty()) {
                 SpannableString spannableOverViewString = new SpannableString(Html.fromHtml(data.getOverview()));
                 String overView = spannableOverViewString.toString();
+
                 if (spannableOverViewString.toString().trim().getBytes().length > MAX_SHOW_INTRO_COUNT) {
                     String splitOverViewString = StringUtils.SplitStringByByteLength(spannableOverViewString.toString(),"EUC-KR",MAX_SHOW_INTRO_COUNT)[0];
                     overView = new StringBuilder().append(splitOverViewString).append("...").toString();
                     contentMoreTextView.setVisibility(View.VISIBLE);
+                    contentMoreTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            itemListener.onOverViewMoreClicked(data);
+                        }
+                    });
                 }
 
 

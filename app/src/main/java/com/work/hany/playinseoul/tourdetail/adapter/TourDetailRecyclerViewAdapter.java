@@ -24,8 +24,8 @@ import static com.work.hany.playinseoul.R.layout;
 public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
 
 
-    public TourDetailRecyclerViewAdapter(ArrayList<Section> sections) {
-        super(sections);
+    public TourDetailRecyclerViewAdapter(ArrayList<Section> sections,  ItemListener itemListener) {
+        super(sections,itemListener);
     }
 
     //TODO 리턴하는 null 이 마음에 안들어어엉

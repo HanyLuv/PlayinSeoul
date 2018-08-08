@@ -20,10 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TravelCourseDetailPresenter implements TravelCourseDetailContract.Presenter {
-    @Override
-    public void loadContent(int contentId, int contentTypeId) {
 
-    }
     //TODO 이미지 상세 클릭, 지도 클릭 이벤트
 
     @Nullable
@@ -118,6 +115,7 @@ public class TravelCourseDetailPresenter implements TravelCourseDetailContract.P
     @Override
     public void openOverViewDetail(AreaTour tour) {
         //오버뷰 더 자세히 보기 할때
+        detailView.showOverViewDetail(tour);
     }
 
     @Override

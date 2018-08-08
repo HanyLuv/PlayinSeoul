@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.work.hany.playinseoul.R;
+import com.work.hany.playinseoul.common.OverViewDetailFragment;
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
@@ -19,15 +20,16 @@ import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.network.TravelIntro;
 import com.work.hany.playinseoul.tourdetail.DetailActivity;
 import com.work.hany.playinseoul.tourdetail.adapter.TravelCourseDetailRecyclerViewAdapter;
-import com.work.hany.playinseoul.tourdetail.tour.TourDetailFragment;
 import com.work.hany.playinseoul.util.ActivityUtils;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import dagger.android.DaggerActivity;
 import dagger.android.support.DaggerFragment;
+
+import static com.work.hany.playinseoul.common.OverViewDetailFragment.ARGUMENT_TOUR;
+import static com.work.hany.playinseoul.common.OverViewDetailFragment.BUNDLE_TOUR;
 
 @ActivityScoped
 public class TravelCourseDetailFragment extends DaggerFragment implements TravelCourseDetailContract.View {
@@ -40,15 +42,16 @@ public class TravelCourseDetailFragment extends DaggerFragment implements Travel
 
     private TravelCourseDetailRecyclerViewAdapter detailRecyclerViewAdapter;
 
-    private TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener = new TravelCourseDetailRecyclerViewAdapter.ItemListener() {
+    private TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener = new TravelCourseDetailRecyclerViewAdapter.ItemListener(){
         @Override
         public void onSubCourseDetailShowClicked(TravelDetail travelDetail) {
             presenter.openSubTravelCourseDetail(travelDetail);
         }
 
         @Override
-        public void onOverViewMoreShowClicked(AreaTour tour) {
+        public void onOverViewMoreClicked(AreaTour tour) {
             presenter.openOverViewDetail(tour);
+
         }
     };
 
@@ -109,7 +112,12 @@ public class TravelCourseDetailFragment extends DaggerFragment implements Travel
 
     @Override
     public void showOverViewDetail(AreaTour tour) {
+        OverViewDetailFragment fragment = new OverViewDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ARGUMENT_TOUR,tour);
+        fragment.setArguments(bundle);
 
+        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), new OverViewDetailFragment(),R.id.fragmentLayout,true);
     }
 
     @Override
