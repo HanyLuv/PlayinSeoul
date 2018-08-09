@@ -17,6 +17,7 @@ import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.tourdetail.OverViewModule;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import dagger.Component;
 import dagger.Subcomponent;
@@ -25,7 +26,9 @@ import dagger.android.support.DaggerFragment;
 public class OverViewDetailFragment extends DaggerFragment implements OverViewDetailContract.View {
     public static final String ARGUMENT_TOUR = "ARGUMENT_TOUR";
     public static final String BUNDLE_TOUR = "BUNDLE_TOUR";
+
     @Inject
+    @Named("OverViewDetailFragment")
     AreaTour areaTour;
 
     @Inject

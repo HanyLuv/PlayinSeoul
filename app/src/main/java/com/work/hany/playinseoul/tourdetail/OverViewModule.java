@@ -16,6 +16,8 @@ import com.work.hany.playinseoul.tourdetail.travel.TravelCourseDetailContract;
 import com.work.hany.playinseoul.tourdetail.travel.TravelCourseDetailFragment;
 import com.work.hany.playinseoul.tourdetail.travel.TravelCourseDetailPresenter;
 
+import javax.inject.Named;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
@@ -26,9 +28,11 @@ import static com.work.hany.playinseoul.tourdetail.DetailActivity.EXTRA_TOUR_ID;
 
 @Module
 public abstract class OverViewModule {
-    @FragmentScoped
+
+
+    @Named("OverViewDetailFragment")
     @Provides
-    static AreaTour provideTourArgument(Fragment fragment) {
+    static AreaTour provideTourArgument(OverViewDetailFragment fragment) {
         return fragment.getArguments().getParcelable(ARGUMENT_TOUR);
     }
 }

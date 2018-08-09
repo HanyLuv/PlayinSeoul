@@ -117,7 +117,7 @@ public class TravelCourseDetailFragment extends DaggerFragment implements Travel
         bundle.putParcelable(ARGUMENT_TOUR,tour);
         fragment.setArguments(bundle);
 
-        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), new OverViewDetailFragment(),R.id.fragmentLayout,true);
+        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
     }
 
     @Override

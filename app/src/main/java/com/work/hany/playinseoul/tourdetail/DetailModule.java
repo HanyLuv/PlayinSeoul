@@ -1,10 +1,7 @@
 package com.work.hany.playinseoul.tourdetail;
 
-import android.support.v4.app.Fragment;
-
 import com.work.hany.playinseoul.common.OverViewDetailFragment;
 import com.work.hany.playinseoul.di.ActivityScoped;
-import com.work.hany.playinseoul.di.FragmentBindingModule;
 import com.work.hany.playinseoul.di.FragmentScoped;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.tourdetail.stay.StayDetailContract;
@@ -20,14 +17,12 @@ import com.work.hany.playinseoul.tourdetail.travel.TravelCourseDetailPresenter;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import dagger.Subcomponent;
 import dagger.android.ContributesAndroidInjector;
 
 import static com.work.hany.playinseoul.tourdetail.DetailActivity.EXTRA_TOUR_ID;
 
 @Module
 public abstract class DetailModule {
-
 
     @FragmentScoped
     @ContributesAndroidInjector(modules = OverViewModule.class)
@@ -49,7 +44,6 @@ public abstract class DetailModule {
     @ActivityScoped
     @Binds
     abstract StayDetailContract.Presenter stayDetailPresenter(StayDetailPresenter presenter);
-
 
     @FragmentScoped
     @ContributesAndroidInjector
