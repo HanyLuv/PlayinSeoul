@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +54,10 @@ public class OverViewDetailFragment extends DaggerFragment implements OverViewDe
 
         TextView contentTextView = rootView.findViewById(R.id.over_view_content_text_view);
         TextView titleTextView = rootView.findViewById(R.id.over_view_title_text_view);
+        SpannableString spannableOverViewString = new SpannableString(Html.fromHtml(areaTour.getOverview()));
+        String overViewString = spannableOverViewString.toString();
 
-        contentTextView.setText(areaTour.getOverview());
+        contentTextView.setText(overViewString);
         titleTextView.setText(areaTour.getContentTitle());
         return rootView;
     }

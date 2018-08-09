@@ -1,6 +1,7 @@
 package com.work.hany.playinseoul.main.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,8 +56,10 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
                 break;
 
             case MAIN_TOUR:
-                itemView = inflater.inflate(R.layout.main_recycler_row_item, parent, false);
-                viewHolder = new TourViewHolder(itemView);
+                itemView = inflater.inflate(R.layout.main_recycler_row_tour, parent, false);
+                TourViewHolder tourViewHolder = new TourViewHolder(itemView);
+                tourViewHolder.tourSectionItemsRecyclerView.setRecycledViewPool(recycledViewPool);
+                viewHolder = tourViewHolder;
                 break;
 
         }
@@ -72,8 +75,6 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         if(holder instanceof CategoryViewHolder) {
             CategoryViewHolder categoryViewHolder = (CategoryViewHolder) holder;
             RecyclerView categoryRecyclerView =  categoryViewHolder.categoryRecyclerView;
-            int categoryRecyclerViewWidth = categoryRecyclerView.getWidth();
-//            categoryRecyclerViewScrollPosition = categoryRecyclerViewWidth - categoryRecyclerView.computeHorizontalScrollOffset();
             categoryRecyclerViewScrollPosition =  categoryRecyclerView.computeHorizontalScrollOffset();
 
         }
@@ -107,12 +108,6 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         public void bind(ArrayList<ContentType> data) {
             CategoryHorizontalAdapter categoryHorizontalAdapter =new CategoryHorizontalAdapter(data);
             LinearLayoutManager layoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-//            layoutManager.setInitialPrefetchItemCount(data.size());
-//            RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(itemView.getContext()) {
-//                @Override protected int getVerticalSnapPreference() {
-//                    return LinearSmoothScroller.SNAP_TO_START;
-//                }
-//            };
             categoryRecyclerView.setLayoutManager(layoutManager);
             categoryRecyclerView.setAdapter(categoryHorizontalAdapter);
 
@@ -160,8 +155,64 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         }
     }
 
-    //    class Locate
     class TourViewHolder extends ViewHolder<AreaTour> {
+        private ImageView tourSectionImageView;
+        private TextView tourSectionTitleTextView;
+        private RecyclerView tourSectionItemsRecyclerView;
+
+
+        public TourViewHolder(View itemView) {
+            super(itemView);
+            tourSectionImageView = itemView.findViewById(R.id.tour_content_image_view);
+            tourSectionTitleTextView = itemView.findViewById(R.id.tour_section_title_text_view);
+            tourSectionItemsRecyclerView = itemView.findViewById(R.id.tour_section_item_recycler_view);
+
+        }
+
+        @Override
+        public void bind(final AreaTour areaTour) {
+            ImageLoderUtils.lodeURI(tourSectionImageView, areaTour.getLargeImage());
+            TourSectionItemsAdapter tourSectionItemsAdapter = new TourSectionItemsAdapter(new ArrayList<AreaTour>());
+            tourSectionItemsRecyclerView.setLayoutManager(new GridLayoutManager( itemView.getContext(), 2));
+            tourSectionItemsRecyclerView.setAdapter(tourSectionItemsAdapter);
+        }
+
+        private class TourSectionItemsAdapter extends RecyclerView.Adapter<TourSectionItemsAdapter.ItemViewHolder> {
+            private ArrayList<AreaTour> areaTourList;
+
+            public TourSectionItemsAdapter(ArrayList<AreaTour> areaTourList) {
+                this.areaTourList = areaTourList;
+            }
+
+            @NonNull
+            @Override
+            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
+                return new TourSectionItemsAdapter.ItemViewHolder(inflater.inflate(R.layout.main_recycler_row_tour_item,null));
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return 4;
+            }
+
+            class ItemViewHolder extends RecyclerView.ViewHolder {
+
+                public ItemViewHolder(View itemView) {
+                    super(itemView);
+                }
+            }
+
+        }
+    }
+
+    //    class Locate
+/*    class TourViewHolder extends ViewHolder<AreaTour> {
         private ImageView tourImageView;
         private TextView tourTextView;
         private TextView tourContentTypeTextView;
@@ -188,5 +239,5 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
                 }
             });
         }
-    }
+    }*/
 }

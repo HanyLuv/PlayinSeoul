@@ -8,7 +8,7 @@
         android:id="@+id/main_tour_title_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="여행의 주제는?"
+        android:text="여행의 즐거움 더하기"
         android:textSize="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
