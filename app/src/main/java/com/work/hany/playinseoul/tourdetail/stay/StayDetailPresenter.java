@@ -20,7 +20,7 @@ import retrofit2.Response;
 public class StayDetailPresenter implements StayDetailContract.Presenter {
 
     @Nullable
-    StayDetailContract.View tourView;
+    StayDetailContract.View stayView;
 
     @Nullable
     DataHandler dataHandler;
@@ -37,7 +37,7 @@ public class StayDetailPresenter implements StayDetailContract.Presenter {
             public void onResponse(Call<Result<AreaTour>> call, Response<Result<AreaTour>> response) {
                 if (!call.isCanceled()) {
                     AreaTour areaTour = response.body().getResponse().getBody().getItems().getData();
-                    tourView.initTourOverviewUi(areaTour);
+                    stayView.initTourOverviewUi(areaTour);
                 }
             }
 
@@ -51,7 +51,7 @@ public class StayDetailPresenter implements StayDetailContract.Presenter {
             @Override
             public void onResponse(Call<Result<ArrayList<StayDetail>>> call, Response<Result<ArrayList<StayDetail>>> response) {
                 if (!call.isCanceled()) {
-                    tourView.initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
+                    stayView.initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
                 }
             }
 
@@ -66,7 +66,7 @@ public class StayDetailPresenter implements StayDetailContract.Presenter {
             @Override
             public void onResponse(Call<Result<ArrayList<TourPhoto>>> call, Response<Result<ArrayList<TourPhoto>>> response) {
                 if (!call.isCanceled()) {
-                    tourView.initTourPhotosUi(response.body().getResponse().getBody().getItems().getData());
+                    stayView.initTourPhotosUi(response.body().getResponse().getBody().getItems().getData());
                 }
             }
 
@@ -80,8 +80,14 @@ public class StayDetailPresenter implements StayDetailContract.Presenter {
 
 
     @Override
+    public void openOverViewDetail(AreaTour tour) {
+        //오버뷰 더 자세히 보기 할때
+        stayView.showOverViewDetail(tour);
+    }
+
+    @Override
     public void takeView(StayDetailContract.View view) {
-        this.tourView = view;
+        this.stayView = view;
     }
 
     @Override

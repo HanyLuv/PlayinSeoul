@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.work.hany.playinseoul.R;
+import com.work.hany.playinseoul.common.OverViewDetailFragment;
 import com.work.hany.playinseoul.main.MainFragment;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.model.dao.TourDetail;
@@ -27,6 +28,9 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
+
+import static com.work.hany.playinseoul.common.OverViewDetailFragment.ARGUMENT_TOUR;
+
 //관광정보
 public class TourDetailFragment extends DaggerFragment implements TourDetailContract.View{
 
@@ -41,7 +45,7 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
     private DetailRecyclerAdapter.ItemListener itemListener = new DetailRecyclerAdapter.ItemListener() {
         @Override
         public void onOverViewMoreClicked(AreaTour tour) {
-//            ActivityUtils.addFragmentToActivity(   getActivity().getSupportFragmentManager(),);
+             presenter.openOverViewDetail(tour);
         }
     };
 
@@ -110,6 +114,17 @@ public class TourDetailFragment extends DaggerFragment implements TourDetailCont
         tourDetailRecyclerViewAdapter.updateSection(Section.ItemType.MAP, areaTour);
     }
 
+
+
+    @Override
+    public void showOverViewDetail(AreaTour tour) {
+        OverViewDetailFragment fragment = new OverViewDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ARGUMENT_TOUR,tour);
+        fragment.setArguments(bundle);
+
+        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
+    }
 
     @Override
     public void initTourIntroUi(TourIntro information) {

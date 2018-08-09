@@ -29,9 +29,7 @@
             android:layout_height="wrap_content"
             android:text="상세 정보이다."
             android:lineSpacingExtra="2dp"
-            android:maxLines="5"
             android:layout_marginBottom="20dp"
-            android:ellipsize="end"
             android:textColor="#2E2E2E"
             android:textSize="14dp"  />
     </ScrollView>

@@ -87,4 +87,10 @@ public class TourDetailPresenter implements TourDetailContract.Presenter {
     public void dropView() {
 
     }
+
+    @Override
+    public void openOverViewDetail(AreaTour tour) {
+        //오버뷰 더 자세히 보기 할때
+        tourView.showOverViewDetail(tour);
+    }
 }

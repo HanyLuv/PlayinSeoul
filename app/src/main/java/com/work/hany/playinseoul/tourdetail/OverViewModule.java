@@ -28,8 +28,6 @@ import static com.work.hany.playinseoul.tourdetail.DetailActivity.EXTRA_TOUR_ID;
 
 @Module
 public abstract class OverViewModule {
-
-
     @Named("OverViewDetailFragment")
     @Provides
     static AreaTour provideTourArgument(OverViewDetailFragment fragment) {

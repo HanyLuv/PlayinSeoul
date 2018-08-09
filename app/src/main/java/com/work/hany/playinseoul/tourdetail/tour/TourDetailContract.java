@@ -19,11 +19,13 @@ public interface TourDetailContract {
         void initTourIntroUi(TourIntro information);
         void initTourDetailUi(ArrayList<TourDetail> travelDetails);
         void initTourPhotosUi(ArrayList<TourPhoto> photos); //TODO 음... 음식때도 이거호출할텐데 이름변경생각해보자
+        void showOverViewDetail(AreaTour tour);
     }
 
     interface Presenter extends BasePresenter<View> {
         @Override
         void takeView(TourDetailContract.View view);
         void loadContent(int contentId, int contentTypeId);
+        void openOverViewDetail(AreaTour tour);
     }
 }
