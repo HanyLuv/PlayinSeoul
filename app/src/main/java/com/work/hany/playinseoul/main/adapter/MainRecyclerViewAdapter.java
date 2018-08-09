@@ -112,6 +112,46 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             categoryRecyclerView.setAdapter(categoryHorizontalAdapter);
 
         }
+        /**
+         * TODO 아래로그 확인후 잡자 졸려서 일단 자야할듯 흐규
+         *
+         *     java.lang.ClassCastException: com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter$TourViewHolder$TourSectionItemsAdapter$ItemViewHolder cannot be cast to com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter$CategoryViewHolder$CategoryItemViewHolder
+         at com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter$CategoryViewHolder$CategoryHorizontalAdapter.onBindViewHolder(MainRecyclerViewAdapter.java:116)
+         at android.support.v7.widget.RecyclerView$Adapter.onBindViewHolder(RecyclerView.java:6673)
+         at android.support.v7.widget.RecyclerView$Adapter.bindViewHolder(RecyclerView.java:6714)
+         at android.support.v7.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline(RecyclerView.java:5647)
+         at android.support.v7.widget.RecyclerView$Recycler.tryGetViewHolderForPositionByDeadline(RecyclerView.java:5913)
+         at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition(RecyclerView.java:5752)
+         at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition(RecyclerView.java:5748)
+         at android.support.v7.widget.LinearLayoutManager$LayoutState.next(LinearLayoutManager.java:2232)
+         at android.support.v7.widget.LinearLayoutManager.layoutChunk(LinearLayoutManager.java:1559)
+         at android.support.v7.widget.LinearLayoutManager.fill(LinearLayoutManager.java:1519)
+         at android.support.v7.widget.LinearLayoutManager.onLayoutChildren(LinearLayoutManager.java:614)
+         at android.support.v7.widget.RecyclerView.dispatchLayoutStep2(RecyclerView.java:3812)
+         at android.support.v7.widget.RecyclerView.dispatchLayout(RecyclerView.java:3529)
+         at android.support.v7.widget.RecyclerView.consumePendingUpdateOperations(RecyclerView.java:1737)
+         at android.support.v7.widget.RecyclerView.scrollByInternal(RecyclerView.java:1804)
+         at android.support.v7.widget.RecyclerView.scrollBy(RecyclerView.java:1722)
+         at com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter.onBindViewHolder(MainRecyclerViewAdapter.java:89)
+         at com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter.onBindViewHolder(MainRecyclerViewAdapter.java:26)
+         at android.support.v7.widget.RecyclerView$Adapter.onBindViewHolder(RecyclerView.java:6673)
+         at android.support.v7.widget.RecyclerView$Adapter.bindViewHolder(RecyclerView.java:6714)
+         at android.support.v7.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline(RecyclerView.java:5647)
+         at android.support.v7.widget.RecyclerView$Recycler.tryGetViewHolderForPositionByDeadline(RecyclerView.java:5913)
+         at android.support.v7.widget.GapWorker.prefetchPositionWithDeadline(GapWorker.java:285)
+         at android.support.v7.widget.GapWorker.flushTaskWithDeadline(GapWorker.java:342)
+         at android.support.v7.widget.GapWorker.flushTasksWithDeadline(GapWorker.java:358)
+         at android.support.v7.widget.GapWorker.prefetch(GapWorker.java:365)
+         at android.support.v7.widget.GapWorker.run(GapWorker.java:396)
+         at android.os.Handler.handleCallback(Handler.java:751)
+         at android.os.Handler.dispatchMessage(Handler.java:95)
+         at android.os.Looper.loop(Looper.java:154)
+         at android.app.ActivityThread.main(ActivityThread.java:6682)
+         at java.lang.reflect.Method.invoke(Native Method)
+         at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1520)
+         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1410)
+
+         * */
 
         private class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryItemViewHolder> {
             private ArrayList<ContentType> categoryTypes;
