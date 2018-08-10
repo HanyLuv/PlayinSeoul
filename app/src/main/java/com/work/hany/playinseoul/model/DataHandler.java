@@ -28,8 +28,8 @@ public class DataHandler implements DataHandlerContract {
     }
 
     @Override
-    public   Call<Result<ArrayList<AreaTour>>> getTourList() {
-        return service.getAreaBasedList();
+    public Call<Result<ArrayList<AreaTour>>> getTourList(int numOfRows, ContentType contentTypeId) {
+        return service.getAreaBasedList(contentTypeId.getCode() ,numOfRows);
     }
 
     @Override
@@ -72,7 +72,8 @@ public class DataHandler implements DataHandlerContract {
 
 
 interface DataHandlerContract {
-    Call<Result<ArrayList<AreaTour>>> getTourList();
+    //TODO contentTypeId ->ContentType 바꾸기
+    Call<Result<ArrayList<AreaTour>>> getTourList(int numOfRows, ContentType contentTypeId);
     Call<Result<AreaTour>> getTourOverView(int contentId, int contentTypeId);
     Call<Result<ArrayList<TourPhoto>>> getPhotos(int contentId, int contentTypeId);
     Call<Result<TravelIntro>> getTravelTour(int contentId, int contentTypeId);

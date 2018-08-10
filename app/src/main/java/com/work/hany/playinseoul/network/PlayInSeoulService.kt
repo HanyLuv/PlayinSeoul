@@ -12,8 +12,8 @@ import retrofit2.http.Query
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회 contentTypeId= 넣어서 다양한값 부를수잇다
-    @GET("areaBasedList?&numOfRows=100")
-    fun getAreaBasedList(): Call<Result<ArrayList<AreaTour>>>
+    @GET("areaBasedList")
+    fun getAreaBasedList(@Query("contentTypeId") contentTypeID: Int, @Query("numOfRows") numOfRows: Int): Call<Result<ArrayList<AreaTour>>>
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14
     // http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey=Ejx4tOEJrUzj0J460Snt4dNSCkA0H%2FINuX8Bvec4EMrJJieFwDCHJdL%2BVU%2B6HpuR2nrHrqG8ziZj%2FZ5gwGo0yg%3D%3D&MobileApp=PlayInSeoul&MobileOS=AND&_type=json&contentId=129854&contentTypeId=14&overviewYN=Y&addrinfoYN=Y&mapinfoYN=Y

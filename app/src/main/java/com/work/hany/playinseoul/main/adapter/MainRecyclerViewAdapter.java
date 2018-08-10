@@ -1,5 +1,6 @@
 package com.work.hany.playinseoul.main.adapter;
 
+import android.content.ContentUris;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,10 +25,16 @@ import java.util.ArrayList;
 
 
 public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
-    private MainFragment.MainItemListener mainItemListener;
+    private MainRecyclerViewAdapter.ItemListener mainItemListener;
     private RecyclerView.RecycledViewPool recycledViewPool;
 
-    public MainRecyclerViewAdapter(ArrayList<Section> sections, MainFragment.MainItemListener mainItemListener) {
+    public interface ItemListener {
+        void onTourClicked(AreaTour tour);
+        void onMoreTourClicked(AreaTour tour);
+    }
+
+
+    public MainRecyclerViewAdapter(ArrayList<Section> sections, MainRecyclerViewAdapter.ItemListener mainItemListener) {
         this.mainItemListener = mainItemListener;
         this.sections = sections;
 //        this.recycledViewPool = new RecyclerView.RecycledViewPool();
@@ -85,7 +92,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         if(holder instanceof CategoryViewHolder) {
-            CategoryViewHolder categoryViewHolder = (CategoryViewHolder) holder;
+            CategoryViewHolder categoryViewHolder =  CategoryViewHolder.class.cast(holder);
             categoryViewHolder.categoryRecyclerView.scrollBy(categoryRecyclerViewScrollPosition,0);
         }
     }
@@ -112,46 +119,6 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             categoryRecyclerView.setAdapter(categoryHorizontalAdapter);
 
         }
-        /**
-         * TODO 아래로그 확인후 잡자 졸려서 일단 자야할듯 흐규
-         *
-         *     java.lang.ClassCastException: com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter$TourViewHolder$TourSectionItemsAdapter$ItemViewHolder cannot be cast to com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter$CategoryViewHolder$CategoryItemViewHolder
-         at com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter$CategoryViewHolder$CategoryHorizontalAdapter.onBindViewHolder(MainRecyclerViewAdapter.java:116)
-         at android.support.v7.widget.RecyclerView$Adapter.onBindViewHolder(RecyclerView.java:6673)
-         at android.support.v7.widget.RecyclerView$Adapter.bindViewHolder(RecyclerView.java:6714)
-         at android.support.v7.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline(RecyclerView.java:5647)
-         at android.support.v7.widget.RecyclerView$Recycler.tryGetViewHolderForPositionByDeadline(RecyclerView.java:5913)
-         at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition(RecyclerView.java:5752)
-         at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition(RecyclerView.java:5748)
-         at android.support.v7.widget.LinearLayoutManager$LayoutState.next(LinearLayoutManager.java:2232)
-         at android.support.v7.widget.LinearLayoutManager.layoutChunk(LinearLayoutManager.java:1559)
-         at android.support.v7.widget.LinearLayoutManager.fill(LinearLayoutManager.java:1519)
-         at android.support.v7.widget.LinearLayoutManager.onLayoutChildren(LinearLayoutManager.java:614)
-         at android.support.v7.widget.RecyclerView.dispatchLayoutStep2(RecyclerView.java:3812)
-         at android.support.v7.widget.RecyclerView.dispatchLayout(RecyclerView.java:3529)
-         at android.support.v7.widget.RecyclerView.consumePendingUpdateOperations(RecyclerView.java:1737)
-         at android.support.v7.widget.RecyclerView.scrollByInternal(RecyclerView.java:1804)
-         at android.support.v7.widget.RecyclerView.scrollBy(RecyclerView.java:1722)
-         at com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter.onBindViewHolder(MainRecyclerViewAdapter.java:89)
-         at com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter.onBindViewHolder(MainRecyclerViewAdapter.java:26)
-         at android.support.v7.widget.RecyclerView$Adapter.onBindViewHolder(RecyclerView.java:6673)
-         at android.support.v7.widget.RecyclerView$Adapter.bindViewHolder(RecyclerView.java:6714)
-         at android.support.v7.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline(RecyclerView.java:5647)
-         at android.support.v7.widget.RecyclerView$Recycler.tryGetViewHolderForPositionByDeadline(RecyclerView.java:5913)
-         at android.support.v7.widget.GapWorker.prefetchPositionWithDeadline(GapWorker.java:285)
-         at android.support.v7.widget.GapWorker.flushTaskWithDeadline(GapWorker.java:342)
-         at android.support.v7.widget.GapWorker.flushTasksWithDeadline(GapWorker.java:358)
-         at android.support.v7.widget.GapWorker.prefetch(GapWorker.java:365)
-         at android.support.v7.widget.GapWorker.run(GapWorker.java:396)
-         at android.os.Handler.handleCallback(Handler.java:751)
-         at android.os.Handler.dispatchMessage(Handler.java:95)
-         at android.os.Looper.loop(Looper.java:154)
-         at android.app.ActivityThread.main(ActivityThread.java:6682)
-         at java.lang.reflect.Method.invoke(Native Method)
-         at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1520)
-         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1410)
-
-         * */
 
         private class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryItemViewHolder> {
             private ArrayList<ContentType> categoryTypes;
@@ -195,7 +162,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         }
     }
 
-    class TourViewHolder extends ViewHolder<AreaTour> {
+    class TourViewHolder extends ViewHolder<ArrayList<AreaTour>> {
         private ImageView tourSectionImageView;
         private TextView tourSectionTitleTextView;
         private RecyclerView tourSectionItemsRecyclerView;
@@ -210,9 +177,12 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         }
 
         @Override
-        public void bind(final AreaTour areaTour) {
-            ImageLoderUtils.lodeURI(tourSectionImageView, areaTour.getLargeImage());
-            TourSectionItemsAdapter tourSectionItemsAdapter = new TourSectionItemsAdapter(new ArrayList<AreaTour>());
+        public void bind(final ArrayList<AreaTour> areaTour) {
+            String sectionTitle = ConverterUtils.convertContentType(areaTour.get(0).getContentTypeId());
+            tourSectionTitleTextView.setText(sectionTitle);
+
+            ImageLoderUtils.lodeURI(tourSectionImageView, areaTour.get(areaTour.size() - 1).getLargeImage());
+            TourSectionItemsAdapter tourSectionItemsAdapter = new TourSectionItemsAdapter(areaTour);
             tourSectionItemsRecyclerView.setLayoutManager(new GridLayoutManager( itemView.getContext(), 2));
             tourSectionItemsRecyclerView.setAdapter(tourSectionItemsAdapter);
         }
@@ -233,7 +203,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
             @Override
             public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-
+                holder.bind(areaTourList.get(position));
             }
 
             @Override
@@ -242,9 +212,35 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             }
 
             class ItemViewHolder extends RecyclerView.ViewHolder {
+                private ImageView tourImageView;
+                private TextView tourTextView;
+                private TextView tourAddrTextView;
+                private TextView tourContentShowCountTextView;
 
                 public ItemViewHolder(View itemView) {
                     super(itemView);
+                    tourImageView = itemView.findViewById(R.id.tour_content_image_view);
+                    tourTextView = itemView.findViewById(R.id.tour_title_text_view);
+                    tourContentShowCountTextView = itemView.findViewById(R.id.tour_show_text_view);
+                    tourAddrTextView = itemView.findViewById(R.id.tour_content_addr_text_view);
+
+                }
+
+                public void bind(final AreaTour tour){
+                    ImageLoderUtils.lodeURI(tourImageView, tour.getLargeImage());
+                    tourTextView.setText(tour.getContentTitle());
+
+                    String countStr = new StringBuilder().append("조회수 ").append(tour.getReadCount()).toString();
+                    tourContentShowCountTextView.setText(countStr);
+                    tourAddrTextView.setText(tour.getAreaAddress());
+
+                    itemView.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            mainItemListener.onTourClicked(tour);
+                        }
+                    });
+
                 }
             }
 

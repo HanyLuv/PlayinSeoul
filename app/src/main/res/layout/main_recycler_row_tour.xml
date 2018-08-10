@@ -8,21 +8,22 @@
         android:id="@+id/tour_section_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="관광지에서 놀래?"
-        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="25dp"
+        android:text="관광지에서 놀래?"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/content_title_text_color"
         android:textSize="20dp" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/tour_section_card_view"
-        android:layout_below="@+id/tour_section_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tour_section_title_text_view"
         android:layout_margin="10dp"
         android:elevation="2dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,35 +34,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-
-            <TextView
-                android:id="@+id/tour_title_text_view"
-                android:layout_width="match_parent"
+            <android.support.v7.widget.CardView
+                android:id="@+id/tour_more_card_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_centerInParent="true"
-                android:layout_below="@+id/tour_content_type_text_view"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:text="더 알아 보기"
-                android:textColor="@color/content_title_text_color"
-                android:textSize="18dp" />
+                android:elevation="2dp"
+                app:cardCornerRadius="3dp">
 
+                <TextView
+                    android:id="@+id/tour_title_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tour_content_type_text_view"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:text="더 알아 보기"
+                    android:textColor="@color/content_title_text_color"
+                    android:textSize="14dp" />
 
+            </android.support.v7.widget.CardView>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/tour_section_card_view"
         android:id="@+id/tour_section_item_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tour_section_card_view"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp" />
 
 
 </RelativeLayout>

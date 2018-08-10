@@ -4,6 +4,7 @@ package com.work.hany.playinseoul.main;
 import android.support.annotation.Nullable;
 
 import com.work.hany.playinseoul.di.ActivityScoped;
+import com.work.hany.playinseoul.model.ContentType;
 import com.work.hany.playinseoul.model.DataHandler;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.Result;
@@ -30,7 +31,6 @@ public class MainPresenter implements MainContract.Presenter {
     @Inject
     MainPresenter(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
-        //TODO Main actvity에서 @Inject하고, 여기서 안하니 오류나더라. 정확히 한번 확인해보자.
     }
 
     @Override
@@ -40,7 +40,59 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void loadTourList() {
-        dataHandler.getTourList().enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+        int rowNum = 5;
+        //문화시설
+        dataHandler.getTourList(rowNum, ContentType.CULTURE ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+            @Override
+            public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
+                if (!call.isCanceled()) {
+                    ArrayList<AreaTour> areaTourInformationList = response.body().getResponse().getBody().getItems().getData();
+                    mainView.initTourListUi(areaTourInformationList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<ArrayList<AreaTour>>> call, Throwable t) {
+
+            }
+        });
+
+        //레포츠
+        dataHandler.getTourList(rowNum, ContentType.REPORTS ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+            @Override
+            public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
+                if (!call.isCanceled()) {
+                    ArrayList<AreaTour> areaTourInformationList = response.body().getResponse().getBody().getItems().getData();
+                    mainView.initTourListUi(areaTourInformationList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<ArrayList<AreaTour>>> call, Throwable t) {
+
+            }
+        });
+
+
+        //페스티발
+        dataHandler.getTourList(rowNum, ContentType.FESTIVAL ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+            @Override
+            public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
+                if (!call.isCanceled()) {
+                    ArrayList<AreaTour> areaTourInformationList = response.body().getResponse().getBody().getItems().getData();
+                    mainView.initTourListUi(areaTourInformationList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<ArrayList<AreaTour>>> call, Throwable t) {
+
+            }
+        });
+
+
+        //관광지
+        dataHandler.getTourList(rowNum, ContentType.TOUR ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
             @Override
             public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
                 if (!call.isCanceled()) {

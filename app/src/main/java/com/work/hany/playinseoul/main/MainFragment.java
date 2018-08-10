@@ -16,7 +16,9 @@ import com.work.hany.playinseoul.main.adapter.MainRecyclerViewAdapter;
 import com.work.hany.playinseoul.model.ContentType;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
+import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.tourdetail.DetailActivity;
+import com.work.hany.playinseoul.tourdetail.adapter.TravelCourseDetailRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -34,17 +36,21 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
 
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
 
-    public interface MainItemListener {
-        void onTourClick(AreaTour tourInformation);
-    }
 
-    private MainItemListener mainItemListener = new MainItemListener() {
+    private MainRecyclerViewAdapter.ItemListener itemListener = new MainRecyclerViewAdapter.ItemListener(){
         @Override
-        public void onTourClick(AreaTour tourInformation) {
-            presenter.openTourDetails(tourInformation);
-            //TODO contentTypeID 에따라서 실행되어야하는 프레그먼트가 다르다.
+        public void onTourClicked(AreaTour tour) {
+            presenter.openTourDetails(tour);
         }
+
+        @Override
+        public void onMoreTourClicked(AreaTour tour) {
+//            presenter
+        }
+
+
     };
+
 
     @Inject
     public MainFragment() { }
@@ -65,7 +71,7 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         Section categorySection = new Section(Section.ItemType.CATEGORY, areaTour);
         sections.add(categorySection);
 
-        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(sections, mainItemListener);
+        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(sections, itemListener);
 
     }
 
@@ -110,9 +116,7 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
 
     @Override
     public void initTourListUi(ArrayList<AreaTour> areaTourList) {
-        for(AreaTour tour: areaTourList) {
-            mainRecyclerViewAdapter.addSection(Section.ItemType.MAIN_TOUR, tour);
-        }
+        mainRecyclerViewAdapter.addSection(Section.ItemType.MAIN_TOUR, areaTourList);
     }
 
 
