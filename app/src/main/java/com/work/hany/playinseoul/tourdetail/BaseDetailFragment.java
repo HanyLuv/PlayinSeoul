@@ -16,7 +16,6 @@ import static com.work.hany.playinseoul.common.overview.OverViewDetailFragment.A
 abstract public class BaseDetailFragment extends DaggerFragment implements BaseDetailContract.BaseDetailView {
 
     protected abstract BaseDetailContract.BaseDetailPresenter getPresenter();
-    protected abstract BaseDetailContract.BaseDetailView getDetailView();
 
     @Override
     public void onResume() {
