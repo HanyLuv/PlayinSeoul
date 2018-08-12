@@ -120,8 +120,4 @@ public class TourDetailFragment extends BaseDetailFragment implements TourDetail
         return presenter;
     }
 
-    @Override
-    protected BaseDetailContract.BaseDetailView getDetailView() {
-        return this;
-    }
 }

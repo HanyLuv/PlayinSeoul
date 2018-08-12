@@ -121,12 +121,6 @@ public class StayDetailFragment extends BaseDetailFragment implements StayDetail
         }
     }
 
-
-    @Override
-    protected BaseDetailContract.BaseDetailView getDetailView() {
-        return this;
-    }
-
     @Override
     public BaseDetailContract.BaseDetailPresenter getPresenter() {
         return presenter;

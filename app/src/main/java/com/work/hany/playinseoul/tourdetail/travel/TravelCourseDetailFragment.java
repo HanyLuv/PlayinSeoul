@@ -117,8 +117,4 @@ public class TravelCourseDetailFragment extends BaseDetailFragment implements Tr
         return presenter;
     }
 
-    @Override
-    protected BaseDetailContract.BaseDetailView getDetailView() {
-        return this;
-    }
 }
