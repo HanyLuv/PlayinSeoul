@@ -1,11 +1,9 @@
-package com.work.hany.playinseoul.common;
+package com.work.hany.playinseoul.common.overview;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -14,16 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.work.hany.playinseoul.R;
-import com.work.hany.playinseoul.di.FragmentScoped;
 import com.work.hany.playinseoul.network.AreaTour;
-import com.work.hany.playinseoul.tourdetail.OverViewModule;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import dagger.Component;
-import dagger.Subcomponent;
-import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 public class OverViewDetailFragment extends DaggerFragment implements OverViewDetailContract.View {
     public static final String ARGUMENT_TOUR = "ARGUMENT_TOUR";

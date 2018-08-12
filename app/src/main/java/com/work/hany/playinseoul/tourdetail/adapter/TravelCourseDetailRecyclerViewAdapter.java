@@ -19,17 +19,20 @@ import static com.work.hany.playinseoul.model.Section.ItemType;
 
 public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
 
-    private TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener;
+    private TravelCourseDetailRecyclerViewAdapter.TravelCourseItemListener travelCourseItemListener;
 
-    public interface ItemListener extends DetailRecyclerAdapter.ItemListener {
+    public interface TravelCourseItemListener {
         void onSubCourseDetailShowClicked(TravelDetail travelDetail);
     }
 
     public TravelCourseDetailRecyclerViewAdapter(ArrayList<Section> sections, TravelCourseDetailRecyclerViewAdapter.ItemListener itemListener) {
-        super(sections,itemListener);
+        super(sections, itemListener);
         this.itemListener = itemListener;
     }
 
+    public void setTravelCourseItemListener(TravelCourseItemListener travelCourseItemListener) {
+        this.travelCourseItemListener = travelCourseItemListener;
+    }
 
     //
     // TODO 공통으로 보이는 아이템 셀 부분이 많은데 이걸 한곳에 묶고싶어 ㅠㅠㅠ 생각해보자
@@ -38,27 +41,27 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewHolder viewHolder = null;
-        LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ItemType currentItemType = getCurrentItemType(viewType);
 
-        switch (currentItemType){
+        switch (currentItemType) {
             case IMAGE:
-                View imageRowView= inflater.inflate(R.layout.detail_recycler_row_image_itme,null,false);
+                View imageRowView = inflater.inflate(R.layout.detail_recycler_row_image_itme, null, false);
                 viewHolder = new ImageViewHolder(imageRowView);
                 break;
 
             case INFORMATION:
-                View informationRowView= inflater.inflate(R.layout.detail_recycler_row_travel_tour_intro_itme,null,false);
+                View informationRowView = inflater.inflate(R.layout.detail_recycler_row_travel_tour_intro_itme, null, false);
                 viewHolder = new InformationViewHolder(informationRowView);
                 break;
 
             case OVERHEAD:
-                View introRowView= inflater.inflate(R.layout.detail_recycler_row_overhead_itme,null,false);
+                View introRowView = inflater.inflate(R.layout.detail_recycler_row_overhead_itme, null, false);
                 viewHolder = new OverHeadViewHolder(introRowView);
                 break;
 
             case DETAIL:
-                View courseView= inflater.inflate(R.layout.detail_recycler_row_course_itme,null,false);
+                View courseView = inflater.inflate(R.layout.detail_recycler_row_course_itme, null, false);
                 viewHolder = new CourseViewHolder(courseView);
                 break;
 
@@ -69,7 +72,7 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
     }
 
 
-    class CourseViewHolder extends ViewHolder<TravelDetail>{
+    class CourseViewHolder extends ViewHolder<TravelDetail> {
         private TextView contentCourseTitleTextView;
         private TextView contentCourseNumberTextView;
         private TextView contentCourseDescriptionTextView;
@@ -91,21 +94,22 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
             contentCourseTitleTextView.setText(data.getSubTitle());
             contentCourseNumberTextView.setText(String.valueOf(data.getSubNumber() + 1));
             contentCourseDescriptionTextView.setText(data.getSubDetailDescription());
-            ImageLoderUtils.lodeURI(contentCourseImageTextView,data.getSubDetailImage());
+            ImageLoderUtils.lodeURI(contentCourseImageTextView, data.getSubDetailImage());
             contentCourseMoreTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemListener.onSubCourseDetailShowClicked(data);
+                    if (travelCourseItemListener != null) {
+                        travelCourseItemListener.onSubCourseDetailShowClicked(data);
+                    }
                 }
 
             });
 
 
-
         }
     }
 
-    class InformationViewHolder extends ViewHolder<TravelIntro>{
+    class InformationViewHolder extends ViewHolder<TravelIntro> {
         private TextView contentCourseTimeTextView;
         private TextView contentDistanceTextView;
 
@@ -117,7 +121,7 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
 
         @Override
         public void bind(TravelIntro data) {
-            if(data == null) return;
+            if (data == null) return;
             String courseTimeString = new StringBuilder().append("소요시간 ").append(data.getCourseTime()).toString();
             String distanceString = new StringBuilder().append("총 거리 ").append(data.getDistance()).toString();
             contentCourseTimeTextView.setText(courseTimeString);

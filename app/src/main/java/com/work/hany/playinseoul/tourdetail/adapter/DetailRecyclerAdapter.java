@@ -33,6 +33,7 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
 
     public interface ItemListener {
         void onOverViewMoreClicked(AreaTour tour);
+        void onMapMoreClicked(AreaTour tour);
     }
 
     public DetailRecyclerAdapter(ArrayList<Section> sections, ItemListener itemListener){
@@ -124,10 +125,12 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
         public MapView mapView;
         public GoogleMap  map;
         private TextView mapAddrTextView;
+        private TextView mapMoreTextView;
 
         public MapViewHolder(View itemView) {
             super(itemView);
             mapAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
+            mapMoreTextView = itemView.findViewById(R.id.tour_map_more_text_view);
             mapView = itemView.findViewById(R.id.tour_map_view);
             if(mapView !=null) {
                 mapView.onCreate(null);
@@ -137,11 +140,18 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
         }
 
         @Override
-        public void bind(AreaTour areaTour) {
+        public void bind(final AreaTour areaTour) {
             if (areaTour == null) return;
             mapAddrTextView.setText(areaTour.getFullAddress());
             mapView.setTag(areaTour);
             setMapLocation();
+
+            mapMoreTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemListener.onMapMoreClicked(areaTour);
+                }
+            });
         }
 
         @Override

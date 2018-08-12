@@ -10,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.work.hany.playinseoul.R;
-import com.work.hany.playinseoul.common.OverViewDetailFragment;
+import com.work.hany.playinseoul.common.map.MapDetailFragment;
+import com.work.hany.playinseoul.common.overview.OverViewDetailFragment;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.model.dao.StayDetail;
-import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.tourdetail.BaseDetailFragment;
 import com.work.hany.playinseoul.tourdetail.adapter.DetailRecyclerAdapter;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
 import com.work.hany.playinseoul.util.ActivityUtils;
@@ -27,10 +28,10 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
 
-import static com.work.hany.playinseoul.common.OverViewDetailFragment.ARGUMENT_TOUR;
+import static com.work.hany.playinseoul.common.overview.OverViewDetailFragment.ARGUMENT_TOUR;
 
 //관광정보
-public class StayDetailFragment extends DaggerFragment implements StayDetailContract.View {
+public class StayDetailFragment extends BaseDetailFragment implements StayDetailContract.View {
 
     @Inject
     StayDetailPresenter presenter;
@@ -40,13 +41,6 @@ public class StayDetailFragment extends DaggerFragment implements StayDetailCont
 
     private TourDetailRecyclerViewAdapter tourDetailRecyclerViewAdapter;
 
-    private DetailRecyclerAdapter.ItemListener itemListener = new DetailRecyclerAdapter.ItemListener() {
-        @Override
-        public void onOverViewMoreClicked(AreaTour tour) {
-            presenter.openOverViewDetail(tour);
-        }
-    };
-
 
     @Inject
     public StayDetailFragment(){ }
@@ -55,6 +49,11 @@ public class StayDetailFragment extends DaggerFragment implements StayDetailCont
     public void onResume() {
         super.onResume();
         presenter.takeView(this);
+    }
+
+    @Override
+    public StayDetailPresenter getPresenter() {
+        return presenter;
     }
 
     @Override
@@ -74,7 +73,7 @@ public class StayDetailFragment extends DaggerFragment implements StayDetailCont
         sections.add(mapSection);
 //        sections.add(photosSection);
 
-        tourDetailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections,itemListener);
+        tourDetailRecyclerViewAdapter = new TourDetailRecyclerViewAdapter(sections,getItemListener());
 
     }
 
@@ -141,5 +140,16 @@ public class StayDetailFragment extends DaggerFragment implements StayDetailCont
 
         ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
     }
+
+    @Override
+    public void showMapDetail(AreaTour tour) {
+        MapDetailFragment fragment = new MapDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ARGUMENT_TOUR,tour);
+        fragment.setArguments(bundle);
+
+        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
+    }
+
 
 }

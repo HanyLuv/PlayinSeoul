@@ -68,8 +68,8 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         areaTour.add(ContentType.STAY);
 
 
-        Section categorySection = new Section(Section.ItemType.CATEGORY, areaTour);
-        sections.add(categorySection);
+//        Section categorySection = new Section(Section.ItemType.CATEGORY, areaTour);
+//        sections.add(categorySection);
 
         mainRecyclerViewAdapter = new MainRecyclerViewAdapter(sections, itemListener);
 

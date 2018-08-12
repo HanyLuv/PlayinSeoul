@@ -119,6 +119,12 @@ public class TravelCourseDetailPresenter implements TravelCourseDetailContract.P
     }
 
     @Override
+    public void openMapDetail(AreaTour tour) {
+        detailView.showMapDetail(tour);
+
+    }
+
+    @Override
     public void takeView(TravelCourseDetailContract.View view) {
         this.detailView = view;
 

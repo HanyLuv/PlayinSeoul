@@ -94,4 +94,11 @@ public class StayDetailPresenter implements StayDetailContract.Presenter {
     public void dropView() {
 
     }
+
+
+    @Override
+    public void openMapDetail(AreaTour tour) {
+        stayView.showMapDetail(tour);
+
+    }
 }

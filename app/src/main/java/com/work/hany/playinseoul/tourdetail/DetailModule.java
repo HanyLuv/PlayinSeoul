@@ -1,6 +1,7 @@
 package com.work.hany.playinseoul.tourdetail;
 
-import com.work.hany.playinseoul.common.OverViewDetailFragment;
+import com.work.hany.playinseoul.common.map.MapDetailFragment;
+import com.work.hany.playinseoul.common.overview.OverViewDetailFragment;
 import com.work.hany.playinseoul.di.ActivityScoped;
 import com.work.hany.playinseoul.di.FragmentScoped;
 import com.work.hany.playinseoul.network.AreaTour;
@@ -25,8 +26,13 @@ import static com.work.hany.playinseoul.tourdetail.DetailActivity.EXTRA_TOUR_ID;
 public abstract class DetailModule {
 
     @FragmentScoped
-    @ContributesAndroidInjector(modules = OverViewModule.class)
+    @ContributesAndroidInjector(modules = CommonModule.class)
     abstract OverViewDetailFragment overViewDetailFragment();
+
+
+    @FragmentScoped
+    @ContributesAndroidInjector(modules = CommonModule.class)
+    abstract MapDetailFragment mapDetailFragment();
 
 
     @FragmentScoped
