@@ -44,9 +44,9 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
 
     //TODO getCurrentItemType 와 onCreateViewHolder 가 null을 리턴하는 방식이 마음에 안든당..생각해보자.
 
-    protected class ImageViewHolder extends ViewHolder<String> {
+    protected class ImageBaseViewHolder extends BaseViewHolder<String> {
         private ImageView imageView;
-        public ImageViewHolder(View itemView) {
+        public ImageBaseViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.detail_tour_image);
         }
@@ -58,14 +58,14 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
 
     }
 
-    protected class OverHeadViewHolder extends ViewHolder<AreaTour> {
+    protected class OverHeadBaseViewHolder extends BaseViewHolder<AreaTour> {
         private TextView contentIntroTextView;
         private TextView contentTitleTextView;
         private TextView contentAddrTextView;
         private TextView contentMoreTextView;
         private final int MAX_SHOW_INTRO_COUNT = 300; // 보여지는 인트로 문자 갯수. 300바이트 즉 한글일경우 150자정도...
 
-        public OverHeadViewHolder(View itemView) {
+        public OverHeadBaseViewHolder(View itemView) {
             super(itemView);
             contentIntroTextView = itemView.findViewById(R.id.tour_information_text_view);
             contentTitleTextView = itemView.findViewById(R.id.tour_title_text_view);
@@ -108,11 +108,11 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
 
     //아래 메소드 알아보기
     @Override
-    public void onViewRecycled(@NonNull ViewHolder holder) {
+    public void onViewRecycled(@NonNull BaseViewHolder holder) {
         super.onViewRecycled(holder);
 
-        if( holder instanceof MapViewHolder) {
-            MapViewHolder mapViewHolder = (MapViewHolder)holder;
+        if( holder instanceof MapBaseViewHolder) {
+            MapBaseViewHolder mapViewHolder = (MapBaseViewHolder)holder;
             if (mapViewHolder != null && mapViewHolder.map != null) {
                 mapViewHolder.map.clear();
                 mapViewHolder.map.setMapType(GoogleMap.MAP_TYPE_NONE);
@@ -121,13 +121,13 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
 
     }
 
-    protected class MapViewHolder extends ViewHolder<AreaTour> implements OnMapReadyCallback {
+    protected class MapBaseViewHolder extends BaseViewHolder<AreaTour> implements OnMapReadyCallback {
         public MapView mapView;
         public GoogleMap  map;
         private TextView mapAddrTextView;
         private TextView mapMoreTextView;
 
-        public MapViewHolder(View itemView) {
+        public MapBaseViewHolder(View itemView) {
             super(itemView);
             mapAddrTextView = itemView.findViewById(R.id.tour_addr_text_view);
             mapMoreTextView = itemView.findViewById(R.id.tour_map_more_text_view);
@@ -203,12 +203,12 @@ abstract public class DetailRecyclerAdapter extends BaseSectionRecyclerAdapter {
 
 
     /** 둘러보기, 음식점메뉴에 사용됨*/
-    class PhotosViewHolder extends ViewHolder<ArrayList<TourPhoto>> {
+    class PhotosBaseViewHolder extends BaseViewHolder<ArrayList<TourPhoto>> {
         private LinearLayout tourPhotosLayout;
         private LayoutInflater inflater;
         private final int MAX_SHOW_IMAGE_COUNT = 4;
 
-        public PhotosViewHolder(View itemView) {
+        public PhotosBaseViewHolder(View itemView) {
             super(itemView);
             inflater = LayoutInflater.from(itemView.getContext());
             tourPhotosLayout = itemView.findViewById(R.id.tour_photo_layout);

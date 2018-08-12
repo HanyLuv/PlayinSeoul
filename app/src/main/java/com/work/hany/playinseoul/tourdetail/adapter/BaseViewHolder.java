@@ -7,8 +7,8 @@ import com.work.hany.playinseoul.model.Section;
 
 import java.util.ArrayList;
 
-public abstract class ViewHolder<T> extends  RecyclerView.ViewHolder {
-    public ViewHolder(View itemView) {
+public abstract class BaseViewHolder<T> extends  RecyclerView.ViewHolder {
+    public BaseViewHolder(View itemView) {
         super(itemView);
     }
     abstract public void bind(T data);

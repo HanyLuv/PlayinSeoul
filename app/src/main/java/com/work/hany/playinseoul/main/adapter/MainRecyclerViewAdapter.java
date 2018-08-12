@@ -16,9 +16,9 @@ import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.model.ContentType;
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
+import com.work.hany.playinseoul.tourdetail.adapter.BaseViewHolder;
 import com.work.hany.playinseoul.util.ConverterUtils;
 import com.work.hany.playinseoul.util.ImageLoderUtils;
-import com.work.hany.playinseoul.tourdetail.adapter.ViewHolder;
 
 import java.util.ArrayList;
 
@@ -47,8 +47,8 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder = null;
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BaseViewHolder baseViewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         Section.ItemType currentItemType = getCurrentItemType(viewType);
         View itemView;
@@ -56,25 +56,25 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         switch (currentItemType) {
             case CATEGORY:
                 itemView = inflater.inflate(R.layout.main_recycler_row_category, parent, false);
-                CategoryViewHolder categoryViewHolder = new CategoryViewHolder(itemView);
+                CategoryBaseViewHolder categoryViewHolder = new CategoryBaseViewHolder(itemView);
                 categoryViewHolder.categoryRecyclerView.setRecycledViewPool(recycledViewPool);
-                viewHolder = categoryViewHolder;
+                baseViewHolder = categoryViewHolder;
                 break;
 
             case MAIN_TOUR:
                 itemView = inflater.inflate(R.layout.main_recycler_row_tour, parent, false);
-                TourSectionViewHolder tourSectionViewHolder = new TourSectionViewHolder(itemView);
+                TourSectionBaseViewHolder tourSectionViewHolder = new TourSectionBaseViewHolder(itemView);
                 tourSectionViewHolder.tourSectionItemsRecyclerView.setRecycledViewPool(recycledViewPool);
-                viewHolder = tourSectionViewHolder;
+                baseViewHolder = tourSectionViewHolder;
                 break;
 
         }
 
-        return viewHolder;
+        return baseViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         try {
             super.onBindViewHolder(holder, position);
         } catch (ClassCastException e) {
@@ -85,15 +85,15 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
     //    private int categoryRecyclerViewScrollPosition = 0;
 //
 //    @Override
-//    public void onViewRecycled(@NonNull ViewHolder holder) {
-//        ViewHolder currentViewHolder = holder ;
+//    public void onViewRecycled(@NonNull BaseViewHolder holder) {
+//        BaseViewHolder currentViewHolder = holder ;
 //        if (Section.ItemType.CATEGORY.getCode() == holder.getItemViewType()) {
-//            CategoryViewHolder categoryViewHolder = CategoryViewHolder.class.cast(holder);
+//            CategoryBaseViewHolder categoryViewHolder = CategoryBaseViewHolder.class.cast(holder);
 //            RecyclerView categoryRecyclerView = categoryViewHolder.categoryRecyclerView;
 //            categoryRecyclerViewScrollPosition = categoryRecyclerView.computeHorizontalScrollOffset();
 //            currentViewHolder = holder;
 //        } else if ((Section.ItemType.MAIN_TOUR.getCode() == holder.getItemViewType())) {
-//            currentViewHolder = TourSectionViewHolder.class.cast(holder);
+//            currentViewHolder = TourSectionBaseViewHolder.class.cast(holder);
 //        }
 //
 //        super.onViewRecycled(currentViewHolder);
@@ -101,16 +101,16 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 //    }
 //
 //    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-//        ViewHolder currentViewHolder = holder ;
+//    public void onBindViewHolder(@NonNull BaseViewHolder holder, final int position) {
+//        BaseViewHolder currentViewHolder = holder ;
 //        try {
 //            if (Section.ItemType.CATEGORY.getCode() == holder.getItemViewType()) {
-//                CategoryViewHolder categoryViewHolder = CategoryViewHolder.class.cast(holder);
+//                CategoryBaseViewHolder categoryViewHolder = CategoryBaseViewHolder.class.cast(holder);
 //                categoryViewHolder.categoryRecyclerView.scrollBy(categoryRecyclerViewScrollPosition, 0);
 //                currentViewHolder = categoryViewHolder;
 //
 //            } else if ((Section.ItemType.MAIN_TOUR.getCode() == holder.getItemViewType())) {
-//                currentViewHolder = TourSectionViewHolder.class.cast(holder);
+//                currentViewHolder = TourSectionBaseViewHolder.class.cast(holder);
 //            }
 //        } catch (ClassCastException e) {
 //            Log.e("HANY_TAG", "MainRecyclerViewAdapter.onBindViewHolder" + e.getClass().getSimpleName()+ " position : "+position);
@@ -122,13 +122,13 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
     /**
      * 투어 섹션 뷰홀더
      */
-    class TourSectionViewHolder extends ViewHolder<ArrayList<AreaTour>> {
+    class TourSectionBaseViewHolder extends BaseViewHolder<ArrayList<AreaTour>> {
         private ImageView tourSectionImageView;
         private TextView tourSectionTitleTextView;
         private RecyclerView tourSectionItemsRecyclerView;
 
 
-        public TourSectionViewHolder(View itemView) {
+        public TourSectionBaseViewHolder(View itemView) {
             super(itemView);
             tourSectionImageView = itemView.findViewById(R.id.tour_content_image_view);
             tourSectionTitleTextView = itemView.findViewById(R.id.tour_section_title_text_view);
@@ -151,7 +151,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         /**
          * 투어 섹션 아이템 어댑터
          */
-        private class TourSectionItemsAdapter extends RecyclerView.Adapter<TourSectionItemsAdapter.TourItemViewHolder> {
+        private class TourSectionItemsAdapter extends RecyclerView.Adapter<TourSectionItemsAdapter.TourItemBaseViewHolder> {
             private ArrayList<AreaTour> areaTourList;
             private final int SECTION_IMAGE_COUNT = 1;
 
@@ -161,19 +161,19 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
             @NonNull
             @Override
-            public TourItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public TourItemBaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new TourItemViewHolder(inflater.inflate(R.layout.main_recycler_row_tour_item, null));
+                return new TourItemBaseViewHolder(inflater.inflate(R.layout.main_recycler_row_tour_item, null));
             }
 
             @Override
-            public void onBindViewHolder(@NonNull TourItemViewHolder holder, int position) {
-                Log.e("HANY_TAG", "TourItemViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
+            public void onBindViewHolder(@NonNull TourItemBaseViewHolder holder, int position) {
+                Log.e("HANY_TAG", "TourItemBaseViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
                 try {
                     holder.bind(areaTourList.get(position));
 
                 } catch (ClassCastException e) {
-                    Log.e("HANY_TAG", "[ error! ]TourItemViewHolder onBindViewHolder : " + e.toString());
+                    Log.e("HANY_TAG", "[ error! ]TourItemBaseViewHolder onBindViewHolder : " + e.toString());
                 }
             }
             @Override
@@ -184,13 +184,13 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             /**
              * 투어 섹션 아이템 뷰홀더
              */
-            class TourItemViewHolder extends ViewHolder<AreaTour> {
+            class TourItemBaseViewHolder extends BaseViewHolder<AreaTour> {
                 private ImageView tourImageView;
                 private TextView tourTextView;
                 private TextView tourAddrTextView;
                 private TextView tourContentShowCountTextView;
 
-                public TourItemViewHolder(View itemView) {
+                public TourItemBaseViewHolder(View itemView) {
                     super(itemView);
                     tourImageView = itemView.findViewById(R.id.tour_content_image_view);
                     tourTextView = itemView.findViewById(R.id.tour_title_text_view);
@@ -225,11 +225,11 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
      * 키테고리 뷰홀더
      */
 
-    class CategoryViewHolder extends ViewHolder<ArrayList<ContentType>> {
+    class CategoryBaseViewHolder extends BaseViewHolder<ArrayList<ContentType>> {
         private RecyclerView categoryRecyclerView;
 
         //        private TextView categoryTitleView;
-        public CategoryViewHolder(View itemView) {
+        public CategoryBaseViewHolder(View itemView) {
             super(itemView);
 //            categoryTitleView = itemView.findViewById(R.id.main_tour_title_text_view);
             categoryRecyclerView = itemView.findViewById(R.id.main_tour_recycler_view);
@@ -248,7 +248,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         /**
          * 키테고리 아이템 어댑터
          */
-        private class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryItemViewHolder> {
+        private class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryItemBaseViewHolder> {
             private ArrayList<ContentType> categoryTypes;
 
 
@@ -258,14 +258,14 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
             @NonNull
             @Override
-            public CategoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public CategoryItemBaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new CategoryItemViewHolder(inflater.inflate(R.layout.main_recycler_row_category_item, null));
+                return new CategoryItemBaseViewHolder(inflater.inflate(R.layout.main_recycler_row_category_item, null));
             }
 
             @Override
-            public void onBindViewHolder(@NonNull CategoryItemViewHolder holder, int position) {
-                Log.e("HANY_TAG", "CategoryItemViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
+            public void onBindViewHolder(@NonNull CategoryItemBaseViewHolder holder, int position) {
+                Log.e("HANY_TAG", "CategoryItemBaseViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
                 try {
                     holder.bind(categoryTypes.get(position));
                 } catch (ClassCastException e) {
@@ -283,11 +283,11 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         /**
          * 키테고리 아이템 뷰 홀더
          */
-        private class CategoryItemViewHolder extends ViewHolder<ContentType> {
+        private class CategoryItemBaseViewHolder extends BaseViewHolder<ContentType> {
             private TextView categoryTitleTextView;
 
 
-            public CategoryItemViewHolder(View itemView) {
+            public CategoryItemBaseViewHolder(View itemView) {
                 super(itemView);
                 categoryTitleTextView = itemView.findViewById(R.id.category_item_title_text_view);
             }

@@ -17,6 +17,7 @@ import com.work.hany.playinseoul.model.dao.StayDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.tourdetail.BaseDetailContract;
 import com.work.hany.playinseoul.tourdetail.BaseDetailFragment;
 import com.work.hany.playinseoul.tourdetail.adapter.DetailRecyclerAdapter;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
@@ -49,11 +50,6 @@ public class StayDetailFragment extends BaseDetailFragment implements StayDetail
     public void onResume() {
         super.onResume();
         presenter.takeView(this);
-    }
-
-    @Override
-    public StayDetailPresenter getPresenter() {
-        return presenter;
     }
 
     @Override
@@ -131,25 +127,15 @@ public class StayDetailFragment extends BaseDetailFragment implements StayDetail
         }
     }
 
-    @Override
-    public void showOverViewDetail(AreaTour tour) {
-        OverViewDetailFragment fragment = new OverViewDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ARGUMENT_TOUR,tour);
-        fragment.setArguments(bundle);
 
-        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
+    @Override
+    protected BaseDetailContract.BaseDetailView getDetailView() {
+        return this;
     }
 
     @Override
-    public void showMapDetail(AreaTour tour) {
-        MapDetailFragment fragment = new MapDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ARGUMENT_TOUR,tour);
-        fragment.setArguments(bundle);
-
-        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
+    public BaseDetailContract.BaseDetailPresenter getPresenter() {
+        return presenter;
     }
-
 
 }

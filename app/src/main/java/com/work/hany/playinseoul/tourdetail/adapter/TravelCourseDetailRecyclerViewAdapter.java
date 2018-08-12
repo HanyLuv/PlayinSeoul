@@ -39,47 +39,47 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder = null;
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BaseViewHolder baseViewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ItemType currentItemType = getCurrentItemType(viewType);
 
         switch (currentItemType) {
             case IMAGE:
                 View imageRowView = inflater.inflate(R.layout.detail_recycler_row_image_itme, null, false);
-                viewHolder = new ImageViewHolder(imageRowView);
+                baseViewHolder = new ImageBaseViewHolder(imageRowView);
                 break;
 
             case INFORMATION:
                 View informationRowView = inflater.inflate(R.layout.detail_recycler_row_travel_tour_intro_itme, null, false);
-                viewHolder = new InformationViewHolder(informationRowView);
+                baseViewHolder = new InformationBaseViewHolder(informationRowView);
                 break;
 
             case OVERHEAD:
                 View introRowView = inflater.inflate(R.layout.detail_recycler_row_overhead_itme, null, false);
-                viewHolder = new OverHeadViewHolder(introRowView);
+                baseViewHolder = new OverHeadBaseViewHolder(introRowView);
                 break;
 
             case DETAIL:
                 View courseView = inflater.inflate(R.layout.detail_recycler_row_course_itme, null, false);
-                viewHolder = new CourseViewHolder(courseView);
+                baseViewHolder = new CourseBaseViewHolder(courseView);
                 break;
 
 
         }
 
-        return viewHolder;
+        return baseViewHolder;
     }
 
 
-    class CourseViewHolder extends ViewHolder<TravelDetail> {
+    class CourseBaseViewHolder extends BaseViewHolder<TravelDetail> {
         private TextView contentCourseTitleTextView;
         private TextView contentCourseNumberTextView;
         private TextView contentCourseDescriptionTextView;
         private ImageView contentCourseImageTextView;
         private TextView contentCourseMoreTextView;
 
-        public CourseViewHolder(View itemView) {
+        public CourseBaseViewHolder(View itemView) {
             super(itemView);
             contentCourseTitleTextView = itemView.findViewById(R.id.tour_course_title_text_view);
             contentCourseNumberTextView = itemView.findViewById(R.id.tour_course_number_text_view);
@@ -109,11 +109,11 @@ public class TravelCourseDetailRecyclerViewAdapter extends DetailRecyclerAdapter
         }
     }
 
-    class InformationViewHolder extends ViewHolder<TravelIntro> {
+    class InformationBaseViewHolder extends BaseViewHolder<TravelIntro> {
         private TextView contentCourseTimeTextView;
         private TextView contentDistanceTextView;
 
-        public InformationViewHolder(View itemView) {
+        public InformationBaseViewHolder(View itemView) {
             super(itemView);
             contentCourseTimeTextView = itemView.findViewById(R.id.tour_info_course_time_text_view);
             contentDistanceTextView = itemView.findViewById(R.id.tour_info_distance_text_view);

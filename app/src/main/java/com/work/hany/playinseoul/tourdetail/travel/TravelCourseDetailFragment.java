@@ -19,8 +19,8 @@ import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.network.TravelIntro;
+import com.work.hany.playinseoul.tourdetail.BaseDetailContract;
 import com.work.hany.playinseoul.tourdetail.BaseDetailFragment;
-import com.work.hany.playinseoul.tourdetail.BaseDetailPresenter;
 import com.work.hany.playinseoul.tourdetail.DetailActivity;
 import com.work.hany.playinseoul.tourdetail.adapter.TravelCourseDetailRecyclerViewAdapter;
 import com.work.hany.playinseoul.util.ActivityUtils;
@@ -28,8 +28,6 @@ import com.work.hany.playinseoul.util.ActivityUtils;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
-
-import dagger.android.support.DaggerFragment;
 
 import static com.work.hany.playinseoul.common.overview.OverViewDetailFragment.ARGUMENT_TOUR;
 
@@ -53,12 +51,6 @@ public class TravelCourseDetailFragment extends BaseDetailFragment implements Tr
 
     @Inject
     public TravelCourseDetailFragment(){}
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.takeView(this);
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,16 +101,6 @@ public class TravelCourseDetailFragment extends BaseDetailFragment implements Tr
     }
 
     @Override
-    public void showOverViewDetail(AreaTour tour) {
-        OverViewDetailFragment fragment = new OverViewDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ARGUMENT_TOUR,tour);
-        fragment.setArguments(bundle);
-
-        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
-    }
-
-    @Override
     public void initTourOverviewUi(AreaTour areaTour) { /** 해당 여행 설명*/
         areaTour.setMediumCategoryCode(this.areaTour.getMediumCategoryCode());
         detailRecyclerViewAdapter.updateSection(Section.ItemType.OVERHEAD, areaTour);
@@ -131,18 +113,12 @@ public class TravelCourseDetailFragment extends BaseDetailFragment implements Tr
 
 
     @Override
-    public void showMapDetail(AreaTour tour) {
-        MapDetailFragment fragment = new MapDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ARGUMENT_TOUR,tour);
-        fragment.setArguments(bundle);
-
-        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
+    protected BaseDetailContract.BaseDetailPresenter getPresenter() {
+        return presenter;
     }
 
-
     @Override
-    protected BaseDetailPresenter getPresenter() {
-        return presenter;
+    protected BaseDetailContract.BaseDetailView getDetailView() {
+        return this;
     }
 }

@@ -10,6 +10,8 @@ import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.Result;
 import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.network.TravelIntro;
+import com.work.hany.playinseoul.tourdetail.BaseDetailContract;
+import com.work.hany.playinseoul.tourdetail.BaseDetailPresenter;
 
 import java.util.ArrayList;
 
@@ -19,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TravelCourseDetailPresenter implements TravelCourseDetailContract.Presenter {
+public class TravelCourseDetailPresenter extends BaseDetailPresenter implements TravelCourseDetailContract.Presenter {
 
     //TODO 이미지 상세 클릭, 지도 클릭 이벤트
 
@@ -109,29 +111,17 @@ public class TravelCourseDetailPresenter implements TravelCourseDetailContract.P
 
             }
         });
-//        this.detailView.showSubTravelCourseDetailUi(travelDetail);
     }
 
     @Override
-    public void openOverViewDetail(AreaTour tour) {
-        //오버뷰 더 자세히 보기 할때
-        detailView.showOverViewDetail(tour);
-    }
-
-    @Override
-    public void openMapDetail(AreaTour tour) {
-        detailView.showMapDetail(tour);
-
-    }
-
-    @Override
-    public void takeView(TravelCourseDetailContract.View view) {
-        this.detailView = view;
-
+    public void takeView(BaseDetailContract.BaseDetailView view) {
+        super.takeView(view);
+        this.detailView = TravelCourseDetailContract.View.class.cast(view);
     }
 
     @Override
     public void dropView() {
+        super.dropView();
         this.detailView = null;
     }
 }

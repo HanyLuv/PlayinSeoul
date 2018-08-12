@@ -17,17 +17,14 @@ import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.model.dao.TourIntro;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.tourdetail.BaseDetailContract;
 import com.work.hany.playinseoul.tourdetail.BaseDetailFragment;
-import com.work.hany.playinseoul.tourdetail.BaseDetailPresenter;
-import com.work.hany.playinseoul.tourdetail.adapter.DetailRecyclerAdapter;
 import com.work.hany.playinseoul.tourdetail.adapter.TourDetailRecyclerViewAdapter;
 import com.work.hany.playinseoul.util.ActivityUtils;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
-
-import dagger.android.support.DaggerFragment;
 
 import static com.work.hany.playinseoul.common.overview.OverViewDetailFragment.ARGUMENT_TOUR;
 
@@ -106,18 +103,6 @@ public class TourDetailFragment extends BaseDetailFragment implements TourDetail
         tourDetailRecyclerViewAdapter.updateSection(Section.ItemType.MAP, areaTour);
     }
 
-
-
-    @Override
-    public void showOverViewDetail(AreaTour tour) {
-        OverViewDetailFragment fragment = new OverViewDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ARGUMENT_TOUR,tour);
-        fragment.setArguments(bundle);
-
-        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
-    }
-
     @Override
     public void initTourIntroUi(TourIntro information) {
         tourDetailRecyclerViewAdapter.updateSection(Section.ItemType.INFORMATION, information);
@@ -131,18 +116,12 @@ public class TourDetailFragment extends BaseDetailFragment implements TourDetail
     }
 
     @Override
-    public void showMapDetail(AreaTour tour) {
-        MapDetailFragment fragment = new MapDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ARGUMENT_TOUR,tour);
-        fragment.setArguments(bundle);
-
-        ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,R.id.fragmentLayout,true);
+    protected BaseDetailContract.BaseDetailPresenter getPresenter() {
+        return presenter;
     }
 
-
     @Override
-    protected BaseDetailPresenter getPresenter() {
-        return presenter;
+    protected BaseDetailContract.BaseDetailView getDetailView() {
+        return this;
     }
 }

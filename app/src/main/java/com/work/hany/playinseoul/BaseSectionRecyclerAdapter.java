@@ -2,18 +2,16 @@ package com.work.hany.playinseoul;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ViewGroup;
 
 import com.work.hany.playinseoul.model.Section;
-import com.work.hany.playinseoul.tourdetail.adapter.ViewHolder;
+import com.work.hany.playinseoul.tourdetail.adapter.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
 
-abstract public class BaseSectionRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
+abstract public class BaseSectionRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     protected ArrayList<Section> sections;
 
     @Override
@@ -37,7 +35,7 @@ abstract public class BaseSectionRecyclerAdapter extends RecyclerView.Adapter<Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         holder.bind((sections.get(position).getData()));
     }
 

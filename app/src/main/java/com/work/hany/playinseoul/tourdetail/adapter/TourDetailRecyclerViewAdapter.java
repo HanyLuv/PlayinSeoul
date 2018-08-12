@@ -31,55 +31,55 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
     //TODO 리턴하는 null 이 마음에 안들어어엉
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder = null;
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BaseViewHolder baseViewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         Section.ItemType currentItemType = getCurrentItemType(viewType);
 
         switch (currentItemType) {
             case IMAGE:
                 View imageRowView = inflater.inflate(R.layout.detail_recycler_row_image_itme, null, false);
-                viewHolder = new ImageViewHolder(imageRowView);
+                baseViewHolder = new ImageBaseViewHolder(imageRowView);
                 break;
 
             case INFORMATION:
                 View informationRowView = inflater.inflate(R.layout.detail_recycler_row_tour_intro_itme, null, false);
-                viewHolder = new InformationViewHolder(informationRowView);
+                baseViewHolder = new InformationBaseViewHolder(informationRowView);
                 break;
 
             case OVERHEAD:
                 View introRowView = inflater.inflate(R.layout.detail_recycler_row_overhead_itme, null, false);
-                viewHolder = new TravelCourseDetailRecyclerViewAdapter.OverHeadViewHolder(introRowView);
+                baseViewHolder = new OverHeadBaseViewHolder(introRowView);
                 break;
 
             case DETAIL:
                 View detailRowView = inflater.inflate(R.layout.detail_recycler_row_tour_detatil_itme, null, false);
-                viewHolder = new TourDetailViewHolder(detailRowView);
+                baseViewHolder = new TourDetailBaseViewHolder(detailRowView);
                 break;
 
             case MAP:
                 View mapRowView = inflater.inflate(R.layout.detail_recycler_row_tour_map_itme, null, false);
-                viewHolder = new MapViewHolder(mapRowView);
+                baseViewHolder = new MapBaseViewHolder(mapRowView);
                 break;
 
             case PHOTOS:
                 View photoRowView = inflater.inflate(R.layout.detail_recycler_row_tour_photos_itme, null, false);
-                viewHolder = new PhotosViewHolder(photoRowView);
+                baseViewHolder = new PhotosBaseViewHolder(photoRowView);
                 break;
 
 
             case STAY_DETAIL:
                 View stayDetail = inflater.inflate(layout.detail_recycler_row_stay_detatil_itme, null, false);
-                viewHolder = new StayDetailViewHolder(stayDetail);
+                baseViewHolder = new StayDetailBaseViewHolder(stayDetail);
                 break;
 
         }
 
-        return viewHolder;
+        return baseViewHolder;
     }
 
 
-    class StayDetailViewHolder extends ViewHolder<StayDetail> {
+    class StayDetailBaseViewHolder extends BaseViewHolder<StayDetail> {
         private TextView basePeopleCountTextView;
         private TextView maxPeopleCountTextView;
         private TextView stayRoomNameTextView;
@@ -89,7 +89,7 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
         private TextView stayMoreShowTextView; //해당객실정보 상세보기
         private final int MAX_SHOW_STAY_COUNT = 3;
 
-        public StayDetailViewHolder(View itemView) {
+        public StayDetailBaseViewHolder(View itemView) {
             super(itemView);
             //4개이상 나오면 모든 상품 보기 출력하자.
             basePeopleCountTextView = itemView.findViewById(id.stay_basecount_text_view);
@@ -136,13 +136,13 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
     }
     //https://developers.google.com/maps/documentation/android-sdk/map?authuser=1&hl=ko#the_map_object 맵ㅂ뷰 사용법
 
-    class TourDetailViewHolder extends ViewHolder<TourDetail> {
+    class TourDetailBaseViewHolder extends BaseViewHolder<TourDetail> {
         private View sectionDividerView;
         private TextView contentTitleTextView;
         private TextView contentSubTitleTextView;
         private TextView contentSubDescriptionTextView;
 
-        public TourDetailViewHolder(View itemView) {
+        public TourDetailBaseViewHolder(View itemView) {
             super(itemView);
             contentSubTitleTextView = itemView.findViewById(id.tour_content_title_text_view);
             contentSubDescriptionTextView = itemView.findViewById(id.tour_content_description_text_view);
@@ -169,10 +169,10 @@ public class TourDetailRecyclerViewAdapter extends DetailRecyclerAdapter {
 
     }
 
-    class InformationViewHolder extends ViewHolder<TourIntro> {
+    class InformationBaseViewHolder extends BaseViewHolder<TourIntro> {
         private LinearLayout informationLayout;
 
-        public InformationViewHolder(View itemView) {
+        public InformationBaseViewHolder(View itemView) {
             super(itemView);
             informationLayout = itemView.findViewById(id.tour_info_layout);
         }

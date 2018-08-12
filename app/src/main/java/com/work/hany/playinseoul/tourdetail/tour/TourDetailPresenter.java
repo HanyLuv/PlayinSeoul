@@ -7,6 +7,9 @@ import com.work.hany.playinseoul.model.dao.TourDetail;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.Result;
 import com.work.hany.playinseoul.network.TourPhoto;
+import com.work.hany.playinseoul.tourdetail.BaseDetailContract;
+import com.work.hany.playinseoul.tourdetail.BaseDetailFragment;
+import com.work.hany.playinseoul.tourdetail.BaseDetailPresenter;
 
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TourDetailPresenter implements TourDetailContract.Presenter {
+public class TourDetailPresenter extends BaseDetailPresenter implements TourDetailContract.Presenter {
 
     @Nullable
     TourDetailContract.View tourView;
@@ -77,28 +80,16 @@ public class TourDetailPresenter implements TourDetailContract.Presenter {
 
     }
 
-
     @Override
-    public void takeView(TourDetailContract.View view) {
-        this.tourView = view;
+    public void takeView(BaseDetailContract.BaseDetailView view) {
+        super.takeView(view);
+        this.tourView = TourDetailContract.View.class.cast(view);
     }
 
     @Override
     public void dropView() {
-
-    }
-
-    @Override
-    public void openOverViewDetail(AreaTour tour) {
-        //오버뷰 더 자세히 보기 할때
-        tourView.showOverViewDetail(tour);
-    }
-
-
-    @Override
-    public void openMapDetail(AreaTour tour) {
-        tourView.showMapDetail(tour);
-
+        super.dropView();
+        this.tourView = null;
     }
 
 }
