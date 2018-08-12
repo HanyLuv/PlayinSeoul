@@ -2,12 +2,14 @@ package com.work.hany.playinseoul;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.work.hany.playinseoul.model.Section;
 import com.work.hany.playinseoul.tourdetail.adapter.ViewHolder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
 
@@ -24,11 +26,12 @@ abstract public class BaseSectionRecyclerAdapter extends RecyclerView.Adapter<Vi
         notifyDataSetChanged();
     }
 
-    public <T>void updateSection(Section.ItemType type, T data) {
-        for(int position = 0, end = sections.size(); position < end; position++ ){
-            if (sections.get(position).getType().equals(type)) {
-                sections.get(position).setData(data);
-                notifyItemChanged(position);
+    public <T> void updateSection(Section.ItemType type, T data) {
+        for(Iterator<Section> i = sections.iterator(); i.hasNext();){
+            Section section = i.next();
+            if(section.getType().equals(type)) {
+                section.setData(data);
+                notifyDataSetChanged();
             }
         }
     }
