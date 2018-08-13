@@ -21,12 +21,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TravelCourseDetailPresenter extends BaseDetailPresenter implements TravelCourseDetailContract.Presenter {
+public class TravelCourseDetailPresenter extends BaseDetailPresenter<TravelCourseDetailContract.View> implements TravelCourseDetailContract.Presenter {
 
     //TODO 이미지 상세 클릭, 지도 클릭 이벤트
-
-    @Nullable
-    TravelCourseDetailContract.View detailView;
 
     @Nullable
     DataHandler dataHandler;
@@ -44,7 +41,7 @@ public class TravelCourseDetailPresenter extends BaseDetailPresenter implements 
             public void onResponse(Call<Result<AreaTour>> call, Response<Result<AreaTour>> response) {
                 if (!call.isCanceled()) {
                     AreaTour areaTour = response.body().getResponse().getBody().getItems().getData();
-                    detailView.initTourOverviewUi(areaTour);
+                    getBaseView().initTourOverviewUi(areaTour);
                 }
             }
 
@@ -60,14 +57,12 @@ public class TravelCourseDetailPresenter extends BaseDetailPresenter implements 
             public void onResponse(Call<Result<TravelIntro>> call, Response<Result<TravelIntro>> response) {
                 if (!call.isCanceled()) {
                     TravelIntro areaTourInformation = response.body().getResponse().getBody().getItems().getData();
-                    detailView.initTourIntroUi(areaTourInformation);
+                    getBaseView().initTourIntroUi(areaTourInformation);
                 }
             }
 
             @Override
             public void onFailure(Call<Result<TravelIntro>> call, Throwable t) {
-                Log.d("HANY_TAG","hi");
-
             }
         });
 
@@ -77,14 +72,12 @@ public class TravelCourseDetailPresenter extends BaseDetailPresenter implements 
             @Override
             public void onResponse(Call<Result<ArrayList<TravelDetail>>> call, Response<Result<ArrayList<TravelDetail>>> response) {
                 if (!call.isCanceled()) {
-                    detailView.initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
+                    getBaseView().initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
                 }
             }
 
             @Override
             public void onFailure(Call<Result<ArrayList<TravelDetail>>> call, Throwable t) {
-                Log.d("HANY_TAG","hi");
-
             }
         });
 
@@ -102,7 +95,7 @@ public class TravelCourseDetailPresenter extends BaseDetailPresenter implements 
                         areaTour.setLargeImage(travelDetail.getSubDetailImage());
                     }
 
-                    detailView.showSubTravelCourseDetailUi(areaTour);
+                    getBaseView().showSubTravelCourseDetailUi(areaTour);
                 }
             }
 
@@ -113,15 +106,4 @@ public class TravelCourseDetailPresenter extends BaseDetailPresenter implements 
         });
     }
 
-    @Override
-    public void takeView(BaseDetailContract.BaseDetailView view) {
-        super.takeView(view);
-        this.detailView = TravelCourseDetailContract.View.class.cast(view);
-    }
-
-    @Override
-    public void dropView() {
-        super.dropView();
-        this.detailView = null;
-    }
 }

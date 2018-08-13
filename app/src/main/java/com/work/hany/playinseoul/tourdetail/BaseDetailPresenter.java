@@ -3,10 +3,12 @@ package com.work.hany.playinseoul.tourdetail;
 import android.support.annotation.Nullable;
 
 import com.work.hany.playinseoul.network.AreaTour;
+import com.work.hany.playinseoul.tourdetail.BaseDetailContract.BaseDetailView;
 
-abstract public class BaseDetailPresenter implements BaseDetailContract.BaseDetailPresenter {
+abstract public class BaseDetailPresenter<T extends BaseDetailContract.BaseDetailView> implements BaseDetailContract.BaseDetailPresenter {
+
     @Nullable
-    BaseDetailContract.BaseDetailView baseView;
+    T baseView;
 
     @Override
     public void openOverViewDetail(AreaTour tour) {
@@ -18,10 +20,8 @@ abstract public class BaseDetailPresenter implements BaseDetailContract.BaseDeta
         baseView.showMapDetail(tour);
     }
 
-    @Override
-    public void takeView(BaseDetailContract.BaseDetailView view) {
-        this.baseView = view;
-
+    public void takeView(BaseDetailView view) {
+        baseView = (T) view;
     }
 
     @Override
@@ -29,6 +29,8 @@ abstract public class BaseDetailPresenter implements BaseDetailContract.BaseDeta
         this.baseView = null;
     }
 
-
-
+    @Nullable
+    public T getBaseView() {
+        return baseView;
+    }
 }

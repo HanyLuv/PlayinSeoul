@@ -19,10 +19,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TourDetailPresenter extends BaseDetailPresenter implements TourDetailContract.Presenter {
+public class TourDetailPresenter extends BaseDetailPresenter<TourDetailContract.View> implements TourDetailContract.Presenter {
 
-    @Nullable
-    TourDetailContract.View tourView;
 
     @Nullable
     DataHandler dataHandler;
@@ -39,8 +37,8 @@ public class TourDetailPresenter extends BaseDetailPresenter implements TourDeta
             public void onResponse(Call<Result<AreaTour>> call, Response<Result<AreaTour>> response) {
                 if (!call.isCanceled()) {
                     AreaTour areaTour = response.body().getResponse().getBody().getItems().getData();
-                    tourView.initTourOverviewUi(areaTour);
-                    tourView.initTourMapUi(areaTour);
+                    getBaseView().initTourOverviewUi(areaTour);
+                    getBaseView().initTourMapUi(areaTour);
                 }
             }
 
@@ -54,7 +52,7 @@ public class TourDetailPresenter extends BaseDetailPresenter implements TourDeta
             @Override
             public void onResponse(Call<Result<ArrayList<TourDetail>>> call, Response<Result<ArrayList<TourDetail>>> response) {
                 if (!call.isCanceled()) {
-                    tourView.initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
+                    getBaseView().initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
                 }
             }
 
@@ -68,7 +66,7 @@ public class TourDetailPresenter extends BaseDetailPresenter implements TourDeta
             @Override
             public void onResponse(Call<Result<ArrayList<TourPhoto>>> call, Response<Result<ArrayList<TourPhoto>>> response) {
                 if (!call.isCanceled()) {
-                    tourView.initTourPhotosUi(response.body().getResponse().getBody().getItems().getData());
+                    getBaseView().initTourPhotosUi(response.body().getResponse().getBody().getItems().getData());
                 }
             }
 
@@ -80,16 +78,6 @@ public class TourDetailPresenter extends BaseDetailPresenter implements TourDeta
 
     }
 
-    @Override
-    public void takeView(BaseDetailContract.BaseDetailView view) {
-        super.takeView(view);
-        this.tourView = TourDetailContract.View.class.cast(view);
-    }
 
-    @Override
-    public void dropView() {
-        super.dropView();
-        this.tourView = null;
-    }
 
 }

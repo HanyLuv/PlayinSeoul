@@ -19,10 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StayDetailPresenter extends BaseDetailPresenter implements StayDetailContract.Presenter {
-
-    @Nullable
-    StayDetailContract.View stayView;
+public class StayDetailPresenter extends BaseDetailPresenter<StayDetailContract.View> implements StayDetailContract.Presenter {
 
     @Nullable
     DataHandler dataHandler;
@@ -39,7 +36,7 @@ public class StayDetailPresenter extends BaseDetailPresenter implements StayDeta
             public void onResponse(Call<Result<AreaTour>> call, Response<Result<AreaTour>> response) {
                 if (!call.isCanceled()) {
                     AreaTour areaTour = response.body().getResponse().getBody().getItems().getData();
-                    stayView.initTourOverviewUi(areaTour);
+                    getBaseView().initTourOverviewUi(areaTour);
                 }
             }
 
@@ -53,7 +50,7 @@ public class StayDetailPresenter extends BaseDetailPresenter implements StayDeta
             @Override
             public void onResponse(Call<Result<ArrayList<StayDetail>>> call, Response<Result<ArrayList<StayDetail>>> response) {
                 if (!call.isCanceled()) {
-                    stayView.initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
+                    getBaseView().initTourDetailUi(response.body().getResponse().getBody().getItems().getData());
                 }
             }
 
@@ -68,7 +65,7 @@ public class StayDetailPresenter extends BaseDetailPresenter implements StayDeta
             @Override
             public void onResponse(Call<Result<ArrayList<TourPhoto>>> call, Response<Result<ArrayList<TourPhoto>>> response) {
                 if (!call.isCanceled()) {
-                    stayView.initTourPhotosUi(response.body().getResponse().getBody().getItems().getData());
+                    getBaseView().initTourPhotosUi(response.body().getResponse().getBody().getItems().getData());
                 }
             }
 
@@ -80,15 +77,4 @@ public class StayDetailPresenter extends BaseDetailPresenter implements StayDeta
 
     }
 
-    @Override
-    public void takeView(BaseDetailContract.BaseDetailView view) {
-        super.takeView(view);
-        stayView = StayDetailContract.View.class.cast(view);
-    }
-
-    @Override
-    public void dropView() {
-        super.dropView();
-        stayView = null;
-    }
 }

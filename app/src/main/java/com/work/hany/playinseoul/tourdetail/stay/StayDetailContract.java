@@ -14,11 +14,8 @@ public interface StayDetailContract {
     interface View extends BaseDetailContract.BaseDetailView {
         //        void initTourOverviewUi(AreaTour areaTour);
         void initTourOverviewUi(AreaTour areaTour);
-
         void initTourIntroUi(TourIntro information);
-
         void initTourDetailUi(ArrayList<StayDetail> stayDetails);
-
         void initTourPhotosUi(ArrayList<TourPhoto> photos); //TODO 음... 음식때도 이거호출할텐데 이름변경생각해보자
 
     }
