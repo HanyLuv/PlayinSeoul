@@ -151,7 +151,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         /**
          * 투어 섹션 아이템 어댑터
          */
-        private class TourSectionItemsAdapter extends RecyclerView.Adapter<TourSectionItemsAdapter.TourItemViewHolder> {
+        private class TourSectionItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             private ArrayList<AreaTour> areaTourList;
             private final int SECTION_IMAGE_COUNT = 1;
 
@@ -172,16 +172,13 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             }
 
             @Override
-            public void onBindViewHolder(@NonNull TourItemViewHolder holder, int position) {
-                Log.e("HANY_TAG", "TourItemViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
-                try {
-
+            public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+                if(holder instanceof TourItemViewHolder) {
                     holder.bind(areaTourList.get(position));
-
-                } catch (ClassCastException e) {
-                    Log.e("HANY_TAG", "[ error! ]TourItemViewHolder onBindViewHolder : " + e.toString());
                 }
+
             }
+
             @Override
             public int getItemCount() {
                 return areaTourList.size() - SECTION_IMAGE_COUNT;
@@ -254,7 +251,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         /**
          * 키테고리 아이템 어댑터
          */
-        private class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryItemBaseViewHolder> {
+        private class CategoryHorizontalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             private ArrayList<ContentType> categoryTypes;
 
 
@@ -270,13 +267,11 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             }
 
             @Override
-            public void onBindViewHolder(@NonNull CategoryItemBaseViewHolder holder, int position) {
-                Log.e("HANY_TAG", "CategoryItemBaseViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
-                try {
+            public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+                if(holder instanceof CategoryItemBaseViewHolder) {
                     holder.bind(categoryTypes.get(position));
-                } catch (ClassCastException e) {
-                    Log.e("HANY_TAG", "[ error! ]CategoryHorizontalAdapter onBindViewHolder : " + e.toString());
                 }
+
             }
 
 
