@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
     <TextView
-        android:id="@+id/over_view_title_text_view"
+        android:id="@+id/map_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tour_addr_text_view"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="15dp"
         android:text="지도 상세보기 "
         android:textColor="#2E2E2E"
         android:textSize="30dp"
-        android:layout_marginTop="30dp"
         android:textStyle="bold" />
 
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/map_addr_text_view" />
+
+
+
+    <TextView
+        android:id="@+id/map_addr_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/map_title_text_view"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textColor="#2E2E2E"
+        android:textSize="16dp" />
 
 </RelativeLayout>
