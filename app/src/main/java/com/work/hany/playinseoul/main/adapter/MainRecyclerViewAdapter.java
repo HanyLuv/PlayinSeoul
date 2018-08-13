@@ -151,7 +151,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         /**
          * 투어 섹션 아이템 어댑터
          */
-        private class TourSectionItemsAdapter extends RecyclerView.Adapter<TourSectionItemsAdapter.TourItemBaseViewHolder> {
+        private class TourSectionItemsAdapter extends RecyclerView.Adapter<TourSectionItemsAdapter.TourItemViewHolder> {
             private ArrayList<AreaTour> areaTourList;
             private final int SECTION_IMAGE_COUNT = 1;
 
@@ -161,19 +161,25 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
             @NonNull
             @Override
-            public TourItemBaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public TourItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new TourItemBaseViewHolder(inflater.inflate(R.layout.main_recycler_row_tour_item, null));
+                return new TourItemViewHolder(inflater.inflate(R.layout.main_recycler_row_tour_item, null));
             }
 
             @Override
-            public void onBindViewHolder(@NonNull TourItemBaseViewHolder holder, int position) {
-                Log.e("HANY_TAG", "TourItemBaseViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
+            public int getItemViewType(int position) {
+                return super.getItemViewType(position);
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull TourItemViewHolder holder, int position) {
+                Log.e("HANY_TAG", "TourItemViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
                 try {
+
                     holder.bind(areaTourList.get(position));
 
                 } catch (ClassCastException e) {
-                    Log.e("HANY_TAG", "[ error! ]TourItemBaseViewHolder onBindViewHolder : " + e.toString());
+                    Log.e("HANY_TAG", "[ error! ]TourItemViewHolder onBindViewHolder : " + e.toString());
                 }
             }
             @Override
@@ -184,13 +190,13 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             /**
              * 투어 섹션 아이템 뷰홀더
              */
-            class TourItemBaseViewHolder extends BaseViewHolder<AreaTour> {
+            class TourItemViewHolder extends BaseViewHolder<AreaTour> {
                 private ImageView tourImageView;
                 private TextView tourTextView;
                 private TextView tourAddrTextView;
                 private TextView tourContentShowCountTextView;
 
-                public TourItemBaseViewHolder(View itemView) {
+                public TourItemViewHolder(View itemView) {
                     super(itemView);
                     tourImageView = itemView.findViewById(R.id.tour_content_image_view);
                     tourTextView = itemView.findViewById(R.id.tour_title_text_view);

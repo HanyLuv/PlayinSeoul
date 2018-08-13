@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
+
+import static com.work.hany.playinseoul.model.ContentType.CULTURE;
 //TODO : 목록 스크롤 하기이이잉ㅇ이이잉 ㅇㅁㅇ
 
 
@@ -68,8 +70,8 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         areaTour.add(ContentType.STAY);
 
 
-//        Section categorySection = new Section(Section.ItemType.CATEGORY, areaTour);
-//        sections.add(categorySection);
+        Section categorySection = new Section(Section.ItemType.CATEGORY, areaTour);
+        sections.add(categorySection);
 
         mainRecyclerViewAdapter = new MainRecyclerViewAdapter(sections, itemListener);
 
@@ -89,11 +91,6 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         tourRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         tourRecyclerView.setAdapter(mainRecyclerViewAdapter);
         tourRecyclerView.setNestedScrollingEnabled(false);
-        /** 조금빨라지긴했다만 ㅠㅠ
-        tourRecyclerView.setItemViewCacheSize(20);
-        tourRecyclerView.setDrawingCacheEnabled(true);
-        tourRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        */
 
         presenter.loadTourList();
 
