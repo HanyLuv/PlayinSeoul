@@ -36,6 +36,10 @@ abstract public class BaseSectionRecyclerAdapter extends RecyclerView.Adapter<Ba
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+        if (holder.getAdapterPosition() != RecyclerView.NO_POSITION ) {
+            position = holder.getAdapterPosition();
+        }
+
         holder.bind((sections.get(position).getData()));
     }
 

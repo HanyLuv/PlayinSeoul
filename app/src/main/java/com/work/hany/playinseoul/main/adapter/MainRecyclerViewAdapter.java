@@ -73,56 +73,31 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         return baseViewHolder;
     }
 
+    private int categoryRecyclerViewScrollPosition = 0;
+
     @Override
-    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
-        try {
-            super.onBindViewHolder(holder, position);
-        } catch (ClassCastException e) {
-            Log.e("HANY_TAG", "[ error! ]MainRecyclerViewAdapter onBindViewHolder : " + e.toString());
+    public void onViewRecycled(@NonNull BaseViewHolder holder) {
+        super.onViewRecycled(holder);
+        if (Section.ItemType.CATEGORY.getCode() == holder.getItemViewType()) {
+            CategoryBaseViewHolder categoryViewHolder = CategoryBaseViewHolder.class.cast(holder);
+            RecyclerView categoryRecyclerView = categoryViewHolder.categoryRecyclerView;
+            categoryRecyclerViewScrollPosition = categoryRecyclerView.computeHorizontalScrollOffset();
         }
     }
 
-    //    private int categoryRecyclerViewScrollPosition = 0;
-//
-//    @Override
-//    public void onViewRecycled(@NonNull BaseViewHolder holder) {
-//        BaseViewHolder currentViewHolder = holder ;
-//        if (Section.ItemType.CATEGORY.getCode() == holder.getItemViewType()) {
-//            CategoryBaseViewHolder categoryViewHolder = CategoryBaseViewHolder.class.cast(holder);
-//            RecyclerView categoryRecyclerView = categoryViewHolder.categoryRecyclerView;
-//            categoryRecyclerViewScrollPosition = categoryRecyclerView.computeHorizontalScrollOffset();
-//            currentViewHolder = holder;
-//        } else if ((Section.ItemType.MAIN_TOUR.getCode() == holder.getItemViewType())) {
-//            currentViewHolder = TourSectionBaseViewHolder.class.cast(holder);
-//        }
-//
-//        super.onViewRecycled(currentViewHolder);
-//
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull BaseViewHolder holder, final int position) {
-//        BaseViewHolder currentViewHolder = holder ;
-//        try {
-//            if (Section.ItemType.CATEGORY.getCode() == holder.getItemViewType()) {
-//                CategoryBaseViewHolder categoryViewHolder = CategoryBaseViewHolder.class.cast(holder);
-//                categoryViewHolder.categoryRecyclerView.scrollBy(categoryRecyclerViewScrollPosition, 0);
-//                currentViewHolder = categoryViewHolder;
-//
-//            } else if ((Section.ItemType.MAIN_TOUR.getCode() == holder.getItemViewType())) {
-//                currentViewHolder = TourSectionBaseViewHolder.class.cast(holder);
-//            }
-//        } catch (ClassCastException e) {
-//            Log.e("HANY_TAG", "MainRecyclerViewAdapter.onBindViewHolder" + e.getClass().getSimpleName()+ " position : "+position);
-//        }
-//
-//        super.onBindViewHolder(currentViewHolder, position);
-//    }
+    @Override
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+        if (Section.ItemType.CATEGORY.getCode() == holder.getItemViewType()) {
+            CategoryBaseViewHolder categoryViewHolder = CategoryBaseViewHolder.class.cast(holder);
+            categoryViewHolder.categoryRecyclerView.scrollBy(categoryRecyclerViewScrollPosition, 0);
+        }
+    }
 
     /**
      * 투어 섹션 뷰홀더
      */
-    class TourSectionBaseViewHolder extends BaseViewHolder<ArrayList<AreaTour>> {
+    private class TourSectionBaseViewHolder extends BaseViewHolder<ArrayList<AreaTour>> {
         private ImageView tourSectionImageView;
         private TextView tourSectionTitleTextView;
         private RecyclerView tourSectionItemsRecyclerView;
@@ -151,7 +126,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         /**
          * 투어 섹션 아이템 어댑터
          */
-        private class TourSectionItemsAdapter extends RecyclerView.Adapter<TourSectionItemsAdapter.TourItemViewHolder> {
+        private class TourSectionItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             private ArrayList<AreaTour> areaTourList;
             private final int SECTION_IMAGE_COUNT = 1;
 
@@ -163,67 +138,66 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             @Override
             public TourItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new TourItemViewHolder(inflater.inflate(R.layout.main_recycler_row_tour_item, null));
+                TourItemViewHolder tourItemViewHolder = new TourItemViewHolder(inflater.inflate(R.layout.main_recycler_row_tour_item, null));
+                return tourItemViewHolder;
             }
 
             @Override
             public int getItemViewType(int position) {
-                return super.getItemViewType(position);
+                return Section.ItemType.MAIN_TOUR.getCode();
             }
 
             @Override
-            public void onBindViewHolder(@NonNull TourItemViewHolder holder, int position) {
-                Log.e("HANY_TAG", "TourItemViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
-                try {
-
-                    holder.bind(areaTourList.get(position));
-
-                } catch (ClassCastException e) {
-                    Log.e("HANY_TAG", "[ error! ]TourItemViewHolder onBindViewHolder : " + e.toString());
+            public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+                if (holder.getItemViewType() != Section.ItemType.MAIN_TOUR.getCode()) {
+                    RecyclerView.ViewHolder holderFromRecyclerPool = tourSectionItemsRecyclerView.getRecycledViewPool().getRecycledView(getItemViewType(position));
+                    ((TourItemViewHolder) holderFromRecyclerPool).bind(areaTourList.get(holder.getAdapterPosition()));
+                } else {
+                    holder.bind(areaTourList.get(holder.getAdapterPosition()));
                 }
             }
+
             @Override
             public int getItemCount() {
                 return areaTourList.size() - SECTION_IMAGE_COUNT;
             }
+        }
+        /**
+         * 투어 섹션 아이템 뷰홀더
+         */
+        private class TourItemViewHolder extends BaseViewHolder<AreaTour> {
+            private ImageView tourImageView;
+            private TextView tourTextView;
+            private TextView tourAddrTextView;
+            private TextView tourContentShowCountTextView;
 
-            /**
-             * 투어 섹션 아이템 뷰홀더
-             */
-            class TourItemViewHolder extends BaseViewHolder<AreaTour> {
-                private ImageView tourImageView;
-                private TextView tourTextView;
-                private TextView tourAddrTextView;
-                private TextView tourContentShowCountTextView;
+            public TourItemViewHolder(View itemView) {
+                super(itemView);
+                tourImageView = itemView.findViewById(R.id.tour_content_image_view);
+                tourTextView = itemView.findViewById(R.id.tour_title_text_view);
+                tourContentShowCountTextView = itemView.findViewById(R.id.tour_show_text_view);
+                tourAddrTextView = itemView.findViewById(R.id.tour_content_addr_text_view);
 
-                public TourItemViewHolder(View itemView) {
-                    super(itemView);
-                    tourImageView = itemView.findViewById(R.id.tour_content_image_view);
-                    tourTextView = itemView.findViewById(R.id.tour_title_text_view);
-                    tourContentShowCountTextView = itemView.findViewById(R.id.tour_show_text_view);
-                    tourAddrTextView = itemView.findViewById(R.id.tour_content_addr_text_view);
-
-                }
-
-                public void bind(final AreaTour tour) {
-                    ImageLoderUtils.lodeURI(tourImageView, tour.getLargeImage());
-                    tourTextView.setText(tour.getContentTitle());
-
-                    String countStr = new StringBuilder().append("조회수 ").append(tour.getReadCount()).toString();
-                    tourContentShowCountTextView.setText(countStr);
-                    tourAddrTextView.setText(tour.getAreaAddress());
-
-                    itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mainItemListener.onTourClicked(tour);
-                        }
-                    });
-
-                }
             }
 
+            public void bind(final AreaTour tour) {
+                ImageLoderUtils.lodeURI(tourImageView, tour.getLargeImage());
+                tourTextView.setText(tour.getContentTitle());
+
+                String countStr = new StringBuilder().append("조회수 ").append(tour.getReadCount()).toString();
+                tourContentShowCountTextView.setText(countStr);
+                tourAddrTextView.setText(tour.getAreaAddress());
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mainItemListener.onTourClicked(tour);
+                    }
+                });
+
+            }
         }
+
     }
 
 
@@ -231,10 +205,9 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
      * 키테고리 뷰홀더
      */
 
-    class CategoryBaseViewHolder extends BaseViewHolder<ArrayList<ContentType>> {
+    private class CategoryBaseViewHolder extends BaseViewHolder<ArrayList<ContentType>> {
         private RecyclerView categoryRecyclerView;
 
-        //        private TextView categoryTitleView;
         public CategoryBaseViewHolder(View itemView) {
             super(itemView);
 //            categoryTitleView = itemView.findViewById(R.id.main_tour_title_text_view);
@@ -251,34 +224,39 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
         }
 
+
         /**
          * 키테고리 아이템 어댑터
          */
-        private class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryItemBaseViewHolder> {
+        private class CategoryHorizontalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             private ArrayList<ContentType> categoryTypes;
-
 
             public CategoryHorizontalAdapter(ArrayList<ContentType> categoryTypes) {
                 this.categoryTypes = categoryTypes;
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                return Section.ItemType.CATEGORY.getCode();
             }
 
             @NonNull
             @Override
             public CategoryItemBaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new CategoryItemBaseViewHolder(inflater.inflate(R.layout.main_recycler_row_category_item, null));
+                CategoryItemBaseViewHolder categoryItemBaseViewHolder = new CategoryItemBaseViewHolder(inflater.inflate(R.layout.main_recycler_row_category_item, null));
+                return categoryItemBaseViewHolder;
             }
 
             @Override
-            public void onBindViewHolder(@NonNull CategoryItemBaseViewHolder holder, int position) {
-                Log.e("HANY_TAG", "CategoryItemBaseViewHolder onBindViewHolder " + holder.getClass().getSimpleName() + " position : " + position);
-                try {
-                    holder.bind(categoryTypes.get(position));
-                } catch (ClassCastException e) {
-                    Log.e("HANY_TAG", "[ error! ]CategoryHorizontalAdapter onBindViewHolder : " + e.toString());
+            public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+                if (holder.getItemViewType() != Section.ItemType.CATEGORY.getCode()) {
+                    RecyclerView.ViewHolder holderFromRecyclerPool = categoryRecyclerView.getRecycledViewPool().getRecycledView(getItemViewType(position));
+                    ((CategoryItemBaseViewHolder) holderFromRecyclerPool).bind(categoryTypes.get(holder.getAdapterPosition()));
+                } else {
+                    holder.bind(categoryTypes.get(holder.getAdapterPosition()));
                 }
             }
-
 
             @Override
             public int getItemCount() {
