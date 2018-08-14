@@ -29,8 +29,8 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
     public interface ItemListener {
         void onTourClicked(AreaTour tour);
-
         void onMoreTourClicked(AreaTour tour);
+        void onCategoryClicked(ContentType type);
     }
 
 
@@ -276,8 +276,14 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
                 categoryTitleTextView = itemView.findViewById(R.id.category_item_title_text_view);
             }
 
-            public void bind(ContentType type) {
+            public void bind(final ContentType type) {
                 categoryTitleTextView.setText(type.getName());
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mainItemListener.onCategoryClicked(type);
+                    }
+                });
             }
         }
     }

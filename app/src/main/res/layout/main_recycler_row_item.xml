@@ -16,7 +16,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/tour_content_image_view"
+                android:id="@+id/tourContentImageView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
 

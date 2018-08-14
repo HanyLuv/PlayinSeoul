@@ -39,10 +39,15 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void openCategoryTourDetails(ContentType type) {
+        mainView.showCategoryTourDetailsUi(type);
+    }
+
+    @Override
     public void loadTourList() {
         int rowNum = 5;
         //문화시설
-        dataHandler.getTourList(rowNum, ContentType.CULTURE ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+        dataHandler.getTourList(rowNum, ContentType.CULTURE.getCode() ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
             @Override
             public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
                 if (!call.isCanceled()) {
@@ -58,7 +63,7 @@ public class MainPresenter implements MainContract.Presenter {
         });
 
         //레포츠
-        dataHandler.getTourList(rowNum, ContentType.REPORTS ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+        dataHandler.getTourList(rowNum, ContentType.REPORTS.getCode() ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
             @Override
             public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
                 if (!call.isCanceled()) {
@@ -75,7 +80,7 @@ public class MainPresenter implements MainContract.Presenter {
 
 
         //페스티발
-        dataHandler.getTourList(rowNum, ContentType.FESTIVAL ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+        dataHandler.getTourList(rowNum, ContentType.FESTIVAL.getCode() ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
             @Override
             public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
                 if (!call.isCanceled()) {
@@ -92,7 +97,7 @@ public class MainPresenter implements MainContract.Presenter {
 
 
         //관광지
-        dataHandler.getTourList(rowNum, ContentType.TOUR ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
+        dataHandler.getTourList(rowNum, ContentType.TOUR.getCode() ).enqueue(new Callback<Result<ArrayList<AreaTour>>>() {
             @Override
             public void onResponse(Call<Result<ArrayList<AreaTour>>> call, Response<Result<ArrayList<AreaTour>>> response) {
                 if (!call.isCanceled()) {
