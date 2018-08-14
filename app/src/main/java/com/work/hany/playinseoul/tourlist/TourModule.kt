@@ -18,9 +18,9 @@ abstract class TourModule {
 //    @Binds
 //    abstract fun tourListPresenter(presenter: TourListPresenter): TourListContact.Presenter
 //
-//    @Provides
-//    @ActivityScoped
-//    fun provideTourContentType(activity: TourListActivity): Int {
-//        return activity.intent.getIntExtra(TourListFragment.ArgumentKey.CONTENT_TYPE, 0)
-//    }
+    @Provides
+    @ActivityScoped
+    fun provideTourContentType(activity: TourListActivity): Int {
+        return activity.intent.getIntExtra(TourListFragment.ArgumentKey.CONTENT_TYPE, 0)
+    }
 }

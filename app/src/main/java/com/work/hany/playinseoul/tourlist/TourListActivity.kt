@@ -7,7 +7,7 @@ import dagger.Lazy
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class TourListActivity : DaggerAppCompatActivity() {
+internal class TourListActivity : DaggerAppCompatActivity() {
     @Inject
     internal lateinit var tourListFragment: Lazy<TourListFragment>
 

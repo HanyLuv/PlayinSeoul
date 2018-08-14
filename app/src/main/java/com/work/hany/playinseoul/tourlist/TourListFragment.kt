@@ -15,7 +15,7 @@ import java.util.*
 import javax.inject.Inject
 
 @ActivityScoped
-class TourListFragment @Inject constructor() : DaggerFragment(), TourListContact.View {
+internal class TourListFragment @Inject internal constructor() : DaggerFragment(), TourListContact.View {
     object ArgumentKey {
         const val CONTENT_TYPE = "content_type_code"
     }
@@ -23,7 +23,8 @@ class TourListFragment @Inject constructor() : DaggerFragment(), TourListContact
 //    @Inject
 //    lateinit var presenter: TourListPresenter
 //
-//    @Inject var contentType: Int? = null
+     var contentType: Int? = null
+    @Inject set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var rootView = inflater.inflate(R.layout.fragment_tour_list, null, false)
