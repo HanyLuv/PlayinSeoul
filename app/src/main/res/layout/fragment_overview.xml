@@ -12,26 +12,28 @@
         android:layout_below="@+id/tour_addr_text_view"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
         android:text="타이틀 입니다."
         android:textColor="#2E2E2E"
         android:textSize="30dp"
-        android:layout_marginTop="30dp"
         android:textStyle="bold" />
+
     <ScrollView
-        android:layout_margin="30dp"
-        android:layout_below="@+id/over_view_title_text_view"
         android:id="@+id/over_view_content_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/over_view_title_text_view"
+        android:layout_margin="30dp">
+
         <TextView
             android:id="@+id/over_view_content_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="상세 정보이다."
-            android:lineSpacingExtra="2dp"
             android:layout_marginBottom="20dp"
+            android:lineSpacingExtra="2dp"
+            android:text="상세 정보이다."
             android:textColor="#2E2E2E"
-            android:textSize="14dp"  />
+            android:textSize="14dp" />
     </ScrollView>
 
 </RelativeLayout>

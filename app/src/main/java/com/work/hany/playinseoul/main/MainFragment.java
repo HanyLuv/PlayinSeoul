@@ -19,6 +19,8 @@ import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.tourdetail.DetailActivity;
 import com.work.hany.playinseoul.tourdetail.adapter.TravelCourseDetailRecyclerViewAdapter;
+import com.work.hany.playinseoul.tourlist.TourListActivity;
+import com.work.hany.playinseoul.tourlist.TourListFragment;
 
 import java.util.ArrayList;
 
@@ -50,9 +52,18 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
 //            presenter
         }
 
-
+        @Override
+        public void onCategoryClicked(ContentType type) {
+            presenter.openCategoryTourDetails(type);
+        }
     };
 
+    @Override
+    public void showCategoryTourDetailsUi(ContentType type) {
+        Intent intent = new Intent(getContext(), TourListActivity.class);
+        intent.putExtra( TourListFragment.ArgumentKey.CONTENT_TYPE, type.getCode());
+        startActivity(intent);
+    }
 
     @Inject
     public MainFragment() { }
