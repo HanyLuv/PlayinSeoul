@@ -46,10 +46,9 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
         public void onTourClicked(AreaTour tour) {
             presenter.openTourDetails(tour);
         }
-
+//TODO 카테고리랑, 더보기랑 불러오는 함수가 동일하다... 한곳에 묶자 ㅇㅅㅇ
         @Override
-        public void onMoreTourClicked(AreaTour tour) {
-//            presenter
+        public void onMoreTourClicked(AreaTour tour) { presenter.openTourList(tour.getContentTypeId());
         }
 
         @Override
@@ -57,6 +56,13 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
             presenter.openCategoryTourDetails(type);
         }
     };
+
+    @Override
+    public void showTourListUi(int contentTypeId) {
+        Intent intent = new Intent(getContext(), TourListActivity.class);
+        intent.putExtra( TourListFragment.ArgumentKey.CONTENT_TYPE, contentTypeId);
+        startActivity(intent);
+    }
 
     @Override
     public void showCategoryTourDetailsUi(ContentType type) {
@@ -74,7 +80,7 @@ public class MainFragment extends DaggerFragment implements MainContract.View {
 
         ArrayList<Section> sections = new ArrayList<>();
 
-        ArrayList<ContentType>  areaTour = new ArrayList<>(); // TODO 데이터 만드는 클래스로 이동하자~
+        ArrayList<ContentType>  areaTour = new ArrayList<>(); // TODO 데이터 만드는 클래스로 이동하자:)
         areaTour.add(ContentType.FOOD);
         areaTour.add(ContentType.SHOPPING);
         areaTour.add(ContentType.TRAVEL_COURSE);

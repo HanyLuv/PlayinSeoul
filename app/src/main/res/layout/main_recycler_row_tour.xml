@@ -27,7 +27,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp">
+            android:layout_height="200dp">
 
             <ImageView
                 android:id="@+id/tour_content_image_view"
@@ -35,7 +35,7 @@
                 android:layout_height="match_parent" />
 
             <TextView
-                android:id="@+id/tour_title_text_view"
+                android:id="@+id/tour_more_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignBottom="@+id/tour_content_image_view"
@@ -57,8 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tour_section_card_view"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="5dp" />
 
 

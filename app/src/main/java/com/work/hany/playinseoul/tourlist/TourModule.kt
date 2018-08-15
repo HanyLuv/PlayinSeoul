@@ -9,18 +9,22 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-abstract class TourModule {
+internal abstract class TourModule {
+
     @FragmentScoped
     @ContributesAndroidInjector
-    internal abstract fun tourListFragment(): TourListFragment
+    abstract fun tourListFragment(): TourListFragment
 
-//    @ActivityScoped
-//    @Binds
-//    abstract fun tourListPresenter(presenter: TourListPresenter): TourListContact.Presenter
-//
-    @Provides
     @ActivityScoped
-    fun provideTourContentType(activity: TourListActivity): Int {
-        return activity.intent.getIntExtra(TourListFragment.ArgumentKey.CONTENT_TYPE, 0)
+    @Binds
+    abstract fun tourListPresenter(presenter: TourListPresenter): TourListContact.Presenter
+
+
+    @Module
+    companion object {
+        @JvmStatic @Provides @ActivityScoped fun provideTourContentType(activity: TourListActivity): Int {
+            return activity.intent.getIntExtra(TourListFragment.ArgumentKey.CONTENT_TYPE, 0)
+        }
     }
+
 }

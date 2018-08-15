@@ -113,6 +113,12 @@ public class MainPresenter implements MainContract.Presenter {
         });
     }
 
+
+    @Override
+    public void openTourList(int contentTypeId) {
+        mainView.showTourListUi(contentTypeId);
+    }
+
     @Override
     public void takeView(MainContract.View view) {
         this.mainView = view;
@@ -124,4 +130,6 @@ public class MainPresenter implements MainContract.Presenter {
     public void dropView() {
 
     }
+
+
 }

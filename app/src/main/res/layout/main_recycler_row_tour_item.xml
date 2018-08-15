@@ -25,13 +25,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tour_content_card_view"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="3dp"
         android:text="텍스트입니다."
         android:textColor="@color/content_type_text_color"
-        android:textSize="10dp" />
+        android:textSize="8dp" />
 
     <TextView
         android:id="@+id/tour_title_text_view"

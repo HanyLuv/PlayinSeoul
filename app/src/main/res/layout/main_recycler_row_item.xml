@@ -1,82 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="130dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+    android:layout_marginTop="10dp">
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        android:elevation="2dp">
+        android:id="@+id/tourContentImageCardView"
+        android:layout_width="130dp"
+        android:layout_height="125dp"
+        android:elevation="2dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/tourContentImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/tourContentImageView"
-                android:layout_width="match_parent"
-                android:layout_height="250dp" />
-
-
-            <TextView
-                android:layout_below="@id/tour_content_image_view"
-                android:id="@+id/tour_content_type_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"
-                android:text="텍스트입니다."
-                android:textColor="@color/content_type_text_color"
-                android:textSize="14dp"
-                android:textStyle="bold"
-
-                />
-
-            <TextView
-                android:layout_below="@+id/tour_content_type_text_view"
-                android:id="@+id/tour_title_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
-                android:text="타이틀"
-                android:textColor="@color/content_title_text_color"
-                android:textSize="18dp" />
-
-
-            <TextView
-                android:id="@+id/tour_date_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tour_title_text_view"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
-                android:text="2018년 8월 10일"
-                android:textSize="12dp" />
-
-
-            <TextView
-                android:id="@+id/tour_show_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tour_date_text_view"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:text="조회수 10회"
-                android:textSize="12dp" />
-
-        </RelativeLayout>
-
+            android:layout_height="250dp"
+            android:scaleType="fitXY" />
 
     </android.support.v7.widget.CardView>
 
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/tourContentInfoLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tourContentImageCardView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/tourContentTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tourContentAddrTextView"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="타이틀"
+            android:textColor="@color/content_title_text_color"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tourContentAddrTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:text="텍스트입니다."
+            android:textColor="@color/content_type_text_color"
+            android:textSize="8dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tourContentDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="2018년 8월 10일"
+            android:textColor="@color/content_basic_text_color"
+            android:textSize="11dp" />
+
+        <ImageView
+            android:id="@+id/tourContentShowIconImageView"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
+            android:layout_toLeftOf="@+id/tourContentShowTextView"
+            android:src="@drawable/icon_read" />
+
+        <TextView
+            android:id="@+id/tourContentShowTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="15dp"
+            android:text="조회수 10회"
+            android:textColor="@color/content_basic_text_color"
+            android:textSize="11dp" />
+
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

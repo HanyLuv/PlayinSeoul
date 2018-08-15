@@ -12,7 +12,11 @@ import retrofit2.http.Query
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회 contentTypeId= 넣어서 다양한값 부를수잇다
-    @GET("areaBasedList")
+    /**
+     * 기본 데이터 정렬순(A=제목순, B=조회순, C=수정일순, D=생성일순)
+    대표이미지 정렬 추가 (O=제목순, P=조회순, Q=수정일순, R=생성일순)
+     * */
+    @GET("areaBasedList?arrange=R")
     fun getAreaBasedList(@Query("contentTypeId") contentTypeID: Int, @Query("numOfRows") numOfRows: Int): Call<Result<ArrayList<AreaTour>>>
 
     //detailCommon	공통정보 조회 (상세정보1) 여행코스는 주소가 없다 -_-;;아오 진짜 아래 링크는 문화시설 code 14

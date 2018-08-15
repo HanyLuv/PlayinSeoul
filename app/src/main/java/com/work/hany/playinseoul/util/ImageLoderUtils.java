@@ -16,6 +16,16 @@ public class ImageLoderUtils {
                 .into(imageView);
 
     }
+
+    public static void lodeURI(ImageView imageView, String uri, RequestOptions options) {
+        Glide.with(imageView)
+                .load(uri)
+                .apply(options)
+                .apply(RequestOptions.downsampleOf(DownsampleStrategy.CENTER_INSIDE))
+                .into(imageView);
+
+    }
+
 }
 
 

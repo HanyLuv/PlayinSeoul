@@ -1,5 +1,6 @@
 package com.work.hany.playinseoul.tourlist
 
+import android.util.Log
 import com.work.hany.playinseoul.di.ActivityScoped
 import com.work.hany.playinseoul.model.DataHandler
 import com.work.hany.playinseoul.network.AreaTour
@@ -27,6 +28,7 @@ class TourListPresenter @Inject constructor(private var dataHandler: DataHandler
             }
 
             override fun onFailure(call: Call<Result<ArrayList<AreaTour>>>?, t: Throwable?) {
+                Log.d("HANY_TAG","onFailure");
             }
 
         })
@@ -42,6 +44,7 @@ class TourListPresenter @Inject constructor(private var dataHandler: DataHandler
     }
 
     override fun openTourDetails(areaTour: AreaTour) {
+        tourListView.showTourDetailsUi(areaTour)
     }
 
 }

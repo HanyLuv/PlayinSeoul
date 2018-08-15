@@ -13,12 +13,14 @@ public interface MainContract {
         void initTourListUi(ArrayList<AreaTour> areaTourList);
         void showTourDetailsUi(AreaTour areaTour);
         void showCategoryTourDetailsUi(ContentType type);
+        void showTourListUi(int contentTypeId);
         void setLoadingIndicator(boolean active);
     }
 
     interface Presenter extends BasePresenter<View> {
         void openTourDetails(AreaTour areaTour);
         void openCategoryTourDetails(ContentType type);
+        void openTourList(int contentTypeId);
 
         void loadTourList();
 

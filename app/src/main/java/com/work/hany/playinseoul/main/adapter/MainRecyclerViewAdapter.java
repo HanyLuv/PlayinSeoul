@@ -99,6 +99,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
      */
     private class TourSectionBaseViewHolder extends BaseViewHolder<ArrayList<AreaTour>> {
         private ImageView tourSectionImageView;
+        private TextView tourSectionMoreTextView;
         private TextView tourSectionTitleTextView;
         private RecyclerView tourSectionItemsRecyclerView;
 
@@ -106,6 +107,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
         public TourSectionBaseViewHolder(View itemView) {
             super(itemView);
             tourSectionImageView = itemView.findViewById(R.id.tour_content_image_view);
+            tourSectionMoreTextView = itemView.findViewById(R.id.tour_more_text_view);
             tourSectionTitleTextView = itemView.findViewById(R.id.tour_section_title_text_view);
             tourSectionItemsRecyclerView = itemView.findViewById(R.id.tour_section_item_recycler_view);
 
@@ -121,6 +123,13 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             TourSectionItemsAdapter tourSectionItemsAdapter = new TourSectionItemsAdapter(areaTour);
             tourSectionItemsRecyclerView.setLayoutManager(new GridLayoutManager(itemView.getContext(), 2));
             tourSectionItemsRecyclerView.setAdapter(tourSectionItemsAdapter);
+
+            tourSectionMoreTextView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    mainItemListener.onMoreTourClicked(areaTour.get(0));
+                }
+            });
         }
 
         /**
@@ -186,7 +195,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
 
                 String countStr = new StringBuilder().append("조회수 ").append(tour.getReadCount()).toString();
                 tourContentShowCountTextView.setText(countStr);
-                tourAddrTextView.setText(tour.getAreaAddress());
+                tourAddrTextView.setText(tour.getFullAddress());
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

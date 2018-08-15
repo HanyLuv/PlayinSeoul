@@ -18,5 +18,6 @@ class TourListContact {
     interface Presenter : BasePresenter<View> {
         fun openTourDetails(areaTour: AreaTour)
         fun loadTourList(contentTypeId: Int)
+
     }
 }
