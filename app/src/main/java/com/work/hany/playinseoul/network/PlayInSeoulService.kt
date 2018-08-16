@@ -58,6 +58,10 @@ interface PlayInSeoulService {
     @GET("detailInfo?detailYN=Y")
     fun getStayDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<StayDetail>>>
 
+
+    @GET("detailInfo?detailYN=Y")
+    fun getAreaCode(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<StayDetail>>>
+
 }
 
 

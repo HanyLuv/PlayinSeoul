@@ -9,15 +9,15 @@ import java.util.ArrayList
 
 class SearchContact {
     interface View : BaseView<Presenter> {
-        fun initTourListUi(areaTourList: ArrayList<AreaTour>)
-        fun showTourDetailsUi(areaTour: AreaTour)
+//        fun initTourListUi(areaTourList: ArrayList<AreaTour>)
+//        fun showTourDetailsUi(areaTour: AreaTour)
 //        void setLoadingIndicator(boolean active);
     }
 
 
     interface Presenter : BasePresenter<View> {
-        fun openTourDetails(areaTour: AreaTour)
-        fun loadTourList(contentTypeId: Int)
+//        fun openTourDetails(areaTour: AreaTour)
+        fun loadAreaCode()
 
     }
 }

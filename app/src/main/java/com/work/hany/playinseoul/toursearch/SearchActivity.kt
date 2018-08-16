@@ -8,14 +8,15 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class SearchActivity: DaggerAppCompatActivity() {
+
     @Inject
-    internal lateinit var tourSearchFragment: Lazy<SearchFragment>
+    internal lateinit var searchFragment: Lazy<SearchFragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var searchFragment = tourSearchFragment.get()
+        var searchFragment = searchFragment.get()
         ActivityUtils.addFragmentToActivity(supportFragmentManager, searchFragment, R.id.contentFrame)
     }
 

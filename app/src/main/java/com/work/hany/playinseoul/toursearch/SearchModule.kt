@@ -10,7 +10,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class SearchModule {
+internal abstract  class SearchModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract fun searchFragment(): SearchFragment

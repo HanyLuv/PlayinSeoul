@@ -8,6 +8,7 @@ import android.view.View;
 import com.work.hany.playinseoul.R;
 import com.work.hany.playinseoul.tourlist.TourListActivity;
 import com.work.hany.playinseoul.tourlist.TourListFragment;
+import com.work.hany.playinseoul.toursearch.SearchActivity;
 import com.work.hany.playinseoul.util.ActivityUtils;
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class MainActivity extends DaggerAppCompatActivity {
         findViewById(R.id.search_icon_image_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TourListActivity.class);
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
