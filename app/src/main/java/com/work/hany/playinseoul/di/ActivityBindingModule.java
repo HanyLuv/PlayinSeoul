@@ -7,6 +7,7 @@ import com.work.hany.playinseoul.tourdetail.DetailModule;
 import com.work.hany.playinseoul.tourlist.TourListActivity;
 import com.work.hany.playinseoul.tourlist.TourListFragment;
 import com.work.hany.playinseoul.tourlist.TourModule;
+import com.work.hany.playinseoul.toursearch.SearchActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -17,9 +18,9 @@ public abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = MainModule.class)
     abstract MainActivity mainActivity();
 //
-//    @ActivityScoped
-//    @ContributesAndroidInjector(modules = TourModule.class)
-//    abstract TourListActivity tourListActivity();
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = TourModule.class)
+    abstract SearchActivity searchActivity();
 
 
     @ActivityScoped

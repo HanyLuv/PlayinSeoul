@@ -1,9 +1,13 @@
 package com.work.hany.playinseoul.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.work.hany.playinseoul.R;
+import com.work.hany.playinseoul.tourlist.TourListActivity;
+import com.work.hany.playinseoul.tourlist.TourListFragment;
 import com.work.hany.playinseoul.util.ActivityUtils;
 
 import javax.inject.Inject;
@@ -28,8 +32,15 @@ public class MainActivity extends DaggerAppCompatActivity {
             mainFragment = mainFragmentProvider.get();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mainFragment, R.id.contentFrame);
         }
-        // TODO 화면 다시 그릴때 부분 처리 생각.
 
+
+        findViewById(R.id.search_icon_image_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TourListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

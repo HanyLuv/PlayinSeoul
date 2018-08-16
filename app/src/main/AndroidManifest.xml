@@ -25,6 +25,7 @@
 
         <activity android:name=".tourdetail.DetailActivity" />
         <activity android:name=".tourlist.TourListActivity" />
+        <activity android:name=".toursearch.SearchActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
