@@ -28,6 +28,7 @@ class SearchFragment@Inject internal constructor(): DaggerFragment(), SearchCont
     private lateinit var searchRecyclerView: RecyclerView
 
     private lateinit var searchActivity: SearchActivity
+
     override fun onResume() {
         super.onResume()
         presenter.takeView(this)
@@ -48,7 +49,11 @@ class SearchFragment@Inject internal constructor(): DaggerFragment(), SearchCont
 
         override fun onItemClicked(item: Area, type: SearchItemType) {
             searchActivity.updateSelectedTagUi(item)
-            presenter.loadAreaCode(item.code,type)
+            presenter.addSelectedTag(item.name)
+
+            if(item.name != "세종특별자치시"){
+                presenter.loadAreaCode(item.code, type)
+            }
         }
     }
 
@@ -68,4 +73,9 @@ class SearchFragment@Inject internal constructor(): DaggerFragment(), SearchCont
 
         return rootView
     }
+
+    open fun deleteSelectedTag(name: String) {
+        presenter.deleteSelectedTag(name)
+    }
+
 }

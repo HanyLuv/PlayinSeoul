@@ -13,6 +13,8 @@ import javax.inject.Inject
 
 class SearchPresenter @Inject constructor(private var dataHandler: DataHandler): SearchContact.Presenter {
     private lateinit var searchView: SearchContact.View
+    private var selectedTagList = ArrayList<String>()
+
 
     override fun takeView(view: SearchContact.View) {
         this.searchView = view
@@ -97,5 +99,31 @@ class SearchPresenter @Inject constructor(private var dataHandler: DataHandler):
 
     }
 
+    override fun deleteSelectedTag(name: String) {
+        var index = hasSelectedTagAt(name)
+        if(index != -1){
+            selectedTagList.removeAt(index)
+        }
 
+
+    }
+
+    private fun hasSelectedTagAt(name: String): Int {
+        var index = -1 //empty
+        val it = selectedTagList.listIterator()
+        while (it.hasNext()) {
+            val tag = it.next()
+            if (tag == name) {
+                index = it.previousIndex()
+            }
+        }
+        return index
+
+    }
+
+    override fun addSelectedTag(name: String) {
+        if(hasSelectedTagAt(name) == -1){
+            selectedTagList.add(name)
+        }
+    }
 }

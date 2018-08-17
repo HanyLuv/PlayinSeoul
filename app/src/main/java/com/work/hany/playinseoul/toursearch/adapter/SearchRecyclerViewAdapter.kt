@@ -1,5 +1,6 @@
 package com.work.hany.playinseoul.toursearch.adapter
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
@@ -40,11 +41,7 @@ class SearchRecyclerViewAdapter(private var areaItems: ArrayList<SearchItem>, pr
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var currentPosition = if (holder.adapterPosition != RecyclerView.NO_POSITION) {
-            holder.adapterPosition
-        } else {
-            position
-        }
+        var currentPosition = if (holder.adapterPosition != RecyclerView.NO_POSITION) { holder.adapterPosition } else { position }
 
         if (holder.itemViewType != TYPE_SEARCH) {
             val holderFromRecyclerPool = recyclerViewPool.getRecycledView(getItemViewType(position))
@@ -74,7 +71,8 @@ class SearchRecyclerViewAdapter(private var areaItems: ArrayList<SearchItem>, pr
         private var itemTitleTextView: TextView = itemView.findViewById(R.id.searchTitleTextView)
 
         fun bind(item: SearchItem) {
-            itemRecyclerView.layoutManager = StaggeredGridLayoutManager(3, 1)
+            itemRecyclerView.setHasFixedSize(true)
+            itemRecyclerView.layoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.HORIZONTAL)
             itemRecyclerView.adapter = SearchAttrRecyclerViewAdapter(item, itemListener)
             itemTitleTextView.text = item.itemType.name
 

@@ -21,6 +21,8 @@ class SearchContact {
 //        fun openTourDetails(areaTour: AreaTour)
         fun loadAreaCode()
         fun loadAreaCode(areaCode: String,type: SearchItem.SearchItemType)
+        fun deleteSelectedTag(name: String)
+        fun addSelectedTag(name: String)
 
     }
 }

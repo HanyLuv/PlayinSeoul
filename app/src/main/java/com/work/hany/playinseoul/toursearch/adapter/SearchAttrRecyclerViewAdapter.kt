@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.work.hany.playinseoul.R
-import com.work.hany.playinseoul.model.Section
 import com.work.hany.playinseoul.network.Area
 import com.work.hany.playinseoul.toursearch.vo.SearchItem
 
@@ -15,13 +14,14 @@ class SearchAttrRecyclerViewAdapter(codeItem: SearchItem, private var itemListen
     private val attrType = codeItem.itemType
 
     companion object {
-        private const val TYPE_ATTR = 0
+        private const val TYPE_ATTR = 1
     }
 
     interface ItemListener {
         fun onItemClicked(item: Area, type: SearchItem.SearchItemType)
     }
     private lateinit var searchAttrRecyclerView: RecyclerView
+
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         searchAttrRecyclerView = recyclerView
@@ -50,7 +50,7 @@ class SearchAttrRecyclerViewAdapter(codeItem: SearchItem, private var itemListen
 
 
     inner class AttrViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var rowTitleTextView = itemView.findViewById<TextView>(R.id.rowTitleTextView)
+        private var rowTitleTextView = itemView.findViewById<TextView>(R.id.tagTitleTextView)
         fun bind(item: Area) {
             rowTitleTextView.text = item.name
             itemView.setOnClickListener {
