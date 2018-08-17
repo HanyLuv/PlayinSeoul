@@ -59,9 +59,18 @@ interface PlayInSeoulService {
     fun getStayDetailInfo(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<StayDetail>>>
 
 
-    @GET("detailInfo?detailYN=Y")
-    fun getAreaCode(@Query("contentId") contentID: Int, @Query("contentTypeId") contentTypeID: Int): Call<Result<ArrayList<StayDetail>>>
+    //TODO 음.... 파라미터가 유동적인데 이거 어케함?
+    @GET("areaCode")
+    fun getAreaCode(@Query("areaCode") areaCode: String): Call<Result<ArrayList<Area>>>
 
+    @GET("areaCode")
+    fun getAreaCode(): Call<Result<ArrayList<Area>>>
+
+    @GET("categoryCode")
+    fun getCategoryCode(): Call<Result<ArrayList<Area>>>
+
+    @GET("categoryCode")
+    fun getCategoryCode(@Query("categoryCode") categoryCode: String): Call<Result<ArrayList<Area>>>
 }
 
 
@@ -101,6 +110,18 @@ private const val CONTENT_TYPE_STAY = 32//숙박
 private const val CONTENT_TYPE_SHOPPING = 38//쇼핑
 private const val CONTENT_TYPE_FOOD = 39//음식점
  * */
+
+
+/**
+<code>1</code>
+<name>강화군</name>
+<rnum>1</rnum>
+ * */
+
+//지역코드
+data class Area(@SerializedName("code") var code: String,
+                    @SerializedName("name") var name: String,
+                    @SerializedName("rnum") var num: Int) //일련번호
 
 
 //여행 코스 디테일

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main.MainActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/title_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="2dp">
+
+        <EditText
+            android:id="@+id/search_icon_image_view"
+            android:layout_width="match_parent"
+            android:hint="검색어를 입력하세요."
+            android:layout_toRightOf="@id/back_icon_image_view"
+            android:layout_height="50dp"
+            />
+
+
+        <ImageView
+            android:id="@+id/back_icon_image_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:background="@drawable/icon_arrow" />
+
+
+        <!--//TODO 애니메이션 넣자 위에 화살표도 수정하자. 간격구려 -->
+        <HorizontalScrollView
+            android:layout_below="@+id/search_icon_image_view"
+            android:id="@+id/searchSelectTagScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/searchSelectTagLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

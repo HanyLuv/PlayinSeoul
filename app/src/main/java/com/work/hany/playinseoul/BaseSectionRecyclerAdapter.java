@@ -8,6 +8,7 @@ import com.work.hany.playinseoul.tourdetail.adapter.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import static com.work.hany.playinseoul.model.Section.ItemType.NOTHING;
 
@@ -25,11 +26,11 @@ abstract public class BaseSectionRecyclerAdapter extends RecyclerView.Adapter<Ba
     }
 
     public <T> void updateSection(Section.ItemType type, T data) {
-        for(Iterator<Section> i = sections.iterator(); i.hasNext();){
+        for(ListIterator<Section> i = sections.listIterator(); i.hasNext();){
             Section section = i.next();
             if(section.getType().equals(type)) {
                 section.setData(data);
-                notifyDataSetChanged();
+                notifyItemChanged(i.previousIndex());
             }
         }
     }

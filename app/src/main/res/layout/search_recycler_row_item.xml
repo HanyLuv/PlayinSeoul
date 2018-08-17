@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/searchTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지역"
+        android:layout_margin="10dp"
+        android:textColor="@color/content_title_text_color"
+        android:textSize="20dp" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/searchAttrRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchTitleTextView" />
+
+</RelativeLayout>

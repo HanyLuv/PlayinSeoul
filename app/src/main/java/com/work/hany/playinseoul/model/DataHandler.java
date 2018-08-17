@@ -2,6 +2,7 @@ package com.work.hany.playinseoul.model;
 
 import com.work.hany.playinseoul.model.dao.StayDetail;
 import com.work.hany.playinseoul.model.dao.TourDetail;
+import com.work.hany.playinseoul.network.Area;
 import com.work.hany.playinseoul.network.AreaTour;
 import com.work.hany.playinseoul.network.PlayInSeoulRetrofit;
 import com.work.hany.playinseoul.network.PlayInSeoulService;
@@ -67,6 +68,23 @@ public class DataHandler implements DataHandlerContract {
     /** 숙박에 대한 디테일 정보는 완전히 다르므로..*/
     public Call<Result<ArrayList<StayDetail>>> getStayDetail(int contentId, int contentTypeId) {
         return service.getStayDetailInfo(contentId,contentTypeId);
+    }
+
+    /** 으아앙 */
+    public Call<Result<ArrayList<Area>>> getAreaCode() {
+        return service.getAreaCode();
+    }
+    /** 으아앙 */
+    public Call<Result<ArrayList<Area>>> getAreaCode(String areaCode) {
+        return service.getAreaCode(areaCode);
+    }
+
+    public Call<Result<ArrayList<Area>>> getCategoryCode() {
+        return service.getCategoryCode();
+    }
+
+    public Call<Result<ArrayList<Area>>> getCategoryCode(String categoryCode) {
+        return service.getCategoryCode(categoryCode);
     }
 }
 

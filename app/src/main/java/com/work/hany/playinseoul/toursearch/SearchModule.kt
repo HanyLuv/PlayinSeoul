@@ -2,9 +2,6 @@ package com.work.hany.playinseoul.toursearch
 
 import com.work.hany.playinseoul.di.ActivityScoped
 import com.work.hany.playinseoul.di.FragmentScoped
-import com.work.hany.playinseoul.tourlist.TourListContact
-import com.work.hany.playinseoul.tourlist.TourListFragment
-import com.work.hany.playinseoul.tourlist.TourListPresenter
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
