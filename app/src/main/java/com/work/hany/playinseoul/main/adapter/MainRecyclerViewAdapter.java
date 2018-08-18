@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -286,7 +285,7 @@ public class MainRecyclerViewAdapter extends BaseSectionRecyclerAdapter {
             }
 
             public void bind(final ContentType type) {
-                categoryTitleTextView.setText(type.getName());
+                categoryTitleTextView.setText(type.getTagName());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.work.hany.playinseoul.R
 import com.work.hany.playinseoul.network.Area
-import com.work.hany.playinseoul.toursearch.vo.SearchItem
+import com.work.hany.playinseoul.toursearch.vo.SearchSection
 
-class SearchAttrRecyclerViewAdapter(codeItem: SearchItem, private var itemListener: ItemListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchAttrRecyclerViewAdapter(codeItem: SearchSection, private var itemListener: ItemListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val attrItems = codeItem.codes
     private val attrType = codeItem.itemType
 
@@ -18,7 +18,7 @@ class SearchAttrRecyclerViewAdapter(codeItem: SearchItem, private var itemListen
     }
 
     interface ItemListener {
-        fun onItemClicked(item: Area, type: SearchItem.SearchItemType)
+        fun onItemClicked(item: Area, type: SearchSection.SearchItemType)
     }
     private lateinit var searchAttrRecyclerView: RecyclerView
 

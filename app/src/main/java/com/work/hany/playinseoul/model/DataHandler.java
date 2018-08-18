@@ -12,6 +12,7 @@ import com.work.hany.playinseoul.network.TravelDetail;
 import com.work.hany.playinseoul.network.TravelIntro;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -70,21 +71,21 @@ public class DataHandler implements DataHandlerContract {
         return service.getStayDetailInfo(contentId,contentTypeId);
     }
 
-    /** 으아앙 */
-    public Call<Result<ArrayList<Area>>> getAreaCode() {
-        return service.getAreaCode();
-    }
-    /** 으아앙 */
-    public Call<Result<ArrayList<Area>>> getAreaCode(String areaCode) {
-        return service.getAreaCode(areaCode);
+
+    public Call<Result<Area>> getAreaCode(HashMap<String, String> params) {
+        return service.getAreaCode(params);
     }
 
-    public Call<Result<ArrayList<Area>>> getCategoryCode() {
-        return service.getCategoryCode();
+    public Call<Result<ArrayList<Area>>> getAreaCodeList(HashMap<String, String> params) {
+        return service.getAreaCodeList(params);
     }
 
-    public Call<Result<ArrayList<Area>>> getCategoryCode(String categoryCode) {
-        return service.getCategoryCode(categoryCode);
+    public Call<Result<Area>> getCategoryCode(HashMap<String, String> params) {
+        return service.getCategoryCode(params);
+    }
+
+    public Call<Result<ArrayList<Area>>> getCategoryCodeList(HashMap<String, String> params) {
+        return service.getCategoryCodeList(params);
     }
 }
 

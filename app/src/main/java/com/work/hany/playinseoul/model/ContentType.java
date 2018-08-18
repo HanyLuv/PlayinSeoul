@@ -13,17 +13,17 @@ public enum ContentType {
     EMPTY(40,""); //빈값
 
     private int code;
-    private String name;
-    ContentType(int code, String name){
+    private String tagName;
+    ContentType(int code, String tagName){
        this.code = code;
-       this.name = name;
+       this.tagName = tagName;
     }
 
     public int getCode() {
         return code;
     }
 
- public String getName() {
-  return name;
+ public String getTagName() {
+  return tagName;
  }
 }

@@ -9,6 +9,8 @@ import com.work.hany.playinseoul.model.dao.TourDetail
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
+import java.util.HashMap
 
 interface PlayInSeoulService {
     //지역기반 관광정보 조회 contentTypeId= 넣어서 다양한값 부를수잇다
@@ -61,16 +63,16 @@ interface PlayInSeoulService {
 
     //TODO 음.... 파라미터가 유동적인데 이거 어케함?
     @GET("areaCode")
-    fun getAreaCode(@Query("areaCode") areaCode: String): Call<Result<ArrayList<Area>>>
+    fun getAreaCodeList(@QueryMap params: HashMap<String, String>): Call<Result<ArrayList<Area>>>
 
     @GET("areaCode")
-    fun getAreaCode(): Call<Result<ArrayList<Area>>>
+    fun getAreaCode(@QueryMap params: HashMap<String, String>): Call<Result<Area>>
 
     @GET("categoryCode")
-    fun getCategoryCode(): Call<Result<ArrayList<Area>>>
+    fun getCategoryCodeList(@QueryMap params: HashMap<String, String>): Call<Result<ArrayList<Area>>>
 
     @GET("categoryCode")
-    fun getCategoryCode(@Query("categoryCode") categoryCode: String): Call<Result<ArrayList<Area>>>
+    fun getCategoryCode(@QueryMap params: HashMap<String, String>): Call<Result<Area>>
 }
 
 
@@ -121,7 +123,8 @@ private const val CONTENT_TYPE_FOOD = 39//음식점
 //지역코드
 data class Area(@SerializedName("code") var code: String,
                     @SerializedName("name") var name: String,
-                    @SerializedName("rnum") var num: Int) //일련번호
+                    @SerializedName("rnum") var num: Int, //일련번호
+                    var depth: Int = 0) //깊이
 
 
 //여행 코스 디테일

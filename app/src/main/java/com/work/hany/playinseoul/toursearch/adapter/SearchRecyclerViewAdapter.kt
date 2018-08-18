@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.work.hany.playinseoul.R
 import com.work.hany.playinseoul.network.Area
-import com.work.hany.playinseoul.toursearch.vo.SearchItem
+import com.work.hany.playinseoul.toursearch.vo.SearchSection
 import com.work.hany.playinseoul.toursearch.adapter.SearchAttrRecyclerViewAdapter.ItemListener
 
 /** 디비에 저장해놔야한다. 지역만 호출하기엔 데이터 아까워 ㅠ*/
-class SearchRecyclerViewAdapter(private var areaItems: ArrayList<SearchItem>, private var itemListener: ItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchRecyclerViewAdapter(private var areaItems: ArrayList<SearchSection>, private var itemListener: ItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val TYPE_SEARCH = 0
@@ -54,7 +54,7 @@ class SearchRecyclerViewAdapter(private var areaItems: ArrayList<SearchItem>, pr
 
     }
 
-    fun updateSearchItem(type: SearchItem.SearchItemType, items: ArrayList<Area>) {
+    fun updateSearchItem(type: SearchSection.SearchItemType, items: ArrayList<Area>) {
         val it = areaItems.listIterator()
         while (it.hasNext()) {
             val searchItem = it.next()
@@ -70,11 +70,11 @@ class SearchRecyclerViewAdapter(private var areaItems: ArrayList<SearchItem>, pr
         var itemRecyclerView: RecyclerView = itemView.findViewById(R.id.searchAttrRecyclerView)
         private var itemTitleTextView: TextView = itemView.findViewById(R.id.searchTitleTextView)
 
-        fun bind(item: SearchItem) {
+        fun bind(item: SearchSection) {
             itemRecyclerView.setHasFixedSize(true)
-            itemRecyclerView.layoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.HORIZONTAL)
+            itemRecyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.HORIZONTAL)
             itemRecyclerView.adapter = SearchAttrRecyclerViewAdapter(item, itemListener)
-            itemTitleTextView.text = item.itemType.name
+            itemTitleTextView.text = item.itemType.tagName
 
         }
     }
