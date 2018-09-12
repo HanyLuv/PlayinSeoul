@@ -28,7 +28,7 @@ class TourListPresenter @Inject constructor(private var dataHandler: DataHandler
             }
 
             override fun onFailure(call: Call<Result<ArrayList<AreaTour>>>?, t: Throwable?) {
-                Log.d("HANY_TAG","onFailure");
+                Log.d("HANY_TAG","onFailure")
             }
 
         })

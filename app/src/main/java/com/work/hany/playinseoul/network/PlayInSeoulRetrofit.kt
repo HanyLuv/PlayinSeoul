@@ -4,20 +4,24 @@ import okhttp3.OkHttpClient
 import okhttp3.internal.Util
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.Retrofit.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URLDecoder
 
 /**
  *
- * 영어를 지원할것인가?
+ * 영어를 지원할것!!
+ * context 공유 하는 방식 착안해서
+ * 영어 지원 api구성해봅세 ㅎ
+ * https://stackoverflow.com/questions/14057273/android-singleton-with-global-context
  *
  * */
 
-class PlayInSeoulRetrofit private constructor(){
+abstract class PlayInSeoulRetrofit private constructor(){
 
     private object Holder {
         val INSTANCE: Retrofit
-            get() { return Retrofit.Builder()
+            get() { return Builder()
                     .baseUrl(StringBuffer().append(BASE_URL).append("/").toString())
                     .client(createOkHttpClient())
                     .addConverterFactory(GsonConverterFactory.create()).build() }

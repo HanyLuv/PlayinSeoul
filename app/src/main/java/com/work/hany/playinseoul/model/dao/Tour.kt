@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 //관광지 12 detailIntro 요청 결과값
 data class TourIntro (
-        @SerializedName("contenttypeid") var contentTypeId: String, //수용 인원
-        @SerializedName("contentid") var contentId: String, //수용 인원
+        @SerializedName("contenttypeid") var contentTypeId: String,
+        @SerializedName("contentid") var contentId: String,
         @SerializedName("accomcount") var accomcount: String, //수용 인원
         @SerializedName("chkbabycarriage") var hasBabyCarriage: String, //유모차 대여 여부  //없음
         @SerializedName("chkcreditcard") var subContentId: String, //신용카드 여부
