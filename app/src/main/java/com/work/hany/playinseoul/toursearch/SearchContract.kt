@@ -8,7 +8,7 @@ import com.work.hany.playinseoul.toursearch.vo.SearchSection
 import java.util.ArrayList
 
 
-class SearchContact {
+class SearchContract {
     interface View : BaseView<Presenter> {
         fun initAreaCodeListUi(type: SearchSection.SearchItemType, items: ArrayList<Area>)
 //        fun showTourDetailsUi(areaTour: AreaTour)

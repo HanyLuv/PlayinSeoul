@@ -3,7 +3,6 @@ package com.work.hany.playinseoul.tourlist
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import java.util.*
 import javax.inject.Inject
 
 @ActivityScoped
-internal class TourListFragment @Inject internal constructor() : DaggerFragment(), TourListContact.View {
+internal class TourListFragment @Inject internal constructor() : DaggerFragment(), TourListContract.View {
     object ArgumentKey {
         const val CONTENT_TYPE = "content_type_code"
     }

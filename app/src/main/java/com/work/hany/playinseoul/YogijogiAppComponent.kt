@@ -17,6 +17,6 @@ internal interface YogijogiAppComponent : AndroidInjector<YogijogiApplication> {
         @BindsInstance
         fun application(application: Application): YogijogiAppComponent.Builder
         fun build(): YogijogiAppComponent
-
     }
+
 }

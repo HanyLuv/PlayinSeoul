@@ -12,9 +12,9 @@ import java.util.*
 import javax.inject.Inject
 
 @ActivityScoped
-class TourListPresenter @Inject constructor(private var dataHandler: DataHandler) : TourListContact.Presenter {
+class TourListPresenter @Inject constructor(private var dataHandler: DataHandler) : TourListContract.Presenter {
 
-    lateinit var tourListView: TourListContact.View
+    lateinit var tourListView: TourListContract.View
 
     override fun loadTourList(contentTypeId: Int) {
         dataHandler.getTourList(100, contentTypeId).enqueue(object : Callback<Result<ArrayList<AreaTour>>> {
@@ -34,7 +34,7 @@ class TourListPresenter @Inject constructor(private var dataHandler: DataHandler
         })
     }
 
-    override fun takeView(view: TourListContact.View) {
+    override fun takeView(view: TourListContract.View) {
         tourListView = view
     }
 

@@ -13,12 +13,12 @@ import retrofit2.Response
 import java.util.ArrayList
 import javax.inject.Inject
 
-class SearchPresenter @Inject constructor(private var dataHandler: DataHandler): SearchContact.Presenter {
-    private lateinit var searchView: SearchContact.View
+class SearchPresenter @Inject constructor(private var dataHandler: DataHandler): SearchContract.Presenter {
+    private lateinit var searchView: SearchContract.View
     private var selectedTagList = ArrayList<String>()
 
 
-    override fun takeView(view: SearchContact.View) {
+    override fun takeView(view: SearchContract.View) {
         this.searchView = view
     }
 

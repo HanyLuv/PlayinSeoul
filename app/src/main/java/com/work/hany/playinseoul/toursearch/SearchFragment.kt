@@ -20,7 +20,7 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 @ActivityScoped
-class SearchFragment@Inject internal constructor(): DaggerFragment(), SearchContact.View {
+class SearchFragment@Inject internal constructor(): DaggerFragment(), SearchContract.View {
 
     @Inject
     lateinit var presenter: SearchPresenter

@@ -7,7 +7,7 @@ import com.work.hany.playinseoul.network.AreaTour
 import java.util.ArrayList
 
 
-class TourListContact {
+class TourListContract {
     interface View : BaseView<Presenter> {
         fun initTourListUi(areaTourList: ArrayList<AreaTour>)
         fun showTourDetailsUi(areaTour: AreaTour)
