@@ -12,5 +12,4 @@ interface TourDataSource {
     }
 
 
-    fun get
 }

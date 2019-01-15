@@ -5,6 +5,7 @@ import com.work.hany.playinseoul.main.MainModule;
 import com.work.hany.playinseoul.tourdetail.DetailActivity;
 import com.work.hany.playinseoul.tourdetail.DetailModule;
 import com.work.hany.playinseoul.tourfavorite.FavoriteTourListActivity;
+import com.work.hany.playinseoul.tourfavorite.FavoriteTourListModule;
 import com.work.hany.playinseoul.tourlist.TourListActivity;
 import com.work.hany.playinseoul.tourlist.TourListFragment;
 import com.work.hany.playinseoul.tourlist.TourModule;
@@ -35,7 +36,7 @@ public abstract class ActivityBindingModule {
     abstract DetailActivity detailActivity();
 
     @ActivityScoped
-    @ContributesAndroidInjector (modules = FavoriteTourListActivity.class)
+    @ContributesAndroidInjector (modules = FavoriteTourListModule.class)
     abstract FavoriteTourListActivity favoriteTourListActivity();
 
 

@@ -11,7 +11,7 @@ internal abstract class FavoriteTourListModule {
 
     @FragmentScoped
     @ContributesAndroidInjector
-    abstract fun favoriteTourListModule(): FavoriteTourListModule
+    abstract fun favoriteTourListFragment(): FavoriteTourListFragment
 
     @ActivityScoped
     @Binds

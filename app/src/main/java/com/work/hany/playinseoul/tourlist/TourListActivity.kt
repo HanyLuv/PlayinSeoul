@@ -2,7 +2,6 @@ package com.work.hany.playinseoul.tourlist
 
 import android.os.Bundle
 import com.work.hany.playinseoul.R
-import com.work.hany.playinseoul.model.room.FavoriteAreaDatabase
 import com.work.hany.playinseoul.util.ActivityUtils
 import dagger.Lazy
 import dagger.android.support.DaggerAppCompatActivity
